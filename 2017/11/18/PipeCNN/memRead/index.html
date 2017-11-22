@@ -72,7 +72,7 @@
 
 
 
-  <meta name="keywords" content="SDAccel,优化," />
+  <meta name="keywords" content="PipeCNN,memRead," />
 
 
 
@@ -83,52 +83,27 @@
 
 
 
-<meta name="description" content="方案一 方案一  源码123456789101112131415161718192021222324252627#define J_CNT       2#define I_CNT       4#define BUFFER_SIZE I_CNT*J_CNTkernel __attribute__((reqd_work">
-<meta name="keywords" content="SDAccel,优化">
+<meta name="description" content="memRead作用描述memRead的作用主要是从Global Memery中读取data weight bias 然后设置并行化传输方式，处理卷积前的Pading与Group操作以及窗口的预缓冲，便于数据的读取。具体作用如下：  将向量化的VEC_SIZE个data数据复制LANE_NUM份传到data_ch中 将向">
+<meta name="keywords" content="PipeCNN,memRead">
 <meta property="og:type" content="article">
-<meta property="og:title" content="gmem carry dependency 分析">
-<meta property="og:url" content="http://xuke225.github.io.git/child/2017/11/15/SDAccel/gmem-carry-dependency-分析/index.html">
+<meta property="og:title" content="PipeCNN——memRead">
+<meta property="og:url" content="http://xuke225.github.io.git/child/2017/11/18/PipeCNN/memRead/index.html">
 <meta property="og:site_name" content="AI 异构">
-<meta property="og:description" content="方案一 方案一  源码123456789101112131415161718192021222324252627#define J_CNT       2#define I_CNT       4#define BUFFER_SIZE I_CNT*J_CNTkernel __attribute__((reqd_work_group_size(1, 1, 1)))void vector_add(__">
+<meta property="og:description" content="memRead作用描述memRead的作用主要是从Global Memery中读取data weight bias 然后设置并行化传输方式，处理卷积前的Pading与Group操作以及窗口的预缓冲，便于数据的读取。具体作用如下：  将向量化的VEC_SIZE个data数据复制LANE_NUM份传到data_ch中 将向量化的VEC_SIZE * LANE_NUM个weight参数传到weight_">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/6761df957be09d56c49a393122fee9a3.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/44244df7984202643cc6c31cda5b9b57.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/8641efad2576de07149a4a88f3a1ae03.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/050993521dabc3db276d2acdf9a666e5.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/2c8d0ec01cd2286b9eaf77dff54c4316.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/0e9c17ba66f84433714e488fd3ce0f31.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/5ac4e9160997b061791ff6ccc7cd312f.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/9dc9c6e9d56d4468db807068b236994a.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/5dda1f895a647e9e45ccb6a00b4476e6.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/5dda1f895a647e9e45ccb6a00b4476e6.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/7dd3ae852d90aca8b5afa8836c6b0848.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/56606e7b4da8d4cc13d267d7cbec198c.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/937b1ca302f2ee702e4cecd83a63bea8.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/18e958245b430f116c095fb59f21a6e7.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/4ca1ed6e8e0d08cd0e2e6a2f074abf94.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/acf0ff0829e335425ca144cff64031ee.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/acf0ff0829e335425ca144cff64031ee.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/e0408803736b1b7c7ee46344555f1d0b.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/10f729b114b275541fcfc02fdb391bae.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/5c773a40ac3464dd18c91f35c9852037.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/d0ff83cd0c8288e0df9180bda08b3f68.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/0b746748e1f0ddca79d39be4956d2372.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/8db95363cb4843a7a2df6a8a139a212b.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/e15fb942130d0657331e4332e94a02dd.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/e598125028eea15c73df4998ec157285.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/439580baf77868142d0a9b7858ac7860.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/b3a0106b044dd3b1b7b268b0ee259611.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/103f16fb347355a4670592992b0173ed.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/81d167188d4f054e9e0f1061dae5c174.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/11a495df12fd1151547727906a48ae33.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/6778fada1a100f886c7ff480c6c151a7.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/a952567ee07875ac7787e6b0d2774891.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/a5ed8c3f40c32a85238715b109ccc2eb.png">
-<meta property="og:updated_time" content="2017-11-22T06:40:16.654Z">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/835691eecaad88c6d31edbdb0e110c4e.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/90652c47934d88aac34b0c65cf68f00c.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/f3905e7c6238da7eeb664b79a1264518.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/2ef826a33dd1bc37f385779505a1385e.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/f9566704d238b4bdbfae0f137289be4a.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/66792eebe31baef61d76827f19c58082.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/6ff5223989351b8a2bc520cae7eb2ee3.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/memRead%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B-1.gif">
+<meta property="og:updated_time" content="2017-11-22T06:38:50.135Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="gmem carry dependency 分析">
-<meta name="twitter:description" content="方案一 方案一  源码123456789101112131415161718192021222324252627#define J_CNT       2#define I_CNT       4#define BUFFER_SIZE I_CNT*J_CNTkernel __attribute__((reqd_work_group_size(1, 1, 1)))void vector_add(__">
-<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/6761df957be09d56c49a393122fee9a3.png">
+<meta name="twitter:title" content="PipeCNN——memRead">
+<meta name="twitter:description" content="memRead作用描述memRead的作用主要是从Global Memery中读取data weight bias 然后设置并行化传输方式，处理卷积前的Pading与Group操作以及窗口的预缓冲，便于数据的读取。具体作用如下：  将向量化的VEC_SIZE个data数据复制LANE_NUM份传到data_ch中 将向量化的VEC_SIZE * LANE_NUM个weight参数传到weight_">
+<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/835691eecaad88c6d31edbdb0e110c4e.png">
 
 
 
@@ -158,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://xuke225.github.io.git/child/2017/11/15/SDAccel/gmem-carry-dependency-分析/"/>
+  <link rel="canonical" href="http://xuke225.github.io.git/child/2017/11/18/PipeCNN/memRead/"/>
 
 
 
 
 
-  <title>gmem carry dependency 分析 | AI 异构</title>
+  <title>PipeCNN——memRead | AI 异构</title>
   
 
 
@@ -325,7 +300,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://xuke225.github.io.git/child/2017/11/15/SDAccel/gmem-carry-dependency-分析/">
+    <link itemprop="mainEntityOfPage" href="http://xuke225.github.io.git/child/2017/11/18/PipeCNN/memRead/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="许柯">
@@ -342,7 +317,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">gmem carry dependency 分析</h1>
+          <h1 class="post-title" itemprop="name headline">PipeCNN——memRead</h1>
         
 
         <div class="post-meta">
@@ -354,8 +329,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-15T00:00:00+08:00">
-                2017-11-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-18T00:00:00+08:00">
+                2017-11-18
               </time>
             
 
@@ -377,19 +352,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SDAccel/" itemprop="url" rel="index">
-                    <span itemprop="name">SDAccel</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SDAccel/优化分析/" itemprop="url" rel="index">
-                    <span itemprop="name">优化分析</span>
+                  <a href="/categories/PipeCNN/" itemprop="url" rel="index">
+                    <span itemprop="name">PipeCNN</span>
                   </a>
                 </span>
 
@@ -407,8 +371,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/15/SDAccel/gmem-carry-dependency-分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/11/15/SDAccel/gmem-carry-dependency-分析/" itemprop="commentsCount"></span>
+                <a href="/2017/11/18/PipeCNN/memRead/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/11/18/PipeCNN/memRead/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -436,7 +400,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  939
+                  428
                 </span>
               
 
@@ -461,77 +425,34 @@
       
 
       
-        <h3 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h3><ul>
-<li>方案一  源码<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> J_CNT       2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> I_CNT       4</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BUFFER_SIZE I_CNT*J_CNT</span></span><br><span class="line"></span><br><span class="line">kernel __attribute__((reqd_work_group_size(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>)))</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">vector_add</span><span class="params">(__global <span class="keyword">int</span>* c,</span></span></span><br><span class="line"><span class="function"><span class="params">               __global <span class="keyword">const</span> <span class="keyword">int</span>* a,</span></span></span><br><span class="line"><span class="function"><span class="params">               __global <span class="keyword">const</span> <span class="keyword">int</span>* b,</span></span></span><br><span class="line"><span class="function"><span class="params">               <span class="keyword">const</span> <span class="keyword">int</span> n_elements)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   local <span class="keyword">int</span> arrayA[BUFFER_SIZE];</span><br><span class="line">   local <span class="keyword">int</span> arrayB[BUFFER_SIZE];</span><br><span class="line">   local <span class="keyword">int</span> arrayC[BUFFER_SIZE];</span><br><span class="line"></span><br><span class="line">   __attribute__((xcl_pipeline_loop))</span><br><span class="line">loop_1:</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; I_CNT; i++) &#123;</span><br><span class="line">       <span class="comment">//__attribute__((xcl_pipeline_loop))</span></span><br><span class="line">       loop_2:</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; J_CNT; j++) &#123;</span><br><span class="line">           arrayA[i * J_CNT + j] = a[i * J_CNT + j];</span><br><span class="line">           arrayB[i * J_CNT + j] = b[i * J_CNT + j];</span><br><span class="line">           c[i * J_CNT + j] = arrayA[i * J_CNT + j]+arrayB[i * J_CNT + j];</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
+        <h3 id="memRead作用描述"><a href="#memRead作用描述" class="headerlink" title="memRead作用描述"></a>memRead作用描述</h3><p>memRead的作用主要是从<code>Global Memery</code>中读取<code>data</code> <code>weight</code> <code>bias</code> 然后设置并行化传输方式，处理卷积前的<code>Pading</code>与<code>Group</code>操作以及窗口的预缓冲，便于数据的读取。<br><img src="http://oz3lw4cji.bkt.clouddn.com/835691eecaad88c6d31edbdb0e110c4e.png" alt="结构图"><br>具体作用如下：</p>
+<ul>
+<li>将向量化的<code>VEC_SIZE</code>个<code>data</code>数据复制<code>LANE_NUM</code>份传到<code>data_ch</code>中</li>
+<li>将向量化的<code>VEC_SIZE * LANE_NUM</code>个<code>weight</code>参数传到<code>weight_ch</code>中</li>
+<li>将向量化的<code>LANE_NUM</code>个<code>bias</code>参数传到<code>bias_ch_in</code>中</li>
+<li>处理<code>Pading</code>以及<code>split[group]</code>问题</li>
+<li><p><code>Window Buffer</code>数据预取</p>
 <a id="more"></a>
+<h3 id="memRead数据结构"><a href="#memRead数据结构" class="headerlink" title="memRead数据结构"></a>memRead数据结构</h3></li>
+<li><p>入口参数相关结构</p>
 <ul>
-<li><p>方案一  kernel 设置<br><img src="http://oz3lw4cji.bkt.clouddn.com/6761df957be09d56c49a393122fee9a3.png" alt=""></p>
-</li>
-<li><p>方案一  综合结果<br><img src="http://oz3lw4cji.bkt.clouddn.com/44244df7984202643cc6c31cda5b9b57.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/8641efad2576de07149a4a88f3a1ae03.png" alt=""></p>
-</li>
-<li><p>方案一  HLS log 文件<br><img src="http://oz3lw4cji.bkt.clouddn.com/050993521dabc3db276d2acdf9a666e5.png" alt=""></p>
-</li>
-<li><p>方案一  Performance图<br><img src="http://oz3lw4cji.bkt.clouddn.com/2c8d0ec01cd2286b9eaf77dff54c4316.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/0e9c17ba66f84433714e488fd3ce0f31.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/5ac4e9160997b061791ff6ccc7cd312f.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/9dc9c6e9d56d4468db807068b236994a.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/5dda1f895a647e9e45ccb6a00b4476e6.png" alt=""></p>
-</li>
+<li>卷积计算参量<br><img src="http://oz3lw4cji.bkt.clouddn.com/90652c47934d88aac34b0c65cf68f00c.png" alt="卷积计算参量"></li>
+<li>卷积控制参量<br><code>stride</code> <code>padding</code> <code>group</code></li>
+<li>group_rem模型<br><img src="http://oz3lw4cji.bkt.clouddn.com/f3905e7c6238da7eeb664b79a1264518.png" alt="group_rem模型"></li>
+<li>win_size模型<br><img src="http://oz3lw4cji.bkt.clouddn.com/2ef826a33dd1bc37f385779505a1385e.png" alt="win_size模型"></li>
+<li>向量化描述及global接口<br><img src="http://oz3lw4cji.bkt.clouddn.com/f9566704d238b4bdbfae0f137289be4a.png" alt="向量化描述"></li>
 </ul>
-<h3 id="方案二（修改gmem位宽为64bit）"><a href="#方案二（修改gmem位宽为64bit）" class="headerlink" title="方案二（修改gmem位宽为64bit）"></a>方案二（修改gmem位宽为64bit）</h3><ul>
-<li><p>方案二  kernel 设置<br><img src="http://oz3lw4cji.bkt.clouddn.com/5dda1f895a647e9e45ccb6a00b4476e6.png" alt=""></p>
 </li>
-<li><p>为何为64bit?<br>首先，源码中对外层<code>loop_1</code>进行pipeline,因此对于内层的<code>loop_2</code>自动进行uroll展开。内层for循环的边界为<code>J_CNT = 2</code>因此将<code>loop_2</code> 代码<br>展开为如下代码形式。因此需要对<code>a</code>和<code>b</code>进行两次读取，对<code>a</code>请求一次读入，对<code>b</code>请求一次读入。一拍只能对gmem请求一次，因为是并行执行因此<code>a</code>有两个数据<code>a[i * J_CNT + 0]</code> 和<code>a[i * J_CNT + 1]</code>需要读入所以接口位宽为<code>sizeof(int) * 2</code>。<br>对于代码来说<code>gmem</code>位宽应该等于<code>sizeof(int) * J_CNT</code></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// loop_2 uroll 展开过程</span></span><br><span class="line">    arrayA[i * J_CNT + <span class="number">0</span>] = a[i * J_CNT + <span class="number">0</span>];</span><br><span class="line">    arrayA[i * J_CNT + <span class="number">1</span>] = a[i * J_CNT + <span class="number">1</span>];</span><br><span class="line">    arrayB[i * J_CNT + <span class="number">0</span>] = b[i * J_CNT + <span class="number">0</span>];</span><br><span class="line">    arrayB[i * J_CNT + <span class="number">1</span>] = b[i * J_CNT + <span class="number">1</span>];</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>方案二  综合结果<br><img src="http://oz3lw4cji.bkt.clouddn.com/7dd3ae852d90aca8b5afa8836c6b0848.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/56606e7b4da8d4cc13d267d7cbec198c.png" alt=""></p>
-</li>
-<li><p>方案二  HLS log文件<br><img src="http://oz3lw4cji.bkt.clouddn.com/937b1ca302f2ee702e4cecd83a63bea8.png" alt=""></p>
-</li>
-<li><p>方案二  Performance图<br><img src="http://oz3lw4cji.bkt.clouddn.com/18e958245b430f116c095fb59f21a6e7.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/4ca1ed6e8e0d08cd0e2e6a2f074abf94.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/acf0ff0829e335425ca144cff64031ee.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/acf0ff0829e335425ca144cff64031ee.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/e0408803736b1b7c7ee46344555f1d0b.png" alt=""></p>
-</li>
-</ul>
-<h3 id="方案二-II-2-原因分析"><a href="#方案二-II-2-原因分析" class="headerlink" title="方案二 II = 2 原因分析"></a>方案二 II = 2 原因分析</h3><ul>
-<li><p>修改源码,解决gmem ii = 2 问题(屏蔽掉b向arrayB赋值)</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> J_CNT       2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> I_CNT       4</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BUFFER_SIZE I_CNT*J_CNT</span></span><br><span class="line"></span><br><span class="line">kernel __attribute__((reqd_work_group_size(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>)))</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">vector_add</span><span class="params">(__global <span class="keyword">int</span>* c,</span></span></span><br><span class="line"><span class="function"><span class="params">               __global <span class="keyword">const</span> <span class="keyword">int</span>* a,</span></span></span><br><span class="line"><span class="function"><span class="params">               __global <span class="keyword">const</span> <span class="keyword">int</span>* b,</span></span></span><br><span class="line"><span class="function"><span class="params">               <span class="keyword">const</span> <span class="keyword">int</span> n_elements)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   local <span class="keyword">int</span> arrayA[BUFFER_SIZE];</span><br><span class="line">   local <span class="keyword">int</span> arrayB[BUFFER_SIZE];</span><br><span class="line">   local <span class="keyword">int</span> arrayC[BUFFER_SIZE];</span><br><span class="line"></span><br><span class="line">   __attribute__((xcl_pipeline_loop))</span><br><span class="line">loop_1:</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; I_CNT; i++) &#123;</span><br><span class="line">       <span class="comment">//__attribute__((xcl_pipeline_loop))</span></span><br><span class="line">       loop_2:</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; J_CNT; j++) &#123;</span><br><span class="line">           arrayA[i * J_CNT + j] = a[i * J_CNT + j];</span><br><span class="line"><span class="comment">//            arrayB[i * J_CNT + j] = b[i * J_CNT + j];</span></span><br><span class="line">           c[i * J_CNT + j] = arrayA[i * J_CNT + j];<span class="comment">//+arrayB[i * J_CNT + j];</span></span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>综合结果分析<br><img src="http://oz3lw4cji.bkt.clouddn.com/10f729b114b275541fcfc02fdb391bae.png" alt=""></p>
-</li>
-<li><p>HLS log文件<br><img src="http://oz3lw4cji.bkt.clouddn.com/5c773a40ac3464dd18c91f35c9852037.png" alt=""></p>
-</li>
-</ul>
-<ul>
-<li>Performence图</li>
-</ul>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/d0ff83cd0c8288e0df9180bda08b3f68.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/0b746748e1f0ddca79d39be4956d2372.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/8db95363cb4843a7a2df6a8a139a212b.png" alt=""></p>
-<ul>
-<li>为何源程序 II = 2？<br>该问题还要从<code>loop_2</code> unroll说起<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// loop_2 uroll 展开过程</span></span><br><span class="line">    arrayA[i * J_CNT + <span class="number">0</span>] = a[i * J_CNT + <span class="number">0</span>];</span><br><span class="line">    arrayA[i * J_CNT + <span class="number">1</span>] = a[i * J_CNT + <span class="number">1</span>];</span><br><span class="line">    arrayB[i * J_CNT + <span class="number">0</span>] = b[i * J_CNT + <span class="number">0</span>];</span><br><span class="line">    arrayB[i * J_CNT + <span class="number">1</span>] = b[i * J_CNT + <span class="number">1</span>];</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>关键原因是<strong>一拍只能对<code>gmem</code>请求一次</strong> 因为是并行执行因此第一拍对<code>gmem</code>进行<code>a</code>的读请求，<code>a</code>有两个数据<code>a[i * J_CNT + 0]</code> 和<code>a[i * J_CNT + 1]</code>需要读入,同理下一拍对<code>gmem</code>进行<code>b</code>的请求，<code>b</code>有两个数据<code>b[i * J_CNT + 0]</code> 和<code>b[i * J_CNT + 1]</code>需要读入。<br>因此解决办法也不言而喻：一个<code>gmem</code>只能一次读请求，但是综合多个<code>gmem</code>便可以在一拍内分别进行请求！<br><img src="http://oz3lw4cji.bkt.clouddn.com/e15fb942130d0657331e4332e94a02dd.png" alt=""></p>
-<h3 id="方案三（解决-II-2问题）"><a href="#方案三（解决-II-2问题）" class="headerlink" title="方案三（解决 II = 2问题）"></a>方案三（解决 II = 2问题）</h3><ul>
-<li><p>方案三 源码</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> J_CNT       2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> I_CNT       4</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BUFFER_SIZE I_CNT*J_CNT</span></span><br><span class="line"></span><br><span class="line">kernel __attribute__((reqd_work_group_size(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>)))</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">vector_add</span><span class="params">(__global <span class="keyword">int</span>* c,</span></span></span><br><span class="line"><span class="function"><span class="params">               __global <span class="keyword">const</span> <span class="keyword">int</span>* a,</span></span></span><br><span class="line"><span class="function"><span class="params">               __global <span class="keyword">const</span> <span class="keyword">int</span>* b,</span></span></span><br><span class="line"><span class="function"><span class="params">               <span class="keyword">const</span> <span class="keyword">int</span> n_elements)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   local <span class="keyword">int</span> arrayA[BUFFER_SIZE];</span><br><span class="line">   local <span class="keyword">int</span> arrayB[BUFFER_SIZE];</span><br><span class="line">   local <span class="keyword">int</span> arrayC[BUFFER_SIZE];</span><br><span class="line"></span><br><span class="line">   __attribute__((xcl_pipeline_loop))</span><br><span class="line">loop_1:</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; I_CNT; i++) &#123;</span><br><span class="line">       <span class="comment">//__attribute__((xcl_pipeline_loop))</span></span><br><span class="line">       loop_2:</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; J_CNT; j++) &#123;</span><br><span class="line">           arrayA[i * J_CNT + j] = a[i * J_CNT + j];</span><br><span class="line">           arrayB[i * J_CNT + j] = b[i * J_CNT + j];</span><br><span class="line">           c[i * J_CNT + j] = arrayA[i * J_CNT + j]+arrayB[i * J_CNT + j];</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>方案三 设置<br><img src="http://oz3lw4cji.bkt.clouddn.com/e598125028eea15c73df4998ec157285.png" alt=""></p>
-</li>
-<li>方案三 综合结果<br><img src="http://oz3lw4cji.bkt.clouddn.com/439580baf77868142d0a9b7858ac7860.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/b3a0106b044dd3b1b7b268b0ee259611.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/103f16fb347355a4670592992b0173ed.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/81d167188d4f054e9e0f1061dae5c174.png" alt=""></li>
-</ul>
-<ul>
-<li>方案三 HLS log文件<br><img src="http://oz3lw4cji.bkt.clouddn.com/11a495df12fd1151547727906a48ae33.png" alt=""></li>
-</ul>
-<ul>
-<li>方案三 Performence图<br><img src="http://oz3lw4cji.bkt.clouddn.com/6778fada1a100f886c7ff480c6c151a7.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/a952567ee07875ac7787e6b0d2774891.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/a5ed8c3f40c32a85238715b109ccc2eb.png" alt=""></li>
-</ul>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
-<li>产生gmem carry dependency的两种解决办法：<ul>
-<li>进行 gmem位宽大小的调整 32bit – 512bit</li>
-<li>多个 __global 参数采用多个gmem进行数据传输（max memory ports）</li>
+<li>变量 &amp; 数组<ul>
+<li><code>__local lane_data    win_buffer[2][WIN_BUF_SIZE]</code> Ping-pong buffer 用于预存储<code>data</code>数值<br><img src="http://oz3lw4cji.bkt.clouddn.com/66792eebe31baef61d76827f19c58082.png" alt="win_buffer"></li>
+<li><code>__local channel_vec  weight_buffer[WEIGHT_BUF_SIZE]</code>用于预存储<code>weight</code> 数值<br><img src="http://oz3lw4cji.bkt.clouddn.com/6ff5223989351b8a2bc520cae7eb2ee3.png" alt="weight_buffer"></li>
 </ul>
 </li>
 </ul>
-<h3 id="TODO-采用pipe传输（做一个memRead）"><a href="#TODO-采用pipe传输（做一个memRead）" class="headerlink" title="TODO 采用pipe传输（做一个memRead）"></a>TODO 采用pipe传输（做一个memRead）</h3><ul>
-<li>问题（当数据为非32bit的倍数-512bit）</li>
-</ul>
-
+<h3 id="memRead数据流传输方式"><a href="#memRead数据流传输方式" class="headerlink" title="memRead数据流传输方式"></a>memRead数据流传输方式</h3><h3 id="memRead执行过程"><a href="#memRead执行过程" class="headerlink" title="memRead执行过程"></a>memRead执行过程</h3><p><img src="http://oz3lw4cji.bkt.clouddn.com/memRead%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B-1.gif" alt="memRead执行过程"></p>
+<h3 id="memRead处理细节"><a href="#memRead处理细节" class="headerlink" title="memRead处理细节"></a>memRead处理细节</h3><h4 id="win-buffer-的-Ping-pong-操作"><a href="#win-buffer-的-Ping-pong-操作" class="headerlink" title="win_buffer 的 Ping-pong 操作"></a><code>win_buffer</code> 的 <code>Ping-pong</code> 操作</h4><p>首先，先将<code>data</code>数据存储到<code>win_buffer[0]</code>中，然后将<code>data</code>进行预取窗大小的<code>stride</code>后，将另外一片预取窗的<code>data</code>数据存储到<code>win_buffer[1]</code>中。与此同时，将<code>weight</code>值同样存储到<code>weight_buffer</code>中。数据进行预存储的同时，<code>channel</code>对<code>win_buffer[0]</code>中的数据进行输出。 然后下一轮的存储到<code>win_buffer[0]</code>中，而数据的传输则通过已经完成数据读入的<code>win_buffer[1]</code>进行，不断迭代数据的读入与读出进而实现<code>ping-pong操作</code>。</p>
+<h4 id="weight-buffer-的重用与更新"><a href="#weight-buffer-的重用与更新" class="headerlink" title="weight_buffer 的重用与更新"></a><code>weight_buffer</code> 的重用与更新</h4><p>正常情况下<code>win_buffer</code>传出的数据为<code>(weight_dim1 + (CONV_GP_SIZE-1)*stride * weight_dim2 * weight_dim1</code>；而<code>weight_buffer</code>传出的数据为<code>weight_dim1 * weight_dim2 * weight_dim3</code><br>在一次<code>Item</code>循环内，<code>weight_buffer</code>内的数据在重用，但是每次进入Item循环的时候，都会不断地将<code>weight_buffer</code>的数据进行更新！</p>
+<h4 id="memRead的-padding-与-split-group-处理"><a href="#memRead的-padding-与-split-group-处理" class="headerlink" title="memRead的 padding 与 split[group] 处理"></a>memRead的 <code>padding</code> 与 <code>split[group]</code> 处理</h4>
       
     </div>
     
@@ -548,9 +469,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/SDAccel/" rel="tag"># SDAccel</a>
+            <a href="/tags/PipeCNN/" rel="tag"># PipeCNN</a>
           
-            <a href="/tags/优化/" rel="tag"># 优化</a>
+            <a href="/tags/memRead/" rel="tag"># memRead</a>
           
         </div>
       
@@ -563,8 +484,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/10/SDAccel/overlap/" rel="next" title="host overlap">
-                <i class="fa fa-chevron-left"></i> host overlap
+              <a href="/2017/11/16/PipeCNN/memWrite/" rel="next" title="PipeCNN——memWrite">
+                <i class="fa fa-chevron-left"></i> PipeCNN——memWrite
               </a>
             
           </div>
@@ -572,10 +493,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/11/16/PipeCNN/memWrite/" rel="prev" title="PipeCNN——memWrite">
-                PipeCNN——memWrite <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -714,7 +631,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#方案一"><span class="nav-number">1.</span> <span class="nav-text">方案一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案二（修改gmem位宽为64bit）"><span class="nav-number">2.</span> <span class="nav-text">方案二（修改gmem位宽为64bit）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案二-II-2-原因分析"><span class="nav-number">3.</span> <span class="nav-text">方案二 II = 2 原因分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案三（解决-II-2问题）"><span class="nav-number">4.</span> <span class="nav-text">方案三（解决 II = 2问题）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TODO-采用pipe传输（做一个memRead）"><span class="nav-number">6.</span> <span class="nav-text">TODO 采用pipe传输（做一个memRead）</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#memRead作用描述"><span class="nav-number">1.</span> <span class="nav-text">memRead作用描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#memRead数据结构"><span class="nav-number">2.</span> <span class="nav-text">memRead数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#memRead数据流传输方式"><span class="nav-number">3.</span> <span class="nav-text">memRead数据流传输方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#memRead执行过程"><span class="nav-number">4.</span> <span class="nav-text">memRead执行过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#memRead处理细节"><span class="nav-number">5.</span> <span class="nav-text">memRead处理细节</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#win-buffer-的-Ping-pong-操作"><span class="nav-number">5.1.</span> <span class="nav-text">win_buffer 的 Ping-pong 操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#weight-buffer-的重用与更新"><span class="nav-number">5.2.</span> <span class="nav-text">weight_buffer 的重用与更新</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#memRead的-padding-与-split-group-处理"><span class="nav-number">5.3.</span> <span class="nav-text">memRead的 padding 与 split[group] 处理</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -901,7 +818,7 @@
 		_hcwp.push({widget:"Bloggerstream", widget_id: 97885, selector:".hc-comment-count", label: "{\%COUNT%\}" });
 
 		
-		_hcwp.push({widget:"Stream", widget_id: 97885, xid: "2017/11/15/SDAccel/gmem-carry-dependency-分析/"});
+		_hcwp.push({widget:"Stream", widget_id: 97885, xid: "2017/11/18/PipeCNN/memRead/"});
 		
 
 		(function() {
