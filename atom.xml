@@ -5,9 +5,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://xuke225.github.io.git/child/"/>
+  <link href="http://xuke225.github.io.git/"/>
   <updated>2017-11-22T14:11:57.171Z</updated>
-  <id>http://xuke225.github.io.git/child/</id>
+  <id>http://xuke225.github.io.git/</id>
   
   <author>
     <name>许柯</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>PipeCNN——memRead</title>
-    <link href="http://xuke225.github.io.git/child/2017/11/18/PipeCNN/memRead/"/>
-    <id>http://xuke225.github.io.git/child/2017/11/18/PipeCNN/memRead/</id>
+    <link href="http://xuke225.github.io.git/2017/11/18/PipeCNN/memRead/"/>
+    <id>http://xuke225.github.io.git/2017/11/18/PipeCNN/memRead/</id>
     <published>2017-11-17T16:00:00.000Z</published>
     <updated>2017-11-22T14:11:57.171Z</updated>
     
@@ -37,19 +37,19 @@
     
     </summary>
     
-      <category term="PipeCNN" scheme="http://xuke225.github.io.git/child/categories/PipeCNN/"/>
+      <category term="PipeCNN" scheme="http://xuke225.github.io.git/categories/PipeCNN/"/>
     
     
-      <category term="PipeCNN" scheme="http://xuke225.github.io.git/child/tags/PipeCNN/"/>
+      <category term="PipeCNN" scheme="http://xuke225.github.io.git/tags/PipeCNN/"/>
     
-      <category term="memRead" scheme="http://xuke225.github.io.git/child/tags/memRead/"/>
+      <category term="memRead" scheme="http://xuke225.github.io.git/tags/memRead/"/>
     
   </entry>
   
   <entry>
     <title>PipeCNN——memWrite</title>
-    <link href="http://xuke225.github.io.git/child/2017/11/16/PipeCNN/memWrite/"/>
-    <id>http://xuke225.github.io.git/child/2017/11/16/PipeCNN/memWrite/</id>
+    <link href="http://xuke225.github.io.git/2017/11/16/PipeCNN/memWrite/"/>
+    <id>http://xuke225.github.io.git/2017/11/16/PipeCNN/memWrite/</id>
     <published>2017-11-15T16:00:00.000Z</published>
     <updated>2017-11-22T14:05:19.198Z</updated>
     
@@ -62,19 +62,19 @@
     
     </summary>
     
-      <category term="PipeCNN" scheme="http://xuke225.github.io.git/child/categories/PipeCNN/"/>
+      <category term="PipeCNN" scheme="http://xuke225.github.io.git/categories/PipeCNN/"/>
     
     
-      <category term="PipeCNN" scheme="http://xuke225.github.io.git/child/tags/PipeCNN/"/>
+      <category term="PipeCNN" scheme="http://xuke225.github.io.git/tags/PipeCNN/"/>
     
-      <category term="memWrite" scheme="http://xuke225.github.io.git/child/tags/memWrite/"/>
+      <category term="memWrite" scheme="http://xuke225.github.io.git/tags/memWrite/"/>
     
   </entry>
   
   <entry>
     <title>gmem carry dependency 分析</title>
-    <link href="http://xuke225.github.io.git/child/2017/11/15/SDAccel/%E4%BC%98%E5%8C%96/kernel_to_gmem/gmem-carry-dependency-%E5%88%86%E6%9E%90/"/>
-    <id>http://xuke225.github.io.git/child/2017/11/15/SDAccel/优化/kernel_to_gmem/gmem-carry-dependency-分析/</id>
+    <link href="http://xuke225.github.io.git/2017/11/15/SDAccel/%E4%BC%98%E5%8C%96/kernel_to_gmem/gmem-carry-dependency-%E5%88%86%E6%9E%90/"/>
+    <id>http://xuke225.github.io.git/2017/11/15/SDAccel/优化/kernel_to_gmem/gmem-carry-dependency-分析/</id>
     <published>2017-11-14T16:00:00.000Z</published>
     <updated>2017-11-24T02:01:44.245Z</updated>
     
@@ -89,25 +89,25 @@
     
     </summary>
     
-      <category term="SDAccel" scheme="http://xuke225.github.io.git/child/categories/SDAccel/"/>
+      <category term="SDAccel" scheme="http://xuke225.github.io.git/categories/SDAccel/"/>
     
-      <category term="优化" scheme="http://xuke225.github.io.git/child/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
+      <category term="优化" scheme="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
     
-      <category term="kernel_to_gmem" scheme="http://xuke225.github.io.git/child/categories/SDAccel/%E4%BC%98%E5%8C%96/kernel-to-gmem/"/>
+      <category term="kernel_to_gmem" scheme="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/kernel-to-gmem/"/>
     
     
-      <category term="SDAccel" scheme="http://xuke225.github.io.git/child/tags/SDAccel/"/>
+      <category term="SDAccel" scheme="http://xuke225.github.io.git/tags/SDAccel/"/>
     
-      <category term="优化" scheme="http://xuke225.github.io.git/child/tags/%E4%BC%98%E5%8C%96/"/>
+      <category term="优化" scheme="http://xuke225.github.io.git/tags/%E4%BC%98%E5%8C%96/"/>
     
-      <category term="kernel_to_gmem" scheme="http://xuke225.github.io.git/child/tags/kernel-to-gmem/"/>
+      <category term="kernel_to_gmem" scheme="http://xuke225.github.io.git/tags/kernel-to-gmem/"/>
     
   </entry>
   
   <entry>
     <title>host overlap</title>
-    <link href="http://xuke225.github.io.git/child/2017/11/10/SDAccel/%E4%BC%98%E5%8C%96/host/overlap/"/>
-    <id>http://xuke225.github.io.git/child/2017/11/10/SDAccel/优化/host/overlap/</id>
+    <link href="http://xuke225.github.io.git/2017/11/10/SDAccel/%E4%BC%98%E5%8C%96/host/overlap/"/>
+    <id>http://xuke225.github.io.git/2017/11/10/SDAccel/优化/host/overlap/</id>
     <published>2017-11-09T16:00:00.000Z</published>
     <updated>2017-11-24T02:00:58.838Z</updated>
     
@@ -138,25 +138,25 @@
     
     </summary>
     
-      <category term="SDAccel" scheme="http://xuke225.github.io.git/child/categories/SDAccel/"/>
+      <category term="SDAccel" scheme="http://xuke225.github.io.git/categories/SDAccel/"/>
     
-      <category term="优化" scheme="http://xuke225.github.io.git/child/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
+      <category term="优化" scheme="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
     
-      <category term="host" scheme="http://xuke225.github.io.git/child/categories/SDAccel/%E4%BC%98%E5%8C%96/host/"/>
+      <category term="host" scheme="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/host/"/>
     
     
-      <category term="SDAccel" scheme="http://xuke225.github.io.git/child/tags/SDAccel/"/>
+      <category term="SDAccel" scheme="http://xuke225.github.io.git/tags/SDAccel/"/>
     
-      <category term="优化" scheme="http://xuke225.github.io.git/child/tags/%E4%BC%98%E5%8C%96/"/>
+      <category term="优化" scheme="http://xuke225.github.io.git/tags/%E4%BC%98%E5%8C%96/"/>
     
-      <category term="host" scheme="http://xuke225.github.io.git/child/tags/host/"/>
+      <category term="host" scheme="http://xuke225.github.io.git/tags/host/"/>
     
   </entry>
   
   <entry>
     <title>MXNet model zoo 多网络推理</title>
-    <link href="http://xuke225.github.io.git/child/2017/11/09/DeepLearning/mxnet/MXNET%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E7%BD%91%E7%BB%9C%E6%AD%A3%E5%90%91%E6%8E%A8%E7%90%86/"/>
-    <id>http://xuke225.github.io.git/child/2017/11/09/DeepLearning/mxnet/MXNET 实现多网络正向推理/</id>
+    <link href="http://xuke225.github.io.git/2017/11/09/DeepLearning/mxnet/MXNET%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E7%BD%91%E7%BB%9C%E6%AD%A3%E5%90%91%E6%8E%A8%E7%90%86/"/>
+    <id>http://xuke225.github.io.git/2017/11/09/DeepLearning/mxnet/MXNET 实现多网络正向推理/</id>
     <published>2017-11-08T16:00:00.000Z</published>
     <updated>2017-11-22T06:39:10.312Z</updated>
     
@@ -172,17 +172,17 @@
     
     </summary>
     
-      <category term="mxnet" scheme="http://xuke225.github.io.git/child/categories/mxnet/"/>
+      <category term="mxnet" scheme="http://xuke225.github.io.git/categories/mxnet/"/>
     
     
-      <category term="mxnet" scheme="http://xuke225.github.io.git/child/tags/mxnet/"/>
+      <category term="mxnet" scheme="http://xuke225.github.io.git/tags/mxnet/"/>
     
   </entry>
   
   <entry>
     <title>gmem_4bank</title>
-    <link href="http://xuke225.github.io.git/child/2017/11/09/SDAccel/%E4%BC%98%E5%8C%96/kernel_to_gmem/gmem-4bank/"/>
-    <id>http://xuke225.github.io.git/child/2017/11/09/SDAccel/优化/kernel_to_gmem/gmem-4bank/</id>
+    <link href="http://xuke225.github.io.git/2017/11/09/SDAccel/%E4%BC%98%E5%8C%96/kernel_to_gmem/gmem-4bank/"/>
+    <id>http://xuke225.github.io.git/2017/11/09/SDAccel/优化/kernel_to_gmem/gmem-4bank/</id>
     <published>2017-11-08T16:00:00.000Z</published>
     <updated>2017-11-24T01:59:53.467Z</updated>
     
@@ -208,25 +208,25 @@
     
     </summary>
     
-      <category term="SDAccel" scheme="http://xuke225.github.io.git/child/categories/SDAccel/"/>
+      <category term="SDAccel" scheme="http://xuke225.github.io.git/categories/SDAccel/"/>
     
-      <category term="优化" scheme="http://xuke225.github.io.git/child/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
+      <category term="优化" scheme="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
     
-      <category term="kernel_to_gmem" scheme="http://xuke225.github.io.git/child/categories/SDAccel/%E4%BC%98%E5%8C%96/kernel-to-gmem/"/>
+      <category term="kernel_to_gmem" scheme="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/kernel-to-gmem/"/>
     
     
-      <category term="SDAccel" scheme="http://xuke225.github.io.git/child/tags/SDAccel/"/>
+      <category term="SDAccel" scheme="http://xuke225.github.io.git/tags/SDAccel/"/>
     
-      <category term="优化" scheme="http://xuke225.github.io.git/child/tags/%E4%BC%98%E5%8C%96/"/>
+      <category term="优化" scheme="http://xuke225.github.io.git/tags/%E4%BC%98%E5%8C%96/"/>
     
-      <category term="kernel_to_gmem" scheme="http://xuke225.github.io.git/child/tags/kernel-to-gmem/"/>
+      <category term="kernel_to_gmem" scheme="http://xuke225.github.io.git/tags/kernel-to-gmem/"/>
     
   </entry>
   
   <entry>
     <title>Hello World</title>
-    <link href="http://xuke225.github.io.git/child/2017/11/07/hello-world/"/>
-    <id>http://xuke225.github.io.git/child/2017/11/07/hello-world/</id>
+    <link href="http://xuke225.github.io.git/2017/11/07/hello-world/"/>
+    <id>http://xuke225.github.io.git/2017/11/07/hello-world/</id>
     <published>2017-11-06T16:00:00.000Z</published>
     <updated>2017-11-24T07:04:34.316Z</updated>
     
@@ -241,12 +241,12 @@
     
     </summary>
     
-      <category term="test" scheme="http://xuke225.github.io.git/child/categories/test/"/>
+      <category term="test" scheme="http://xuke225.github.io.git/categories/test/"/>
     
     
-      <category term="test" scheme="http://xuke225.github.io.git/child/tags/test/"/>
+      <category term="test" scheme="http://xuke225.github.io.git/tags/test/"/>
     
-      <category term="hello web" scheme="http://xuke225.github.io.git/child/tags/hello-web/"/>
+      <category term="hello web" scheme="http://xuke225.github.io.git/tags/hello-web/"/>
     
   </entry>
   
