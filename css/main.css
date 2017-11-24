@@ -1977,7 +1977,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff78f4;
+  background: #fc474e;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3074,7 +3074,10 @@ hr {
   border-left: 8px solid #4d768c;
 }
 .header {
-  background: url("/images/header-bk-2.gif");
+  background: url("/images/header-bk-3.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .site-meta {
   float: none;
@@ -3094,11 +3097,12 @@ hr {
 .site-meta {
   margin-left: 0px;
   text-align: center;
+  color: #000;
 }
 .site-meta .site-title {
   font-size: 28px;
-  font-family: 'Comic Sans MS', sans-serif;
-  color: #fff;
+  font-family: 'Comic Sans MS', STHupo;
+  color: #000;
 }
 .footer {
   background: none;
@@ -3110,15 +3114,16 @@ hr {
   color: #4c618f;
 }
 #sidebar {
-  background: url("/images/sidebar-bk-3.jpg");
+  background: url("/images/sidebar-bk-4.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 .site-author-name {
-  margin: 68px 0 0;
+  margin: 38px 0 0;
+  font-size: 25px;
   color: #070000;
-  font-family: 'Comic Sans MS', sans-serif;
+  font-family: 'Comic Sans MS', STHupo;
 }
 .links-of-blogroll {
   font-size: 14px;
