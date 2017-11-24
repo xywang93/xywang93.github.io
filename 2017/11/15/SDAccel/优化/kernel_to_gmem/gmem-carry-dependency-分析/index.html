@@ -72,7 +72,7 @@
 
 
 
-  <meta name="keywords" content="test,hello web," />
+  <meta name="keywords" content="SDAccel,优化,kernel_to_gmem," />
 
 
 
@@ -85,20 +85,52 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troublesho">
-<meta name="keywords" content="test,hello web">
+<meta name="description" content="方案一 方案一  源码123456789101112131415161718192021222324252627#define J_CNT       2#define I_CNT       4#define BUFFER_SIZE I_CNT*J_CNTkernel __attribute__((reqd_work">
+<meta name="keywords" content="SDAccel,优化,kernel_to_gmem">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://xuke225.github.io.git/child/2017/11/07/hello-world/index.html">
+<meta property="og:title" content="gmem carry dependency 分析">
+<meta property="og:url" content="http://xuke225.github.io.git/child/2017/11/15/SDAccel/优化/kernel_to_gmem/gmem-carry-dependency-分析/index.html">
 <meta property="og:site_name" content="AI 异构">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="方案一 方案一  源码123456789101112131415161718192021222324252627#define J_CNT       2#define I_CNT       4#define BUFFER_SIZE I_CNT*J_CNTkernel __attribute__((reqd_work_group_size(1, 1, 1)))void vector_add(__">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/%E5%8D%B7%E7%A7%AF%E8%BF%90%E8%A1%8C%E8%BF%87%E7%A8%8B%E7%A4%BA%E6%84%8F.gif">
-<meta property="og:updated_time" content="2017-11-23T15:32:36.752Z">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/6761df957be09d56c49a393122fee9a3.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/44244df7984202643cc6c31cda5b9b57.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/8641efad2576de07149a4a88f3a1ae03.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/050993521dabc3db276d2acdf9a666e5.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/2c8d0ec01cd2286b9eaf77dff54c4316.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/0e9c17ba66f84433714e488fd3ce0f31.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/5ac4e9160997b061791ff6ccc7cd312f.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/9dc9c6e9d56d4468db807068b236994a.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/5dda1f895a647e9e45ccb6a00b4476e6.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/5dda1f895a647e9e45ccb6a00b4476e6.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/7dd3ae852d90aca8b5afa8836c6b0848.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/56606e7b4da8d4cc13d267d7cbec198c.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/937b1ca302f2ee702e4cecd83a63bea8.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/18e958245b430f116c095fb59f21a6e7.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/4ca1ed6e8e0d08cd0e2e6a2f074abf94.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/acf0ff0829e335425ca144cff64031ee.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/acf0ff0829e335425ca144cff64031ee.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/e0408803736b1b7c7ee46344555f1d0b.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/10f729b114b275541fcfc02fdb391bae.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/5c773a40ac3464dd18c91f35c9852037.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/d0ff83cd0c8288e0df9180bda08b3f68.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/0b746748e1f0ddca79d39be4956d2372.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/8db95363cb4843a7a2df6a8a139a212b.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/e15fb942130d0657331e4332e94a02dd.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/e598125028eea15c73df4998ec157285.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/439580baf77868142d0a9b7858ac7860.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/b3a0106b044dd3b1b7b268b0ee259611.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/103f16fb347355a4670592992b0173ed.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/81d167188d4f054e9e0f1061dae5c174.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/11a495df12fd1151547727906a48ae33.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/6778fada1a100f886c7ff480c6c151a7.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/a952567ee07875ac7787e6b0d2774891.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/a5ed8c3f40c32a85238715b109ccc2eb.png">
+<meta property="og:updated_time" content="2017-11-24T02:01:44.245Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/%E5%8D%B7%E7%A7%AF%E8%BF%90%E8%A1%8C%E8%BF%87%E7%A8%8B%E7%A4%BA%E6%84%8F.gif">
+<meta name="twitter:title" content="gmem carry dependency 分析">
+<meta name="twitter:description" content="方案一 方案一  源码123456789101112131415161718192021222324252627#define J_CNT       2#define I_CNT       4#define BUFFER_SIZE I_CNT*J_CNTkernel __attribute__((reqd_work_group_size(1, 1, 1)))void vector_add(__">
+<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/6761df957be09d56c49a393122fee9a3.png">
 
 
 
@@ -128,13 +160,13 @@
 
 
 
-  <link rel="canonical" href="http://xuke225.github.io.git/child/2017/11/07/hello-world/"/>
+  <link rel="canonical" href="http://xuke225.github.io.git/child/2017/11/15/SDAccel/优化/kernel_to_gmem/gmem-carry-dependency-分析/"/>
 
 
 
 
 
-  <title>Hello World | AI 异构</title>
+  <title>gmem carry dependency 分析 | AI 异构</title>
   
 
 
@@ -295,7 +327,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://xuke225.github.io.git/child/2017/11/07/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://xuke225.github.io.git/child/2017/11/15/SDAccel/优化/kernel_to_gmem/gmem-carry-dependency-分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="许柯">
@@ -312,7 +344,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline">gmem carry dependency 分析</h1>
         
 
         <div class="post-meta">
@@ -324,8 +356,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-07T00:00:00+08:00">
-                2017-11-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-15T00:00:00+08:00">
+                2017-11-15
               </time>
             
 
@@ -347,8 +379,30 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/test/" itemprop="url" rel="index">
-                    <span itemprop="name">test</span>
+                  <a href="/categories/SDAccel/" itemprop="url" rel="index">
+                    <span itemprop="name">SDAccel</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SDAccel/优化/" itemprop="url" rel="index">
+                    <span itemprop="name">优化</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SDAccel/优化/kernel-to-gmem/" itemprop="url" rel="index">
+                    <span itemprop="name">kernel_to_gmem</span>
                   </a>
                 </span>
 
@@ -366,8 +420,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/07/hello-world/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/11/07/hello-world/" itemprop="commentsCount"></span>
+                <a href="/2017/11/15/SDAccel/优化/kernel_to_gmem/gmem-carry-dependency-分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/11/15/SDAccel/优化/kernel_to_gmem/gmem-carry-dependency-分析/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -395,7 +449,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  158
+                  939
                 </span>
               
 
@@ -420,26 +474,76 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><p>$ index_z_group = (global_z - padd_offset)/VEC_SIZE $<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure></p>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/%E5%8D%B7%E7%A7%AF%E8%BF%90%E8%A1%8C%E8%BF%87%E7%A8%8B%E7%A4%BA%E6%84%8F.gif" alt=""><br><a id="more"></a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<h3 id="应用技巧"><a href="#应用技巧" class="headerlink" title="应用技巧"></a>应用技巧</h3><h4 id="插入公式"><a href="#插入公式" class="headerlink" title="插入公式"></a>插入公式</h4><p>行內公式 $\sin ^{ 2 }{ \theta +\cos ^{ 2 }{ \theta =1 }  }$ 行內公式<br>$f(x)=ax+b$</p>
-<h4 id="插入视频"><a href="#插入视频" class="headerlink" title="插入视频"></a>插入视频</h4><ul>
-<li><p>直接插入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe src=&quot;https://www.bilibili.com/blackboard/player.html?aid=16516956&amp;as_wide=1&quot; frameborder=&quot;0&quot; width=&quot;640&quot; height=&quot;430&quot; allowfullscreen&gt;&lt;/iframe&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>插件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install --save hexo-tag-bilibili</span><br><span class="line">使用方法</span><br><span class="line">&#123;% bilibili [av_id] %&#125;</span><br></pre></td></tr></table></figure>
+        <h3 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h3><ul>
+<li>方案一  源码<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> J_CNT       2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> I_CNT       4</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BUFFER_SIZE I_CNT*J_CNT</span></span><br><span class="line"></span><br><span class="line">kernel __attribute__((reqd_work_group_size(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>)))</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">vector_add</span><span class="params">(__global <span class="keyword">int</span>* c,</span></span></span><br><span class="line"><span class="function"><span class="params">               __global <span class="keyword">const</span> <span class="keyword">int</span>* a,</span></span></span><br><span class="line"><span class="function"><span class="params">               __global <span class="keyword">const</span> <span class="keyword">int</span>* b,</span></span></span><br><span class="line"><span class="function"><span class="params">               <span class="keyword">const</span> <span class="keyword">int</span> n_elements)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   local <span class="keyword">int</span> arrayA[BUFFER_SIZE];</span><br><span class="line">   local <span class="keyword">int</span> arrayB[BUFFER_SIZE];</span><br><span class="line">   local <span class="keyword">int</span> arrayC[BUFFER_SIZE];</span><br><span class="line"></span><br><span class="line">   __attribute__((xcl_pipeline_loop))</span><br><span class="line">loop_1:</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; I_CNT; i++) &#123;</span><br><span class="line">       <span class="comment">//__attribute__((xcl_pipeline_loop))</span></span><br><span class="line">       loop_2:</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; J_CNT; j++) &#123;</span><br><span class="line">           arrayA[i * J_CNT + j] = a[i * J_CNT + j];</span><br><span class="line">           arrayB[i * J_CNT + j] = b[i * J_CNT + j];</span><br><span class="line">           c[i * J_CNT + j] = arrayA[i * J_CNT + j]+arrayB[i * J_CNT + j];</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<div class="bili_video"><embed height="452" width="544" quality="high" allowfullscreen="true" type="application/x-shockwave-flash" src="http://share.acg.tv/flash.swf" flashvars="aid=NaN&page=1" pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash"></div>
-<p><span id="inline-red">红色</span><br>More info:<br> <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<a id="more"></a>
+<ul>
+<li><p>方案一  kernel 设置<br><img src="http://oz3lw4cji.bkt.clouddn.com/6761df957be09d56c49a393122fee9a3.png" alt=""></p>
+</li>
+<li><p>方案一  综合结果<br><img src="http://oz3lw4cji.bkt.clouddn.com/44244df7984202643cc6c31cda5b9b57.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/8641efad2576de07149a4a88f3a1ae03.png" alt=""></p>
+</li>
+<li><p>方案一  HLS log 文件<br><img src="http://oz3lw4cji.bkt.clouddn.com/050993521dabc3db276d2acdf9a666e5.png" alt=""></p>
+</li>
+<li><p>方案一  Performance图<br><img src="http://oz3lw4cji.bkt.clouddn.com/2c8d0ec01cd2286b9eaf77dff54c4316.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/0e9c17ba66f84433714e488fd3ce0f31.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/5ac4e9160997b061791ff6ccc7cd312f.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/9dc9c6e9d56d4468db807068b236994a.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/5dda1f895a647e9e45ccb6a00b4476e6.png" alt=""></p>
+</li>
+</ul>
+<h3 id="方案二（修改gmem位宽为64bit）"><a href="#方案二（修改gmem位宽为64bit）" class="headerlink" title="方案二（修改gmem位宽为64bit）"></a>方案二（修改gmem位宽为64bit）</h3><ul>
+<li><p>方案二  kernel 设置<br><img src="http://oz3lw4cji.bkt.clouddn.com/5dda1f895a647e9e45ccb6a00b4476e6.png" alt=""></p>
+</li>
+<li><p>为何为64bit?<br>首先，源码中对外层<code>loop_1</code>进行pipeline,因此对于内层的<code>loop_2</code>自动进行uroll展开。内层for循环的边界为<code>J_CNT = 2</code>因此将<code>loop_2</code> 代码<br>展开为如下代码形式。因此需要对<code>a</code>和<code>b</code>进行两次读取，对<code>a</code>请求一次读入，对<code>b</code>请求一次读入。一拍只能对gmem请求一次，因为是并行执行因此<code>a</code>有两个数据<code>a[i * J_CNT + 0]</code> 和<code>a[i * J_CNT + 1]</code>需要读入所以接口位宽为<code>sizeof(int) * 2</code>。<br>对于代码来说<code>gmem</code>位宽应该等于<code>sizeof(int) * J_CNT</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// loop_2 uroll 展开过程</span></span><br><span class="line">    arrayA[i * J_CNT + <span class="number">0</span>] = a[i * J_CNT + <span class="number">0</span>];</span><br><span class="line">    arrayA[i * J_CNT + <span class="number">1</span>] = a[i * J_CNT + <span class="number">1</span>];</span><br><span class="line">    arrayB[i * J_CNT + <span class="number">0</span>] = b[i * J_CNT + <span class="number">0</span>];</span><br><span class="line">    arrayB[i * J_CNT + <span class="number">1</span>] = b[i * J_CNT + <span class="number">1</span>];</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方案二  综合结果<br><img src="http://oz3lw4cji.bkt.clouddn.com/7dd3ae852d90aca8b5afa8836c6b0848.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/56606e7b4da8d4cc13d267d7cbec198c.png" alt=""></p>
+</li>
+<li><p>方案二  HLS log文件<br><img src="http://oz3lw4cji.bkt.clouddn.com/937b1ca302f2ee702e4cecd83a63bea8.png" alt=""></p>
+</li>
+<li><p>方案二  Performance图<br><img src="http://oz3lw4cji.bkt.clouddn.com/18e958245b430f116c095fb59f21a6e7.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/4ca1ed6e8e0d08cd0e2e6a2f074abf94.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/acf0ff0829e335425ca144cff64031ee.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/acf0ff0829e335425ca144cff64031ee.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/e0408803736b1b7c7ee46344555f1d0b.png" alt=""></p>
+</li>
+</ul>
+<h3 id="方案二-II-2-原因分析"><a href="#方案二-II-2-原因分析" class="headerlink" title="方案二 II = 2 原因分析"></a>方案二 II = 2 原因分析</h3><ul>
+<li><p>修改源码,解决gmem ii = 2 问题(屏蔽掉b向arrayB赋值)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> J_CNT       2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> I_CNT       4</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BUFFER_SIZE I_CNT*J_CNT</span></span><br><span class="line"></span><br><span class="line">kernel __attribute__((reqd_work_group_size(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>)))</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">vector_add</span><span class="params">(__global <span class="keyword">int</span>* c,</span></span></span><br><span class="line"><span class="function"><span class="params">               __global <span class="keyword">const</span> <span class="keyword">int</span>* a,</span></span></span><br><span class="line"><span class="function"><span class="params">               __global <span class="keyword">const</span> <span class="keyword">int</span>* b,</span></span></span><br><span class="line"><span class="function"><span class="params">               <span class="keyword">const</span> <span class="keyword">int</span> n_elements)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   local <span class="keyword">int</span> arrayA[BUFFER_SIZE];</span><br><span class="line">   local <span class="keyword">int</span> arrayB[BUFFER_SIZE];</span><br><span class="line">   local <span class="keyword">int</span> arrayC[BUFFER_SIZE];</span><br><span class="line"></span><br><span class="line">   __attribute__((xcl_pipeline_loop))</span><br><span class="line">loop_1:</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; I_CNT; i++) &#123;</span><br><span class="line">       <span class="comment">//__attribute__((xcl_pipeline_loop))</span></span><br><span class="line">       loop_2:</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; J_CNT; j++) &#123;</span><br><span class="line">           arrayA[i * J_CNT + j] = a[i * J_CNT + j];</span><br><span class="line"><span class="comment">//            arrayB[i * J_CNT + j] = b[i * J_CNT + j];</span></span><br><span class="line">           c[i * J_CNT + j] = arrayA[i * J_CNT + j];<span class="comment">//+arrayB[i * J_CNT + j];</span></span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>综合结果分析<br><img src="http://oz3lw4cji.bkt.clouddn.com/10f729b114b275541fcfc02fdb391bae.png" alt=""></p>
+</li>
+<li><p>HLS log文件<br><img src="http://oz3lw4cji.bkt.clouddn.com/5c773a40ac3464dd18c91f35c9852037.png" alt=""></p>
+</li>
+</ul>
+<ul>
+<li>Performence图</li>
+</ul>
+<p><img src="http://oz3lw4cji.bkt.clouddn.com/d0ff83cd0c8288e0df9180bda08b3f68.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/0b746748e1f0ddca79d39be4956d2372.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/8db95363cb4843a7a2df6a8a139a212b.png" alt=""></p>
+<ul>
+<li>为何源程序 II = 2？<br>该问题还要从<code>loop_2</code> unroll说起<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// loop_2 uroll 展开过程</span></span><br><span class="line">    arrayA[i * J_CNT + <span class="number">0</span>] = a[i * J_CNT + <span class="number">0</span>];</span><br><span class="line">    arrayA[i * J_CNT + <span class="number">1</span>] = a[i * J_CNT + <span class="number">1</span>];</span><br><span class="line">    arrayB[i * J_CNT + <span class="number">0</span>] = b[i * J_CNT + <span class="number">0</span>];</span><br><span class="line">    arrayB[i * J_CNT + <span class="number">1</span>] = b[i * J_CNT + <span class="number">1</span>];</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>关键原因是<strong>一拍只能对<code>gmem</code>请求一次</strong> 因为是并行执行因此第一拍对<code>gmem</code>进行<code>a</code>的读请求，<code>a</code>有两个数据<code>a[i * J_CNT + 0]</code> 和<code>a[i * J_CNT + 1]</code>需要读入,同理下一拍对<code>gmem</code>进行<code>b</code>的请求，<code>b</code>有两个数据<code>b[i * J_CNT + 0]</code> 和<code>b[i * J_CNT + 1]</code>需要读入。<br>因此解决办法也不言而喻：一个<code>gmem</code>只能一次读请求，但是综合多个<code>gmem</code>便可以在一拍内分别进行请求！<br><img src="http://oz3lw4cji.bkt.clouddn.com/e15fb942130d0657331e4332e94a02dd.png" alt=""></p>
+<h3 id="方案三（解决-II-2问题）"><a href="#方案三（解决-II-2问题）" class="headerlink" title="方案三（解决 II = 2问题）"></a>方案三（解决 II = 2问题）</h3><ul>
+<li><p>方案三 源码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> J_CNT       2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> I_CNT       4</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BUFFER_SIZE I_CNT*J_CNT</span></span><br><span class="line"></span><br><span class="line">kernel __attribute__((reqd_work_group_size(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>)))</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">vector_add</span><span class="params">(__global <span class="keyword">int</span>* c,</span></span></span><br><span class="line"><span class="function"><span class="params">               __global <span class="keyword">const</span> <span class="keyword">int</span>* a,</span></span></span><br><span class="line"><span class="function"><span class="params">               __global <span class="keyword">const</span> <span class="keyword">int</span>* b,</span></span></span><br><span class="line"><span class="function"><span class="params">               <span class="keyword">const</span> <span class="keyword">int</span> n_elements)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   local <span class="keyword">int</span> arrayA[BUFFER_SIZE];</span><br><span class="line">   local <span class="keyword">int</span> arrayB[BUFFER_SIZE];</span><br><span class="line">   local <span class="keyword">int</span> arrayC[BUFFER_SIZE];</span><br><span class="line"></span><br><span class="line">   __attribute__((xcl_pipeline_loop))</span><br><span class="line">loop_1:</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; I_CNT; i++) &#123;</span><br><span class="line">       <span class="comment">//__attribute__((xcl_pipeline_loop))</span></span><br><span class="line">       loop_2:</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; J_CNT; j++) &#123;</span><br><span class="line">           arrayA[i * J_CNT + j] = a[i * J_CNT + j];</span><br><span class="line">           arrayB[i * J_CNT + j] = b[i * J_CNT + j];</span><br><span class="line">           c[i * J_CNT + j] = arrayA[i * J_CNT + j]+arrayB[i * J_CNT + j];</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方案三 设置<br><img src="http://oz3lw4cji.bkt.clouddn.com/e598125028eea15c73df4998ec157285.png" alt=""></p>
+</li>
+<li>方案三 综合结果<br><img src="http://oz3lw4cji.bkt.clouddn.com/439580baf77868142d0a9b7858ac7860.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/b3a0106b044dd3b1b7b268b0ee259611.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/103f16fb347355a4670592992b0173ed.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/81d167188d4f054e9e0f1061dae5c174.png" alt=""></li>
+</ul>
+<ul>
+<li>方案三 HLS log文件<br><img src="http://oz3lw4cji.bkt.clouddn.com/11a495df12fd1151547727906a48ae33.png" alt=""></li>
+</ul>
+<ul>
+<li>方案三 Performence图<br><img src="http://oz3lw4cji.bkt.clouddn.com/6778fada1a100f886c7ff480c6c151a7.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/a952567ee07875ac7787e6b0d2774891.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/a5ed8c3f40c32a85238715b109ccc2eb.png" alt=""></li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>产生gmem carry dependency的两种解决办法：<ul>
+<li>进行 gmem位宽大小的调整 32bit – 512bit</li>
+<li>多个 __global 参数采用多个gmem进行数据传输（max memory ports）</li>
+</ul>
+</li>
+</ul>
+<h3 id="TODO-采用pipe传输（做一个memRead）"><a href="#TODO-采用pipe传输（做一个memRead）" class="headerlink" title="TODO 采用pipe传输（做一个memRead）"></a>TODO 采用pipe传输（做一个memRead）</h3><ul>
+<li>问题（当数据为非32bit的倍数-512bit）</li>
+</ul>
 
       
     </div>
@@ -457,9 +561,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/test/" rel="tag"><i class="fa fa-tag"></i> test</a>
+            <a href="/tags/SDAccel/" rel="tag"><i class="fa fa-tag"></i> SDAccel</a>
           
-            <a href="/tags/hello-web/" rel="tag"><i class="fa fa-tag"></i> hello web</a>
+            <a href="/tags/优化/" rel="tag"><i class="fa fa-tag"></i> 优化</a>
+          
+            <a href="/tags/kernel-to-gmem/" rel="tag"><i class="fa fa-tag"></i> kernel_to_gmem</a>
           
         </div>
       
@@ -472,14 +578,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/11/10/SDAccel/优化/host/overlap/" rel="next" title="host overlap">
+                <i class="fa fa-chevron-left"></i> host overlap
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/09/SDAccel/优化/kernel_to_gmem/gmem-4bank/" rel="prev" title="gmem_4bank">
-                gmem_4bank <i class="fa fa-chevron-right"></i>
+              <a href="/2017/11/16/PipeCNN/memWrite/" rel="prev" title="PipeCNN——memWrite">
+                PipeCNN——memWrite <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -630,7 +740,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用技巧"><span class="nav-number">1.5.</span> <span class="nav-text">应用技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#插入公式"><span class="nav-number">1.5.1.</span> <span class="nav-text">插入公式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插入视频"><span class="nav-number">1.5.2.</span> <span class="nav-text">插入视频</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#方案一"><span class="nav-number">1.</span> <span class="nav-text">方案一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案二（修改gmem位宽为64bit）"><span class="nav-number">2.</span> <span class="nav-text">方案二（修改gmem位宽为64bit）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案二-II-2-原因分析"><span class="nav-number">3.</span> <span class="nav-text">方案二 II = 2 原因分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案三（解决-II-2问题）"><span class="nav-number">4.</span> <span class="nav-text">方案三（解决 II = 2问题）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TODO-采用pipe传输（做一个memRead）"><span class="nav-number">6.</span> <span class="nav-text">TODO 采用pipe传输（做一个memRead）</span></a></li></ol></div>
             
 
           </div>
@@ -805,7 +915,7 @@
 		_hcwp.push({widget:"Bloggerstream", widget_id: 97885, selector:".hc-comment-count", label: "{\%COUNT%\}" });
 
 		
-		_hcwp.push({widget:"Stream", widget_id: 97885, xid: "2017/11/07/hello-world/"});
+		_hcwp.push({widget:"Stream", widget_id: 97885, xid: "2017/11/15/SDAccel/优化/kernel_to_gmem/gmem-carry-dependency-分析/"});
 		
 
 		(function() {
