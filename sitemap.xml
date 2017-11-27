@@ -2,37 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://xuke225.github.io.git/2017/11/09/DeepLearning/mxnet/MXNET%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E7%BD%91%E7%BB%9C%E6%AD%A3%E5%90%91%E6%8E%A8%E7%90%86/</loc>
-    
-    <lastmod>2017-11-26T07:54:54.931Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xuke225.github.io.git/2017/11/25/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%964/</loc>
-    
-    <lastmod>2017-11-26T05:35:36.248Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xuke225.github.io.git/2017/11/24/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%963/</loc>
-    
-    <lastmod>2017-11-26T05:35:32.112Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://xuke225.github.io.git/2017/11/23/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%962/</loc>
     
-    <lastmod>2017-11-26T05:35:25.344Z</lastmod>
+    <lastmod>2017-11-27T08:54:33.363Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://xuke225.github.io.git/2017/11/22/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%961/</loc>
     
-    <lastmod>2017-11-26T05:35:18.009Z</lastmod>
+    <lastmod>2017-11-27T08:54:30.091Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xuke225.github.io.git/2017/11/24/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%963/</loc>
+    
+    <lastmod>2017-11-27T08:54:18.923Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xuke225.github.io.git/2017/11/25/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%964/</loc>
+    
+    <lastmod>2017-11-27T08:54:09.258Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xuke225.github.io.git/2017/11/09/DeepLearning/mxnet/MXNET%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E7%BD%91%E7%BB%9C%E6%AD%A3%E5%90%91%E6%8E%A8%E7%90%86/</loc>
+    
+    <lastmod>2017-11-26T07:54:54.931Z</lastmod>
     
   </url>
   
