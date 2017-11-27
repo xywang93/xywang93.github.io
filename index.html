@@ -299,7 +299,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://xuke225.github.io.git/2017/11/18/PipeCNN/memRead/">
+    <link itemprop="mainEntityOfPage" href="http://xuke225.github.io.git/2017/11/25/SDAccel/优化/综合案例/mmult优化4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="许柯">
@@ -318,7 +318,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/18/PipeCNN/memRead/" itemprop="url">PipeCNN——memRead</a></h2>
+                <a class="post-title-link" href="/2017/11/25/SDAccel/优化/综合案例/mmult优化4/" itemprop="url">SDAccel矩阵乘法优化（四）</a></h2>
         
 
         <div class="post-meta">
@@ -330,8 +330,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-18T00:00:00+08:00">
-                2017-11-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-25T00:00:00+08:00">
+                2017-11-25
               </time>
             
 
@@ -353,8 +353,30 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/PipeCNN/" itemprop="url" rel="index">
-                    <span itemprop="name">PipeCNN</span>
+                  <a href="/categories/SDAccel/" itemprop="url" rel="index">
+                    <span itemprop="name">SDAccel</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SDAccel/优化/" itemprop="url" rel="index">
+                    <span itemprop="name">优化</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SDAccel/优化/综合案例/" itemprop="url" rel="index">
+                    <span itemprop="name">综合案例</span>
                   </a>
                 </span>
 
@@ -372,8 +394,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/18/PipeCNN/memRead/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/11/18/PipeCNN/memRead/" itemprop="commentsCount"></span>
+                <a href="/2017/11/25/SDAccel/优化/综合案例/mmult优化4/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/11/25/SDAccel/优化/综合案例/mmult优化4/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -396,7 +418,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  626
+                  2,095
                 </span>
               
 
@@ -422,16 +444,46 @@
 
       
         
-          <h3 id="memRead作用描述"><a href="#memRead作用描述" class="headerlink" title="memRead作用描述"></a>memRead作用描述</h3><p>memRead的作用主要是从<code>Global Memery</code>中读取<code>data</code> <code>weight</code> <code>bias</code> 然后设置并行化传输方式，处理卷积前的<code>Pading</code>与<code>Group</code>操作以及窗口的预缓冲，便于数据的读取。<br><img src="http://oz3lw4cji.bkt.clouddn.com/835691eecaad88c6d31edbdb0e110c4e.png" alt="结构图"><br>具体作用如下：</p>
-<ul>
-<li>将向量化的<code>VEC_SIZE</code>个<code>data</code>数据复制<code>LANE_NUM</code>份传到<code>data_ch</code>中</li>
-<li>将向量化的<code>VEC_SIZE * LANE_NUM</code>个<code>weight</code>参数传到<code>weight_ch</code>中</li>
-<li>将向量化的<code>LANE_NUM</code>个<code>bias</code>参数传到<code>bias_ch_in</code>中</li>
-<li>处理<code>Pading</code>以及<code>split[group]</code>问题</li>
-<li><p><code>Window Buffer</code>数据预取</p>
+          <blockquote class="blockquote-center"><br>从一个矩阵乘法的例子一步一步进行功能设计与性能优化。<br><a href="https://xuke225.github.io/2017/11/15/SDAccel/" target="_blank" rel="noopener">SDAccel矩阵乘法优化（一）</a><br><a href="">SDAccel矩阵乘法优化（二）</a><br><a href="">SDAccel矩阵乘法优化（三）</a><br><a href="">SDAccel矩阵乘法优化（四）</a><br></blockquote>
+
+<h3 id="mmult实现及优化步骤"><a href="#mmult实现及优化步骤" class="headerlink" title="mmult实现及优化步骤"></a>mmult实现及优化步骤</h3><table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>实现功能</th>
+<th>关键概念/ Keywords</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1、cpu实现</td>
+<td>即在<code>host</code>端实现简单的矩阵乘法，便于比对数据与性能对比</td>
+</tr>
+<tr>
+<td>2、OpenCL实现</td>
+<td>在<code>device</code>端实现基于OpenCL的FPGA矩阵乘法硬件设计.</td>
+<td><strong>Key</strong> <strong>Concepts</strong><br> - OpenCL APIs</td>
+</tr>
+<tr>
+<td>3、加入<code>Local Memory</code></td>
+<td>采用 <code>Local Memory</code> 减少<strong>数据访存</strong>次数</td>
+<td><strong>Key</strong> <strong>Concepts</strong><br> - Kernel Optimization<br> - Local Memory</td>
+</tr>
+<tr>
+<td>4、实现读写的突发传输</td>
+<td>采用突发传输的方式更好的实现<code>DDR</code>与 <code>Local Memory</code>数据的读写访问</td>
+<td><strong>Key</strong> <strong>Concepts</strong><br> - Kernel Optimization<br> - Burst Read/Write</td>
+</tr>
+<tr>
+<td>5、数组分割</td>
+<td>通过循环展开与数组分割的方式，实现更好的计算性能</td>
+<td><strong>Key</strong> <strong>Concepts</strong><br> - Array Partition<br> - Loop Unroll<br><strong>Keywords</strong><br> - xcl_pipeline_loop<br> - xcl_array_partition(complete, dim)<br> - opencl_unroll_hint</td>
+</tr>
+</tbody>
+</table>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/18/PipeCNN/memRead/#more" rel="contents">
+            <a class="btn" href="/2017/11/25/SDAccel/优化/综合案例/mmult优化4/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -486,7 +538,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://xuke225.github.io.git/2017/11/16/PipeCNN/memWrite/">
+    <link itemprop="mainEntityOfPage" href="http://xuke225.github.io.git/2017/11/24/SDAccel/优化/综合案例/mmult优化3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="许柯">
@@ -505,7 +557,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/16/PipeCNN/memWrite/" itemprop="url">PipeCNN——memWrite</a></h2>
+                <a class="post-title-link" href="/2017/11/24/SDAccel/优化/综合案例/mmult优化3/" itemprop="url">SDAccel矩阵乘法优化（三）</a></h2>
         
 
         <div class="post-meta">
@@ -517,8 +569,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-16T00:00:00+08:00">
-                2017-11-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-24T00:00:00+08:00">
+                2017-11-24
               </time>
             
 
@@ -540,8 +592,30 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/PipeCNN/" itemprop="url" rel="index">
-                    <span itemprop="name">PipeCNN</span>
+                  <a href="/categories/SDAccel/" itemprop="url" rel="index">
+                    <span itemprop="name">SDAccel</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SDAccel/优化/" itemprop="url" rel="index">
+                    <span itemprop="name">优化</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SDAccel/优化/综合案例/" itemprop="url" rel="index">
+                    <span itemprop="name">综合案例</span>
                   </a>
                 </span>
 
@@ -559,8 +633,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/16/PipeCNN/memWrite/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/11/16/PipeCNN/memWrite/" itemprop="commentsCount"></span>
+                <a href="/2017/11/24/SDAccel/优化/综合案例/mmult优化3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/11/24/SDAccel/优化/综合案例/mmult优化3/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -583,7 +657,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,246
+                  1,233
                 </span>
               
 
@@ -609,11 +683,526 @@
 
       
         
-          <h3 id="memWrite作用描述"><a href="#memWrite作用描述" class="headerlink" title="memWrite作用描述"></a>memWrite作用描述</h3><p>memWrite的主要功能是重新整理conv模块或者pooling模块pipe传输的数据，便于下一层启动卷积运算的时候数据的读取是连续的。<br>pipecnn首次进行数据传输的过程是首先从<code>.dat</code>文件中读取数据，然后在host端进行数据重排，但是host端的数据重排仅仅执行一次，之后的排序过程都是通过memWrite kernel 进行的。因此，memWrite的只要作用是进行数据重排。</p>
-<h3 id="memWrite执行过程"><a href="#memWrite执行过程" class="headerlink" title="memWrite执行过程"></a>memWrite执行过程</h3><p><img src="http://oz3lw4cji.bkt.clouddn.com/memWrite%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B.gif" alt="memWrite执行过程"></p>
+          <blockquote class="blockquote-center"><br>从一个矩阵乘法的例子一步一步进行功能设计与性能优化。<br><a href="https://xuke225.github.io/2017/11/15/SDAccel/" target="_blank" rel="noopener">SDAccel矩阵乘法优化（一）</a><br><a href="">SDAccel矩阵乘法优化（二）</a><br><a href="">SDAccel矩阵乘法优化（三）</a><br><a href="">SDAccel矩阵乘法优化（四）</a><br></blockquote>
+
+
+<h3 id="mmult实现及优化步骤"><a href="#mmult实现及优化步骤" class="headerlink" title="mmult实现及优化步骤"></a>mmult实现及优化步骤</h3><table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>实现功能</th>
+<th>关键概念/ Keywords</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1、cpu实现</td>
+<td>即在<code>host</code>端实现简单的矩阵乘法，便于比对数据与性能对比</td>
+</tr>
+<tr>
+<td>2、OpenCL实现</td>
+<td>在<code>device</code>端实现基于OpenCL的FPGA矩阵乘法硬件设计.</td>
+<td><strong>Key</strong> <strong>Concepts</strong><br> - OpenCL APIs</td>
+</tr>
+<tr>
+<td>3、加入<code>Local Memory</code></td>
+<td>采用 <code>Local Memory</code> 减少<strong>数据访存</strong>次数</td>
+<td><strong>Key</strong> <strong>Concepts</strong><br> - Kernel Optimization<br> - Local Memory</td>
+</tr>
+<tr>
+<td>4、实现读写的突发传输</td>
+<td>采用突发传输的方式更好的实现<code>DDR</code>与 <code>Local Memory</code>数据的读写访问</td>
+<td><strong>Key</strong> <strong>Concepts</strong><br> - Kernel Optimization<br> - Burst Read/Write</td>
+</tr>
+<tr>
+<td>5、数组分割</td>
+<td>通过循环展开与数组分割的方式，实现更好的计算性能</td>
+<td><strong>Key</strong> <strong>Concepts</strong><br> - Array Partition<br> - Loop Unroll<br><strong>Keywords</strong><br> - xcl_pipeline_loop<br> - xcl_array_partition(complete, dim)<br> - opencl_unroll_hint</td>
+</tr>
+</tbody>
+</table>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/16/PipeCNN/memWrite/#more" rel="contents">
+            <a class="btn" href="/2017/11/24/SDAccel/优化/综合案例/mmult优化3/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+    
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xuke225.github.io.git/2017/11/23/SDAccel/优化/综合案例/mmult优化2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="许柯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oz3lw4cji.bkt.clouddn.com/%E7%94%9F%E6%B4%BB%E7%85%A7%E2%80%94%E8%AE%B8%E6%9F%AF.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AI 异构">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/23/SDAccel/优化/综合案例/mmult优化2/" itemprop="url">SDAccel矩阵乘法优化（二）</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-23T00:00:00+08:00">
+                2017-11-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SDAccel/" itemprop="url" rel="index">
+                    <span itemprop="name">SDAccel</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SDAccel/优化/" itemprop="url" rel="index">
+                    <span itemprop="name">优化</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SDAccel/优化/综合案例/" itemprop="url" rel="index">
+                    <span itemprop="name">综合案例</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/23/SDAccel/优化/综合案例/mmult优化2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/11/23/SDAccel/优化/综合案例/mmult优化2/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,201
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote class="blockquote-center"><br>从一个矩阵乘法的例子一步一步进行功能设计与性能优化。<br><a href="https://xuke225.github.io/2017/11/15/SDAccel/" target="_blank" rel="noopener">SDAccel矩阵乘法优化（一）</a><br><a href="">SDAccel矩阵乘法优化（二）</a><br><a href="">SDAccel矩阵乘法优化（三）</a><br><a href="">SDAccel矩阵乘法优化（四）</a><br></blockquote>
+
+
+<h3 id="mmult实现及优化步骤"><a href="#mmult实现及优化步骤" class="headerlink" title="mmult实现及优化步骤"></a>mmult实现及优化步骤</h3><table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>实现功能</th>
+<th>关键概念/ Keywords</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1、cpu实现</td>
+<td>即在<code>host</code>端实现简单的矩阵乘法，便于比对数据与性能对比</td>
+</tr>
+<tr>
+<td>2、OpenCL实现</td>
+<td>在<code>device</code>端实现基于OpenCL的FPGA矩阵乘法硬件设计.</td>
+<td><strong>Key</strong> <strong>Concepts</strong><br> - OpenCL APIs</td>
+</tr>
+<tr>
+<td>3、加入<code>Local Memory</code></td>
+<td>采用 <code>Local Memory</code> 减少<strong>数据访存</strong>次数</td>
+<td><strong>Key</strong> <strong>Concepts</strong><br> - Kernel Optimization<br> - Local Memory</td>
+</tr>
+<tr>
+<td>4、实现读写的突发传输</td>
+<td>采用突发传输的方式更好的实现<code>DDR</code>与 <code>Local Memory</code>数据的读写访问</td>
+<td><strong>Key</strong> <strong>Concepts</strong><br> - Kernel Optimization<br> - Burst Read/Write</td>
+</tr>
+<tr>
+<td>5、数组分割</td>
+<td>通过循环展开与数组分割的方式，实现更好的计算性能</td>
+<td><strong>Key</strong> <strong>Concepts</strong><br> - Array Partition<br> - Loop Unroll<br><strong>Keywords</strong><br> - xcl_pipeline_loop<br> - xcl_array_partition(complete, dim)<br> - opencl_unroll_hint</td>
+</tr>
+</tbody>
+</table>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/23/SDAccel/优化/综合案例/mmult优化2/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+    
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xuke225.github.io.git/2017/11/22/SDAccel/优化/综合案例/mmult优化1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="许柯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oz3lw4cji.bkt.clouddn.com/%E7%94%9F%E6%B4%BB%E7%85%A7%E2%80%94%E8%AE%B8%E6%9F%AF.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AI 异构">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/22/SDAccel/优化/综合案例/mmult优化1/" itemprop="url">SDAccel矩阵乘法优化（一）</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-22T00:00:00+08:00">
+                2017-11-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SDAccel/" itemprop="url" rel="index">
+                    <span itemprop="name">SDAccel</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SDAccel/优化/" itemprop="url" rel="index">
+                    <span itemprop="name">优化</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SDAccel/优化/综合案例/" itemprop="url" rel="index">
+                    <span itemprop="name">综合案例</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/22/SDAccel/优化/综合案例/mmult优化1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/11/22/SDAccel/优化/综合案例/mmult优化1/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,654
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote class="blockquote-center"><br>从一个矩阵乘法的例子一步一步进行功能设计与性能优化。<br><a href="https://xuke225.github.io/2017/11/15/SDAccel/" target="_blank" rel="noopener">SDAccel矩阵乘法优化（一）</a><br><a href="">SDAccel矩阵乘法优化（二）</a><br><a href="">SDAccel矩阵乘法优化（三）</a><br><a href="">SDAccel矩阵乘法优化（四）</a><br></blockquote>
+
+<h3 id="mmult实现及优化步骤"><a href="#mmult实现及优化步骤" class="headerlink" title="mmult实现及优化步骤"></a>mmult实现及优化步骤</h3><table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>实现功能</th>
+<th>关键概念/ Keywords</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1、cpu实现</td>
+<td>即在<code>host</code>端实现简单的矩阵乘法，便于比对数据与性能对比</td>
+</tr>
+<tr>
+<td>2、OpenCL实现</td>
+<td>在<code>device</code>端实现基于OpenCL的FPGA矩阵乘法硬件设计.</td>
+<td><strong>Key</strong> <strong>Concepts</strong><br> - OpenCL APIs</td>
+</tr>
+<tr>
+<td>3、加入<code>Local Memory</code></td>
+<td>采用 <code>Local Memory</code> 减少<strong>数据访存</strong>次数</td>
+<td><strong>Key</strong> <strong>Concepts</strong><br> - Kernel Optimization<br> - Local Memory</td>
+</tr>
+<tr>
+<td>4、实现读写的突发传输</td>
+<td>采用突发传输的方式更好的实现<code>DDR</code>与 <code>Local Memory</code>数据的读写访问</td>
+<td><strong>Key</strong> <strong>Concepts</strong><br> - Kernel Optimization<br> - Burst Read/Write</td>
+</tr>
+<tr>
+<td>5、数组分割</td>
+<td>通过循环展开与数组分割的方式，实现更好的计算性能</td>
+<td><strong>Key</strong> <strong>Concepts</strong><br> - Array Partition<br> - Loop Unroll<br><strong>Keywords</strong><br> - xcl_pipeline_loop<br> - xcl_array_partition(complete, dim)<br> - opencl_unroll_hint</td>
+</tr>
+</tbody>
+</table>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/22/SDAccel/优化/综合案例/mmult优化1/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -787,7 +1376,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  939
+                  940
                 </span>
               
 
@@ -814,9 +1403,9 @@
       
         
           <h3 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h3><ul>
-<li>方案一  源码<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> J_CNT       2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> I_CNT       4</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BUFFER_SIZE I_CNT*J_CNT</span></span><br><span class="line"></span><br><span class="line">kernel __attribute__((reqd_work_group_size(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>)))</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">vector_add</span><span class="params">(__global <span class="keyword">int</span>* c,</span></span></span><br><span class="line"><span class="function"><span class="params">               __global <span class="keyword">const</span> <span class="keyword">int</span>* a,</span></span></span><br><span class="line"><span class="function"><span class="params">               __global <span class="keyword">const</span> <span class="keyword">int</span>* b,</span></span></span><br><span class="line"><span class="function"><span class="params">               <span class="keyword">const</span> <span class="keyword">int</span> n_elements)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   local <span class="keyword">int</span> arrayA[BUFFER_SIZE];</span><br><span class="line">   local <span class="keyword">int</span> arrayB[BUFFER_SIZE];</span><br><span class="line">   local <span class="keyword">int</span> arrayC[BUFFER_SIZE];</span><br><span class="line"></span><br><span class="line">   __attribute__((xcl_pipeline_loop))</span><br><span class="line">loop_1:</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; I_CNT; i++) &#123;</span><br><span class="line">       <span class="comment">//__attribute__((xcl_pipeline_loop))</span></span><br><span class="line">       loop_2:</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; J_CNT; j++) &#123;</span><br><span class="line">           arrayA[i * J_CNT + j] = a[i * J_CNT + j];</span><br><span class="line">           arrayB[i * J_CNT + j] = b[i * J_CNT + j];</span><br><span class="line">           c[i * J_CNT + j] = arrayA[i * J_CNT + j]+arrayB[i * J_CNT + j];</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<li>方案一  源码</li>
 </ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> J_CNT       2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> I_CNT       4</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BUFFER_SIZE I_CNT*J_CNT</span></span><br><span class="line"></span><br><span class="line">kernel __attribute__((reqd_work_group_size(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>)))</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">vector_add</span><span class="params">(__global <span class="keyword">int</span>* c,</span></span></span><br><span class="line"><span class="function"><span class="params">               __global <span class="keyword">const</span> <span class="keyword">int</span>* a,</span></span></span><br><span class="line"><span class="function"><span class="params">               __global <span class="keyword">const</span> <span class="keyword">int</span>* b,</span></span></span><br><span class="line"><span class="function"><span class="params">               <span class="keyword">const</span> <span class="keyword">int</span> n_elements)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   local <span class="keyword">int</span> arrayA[BUFFER_SIZE];</span><br><span class="line">   local <span class="keyword">int</span> arrayB[BUFFER_SIZE];</span><br><span class="line">   local <span class="keyword">int</span> arrayC[BUFFER_SIZE];</span><br><span class="line"></span><br><span class="line">   __attribute__((xcl_pipeline_loop))</span><br><span class="line">loop_1:</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; I_CNT; i++) &#123;</span><br><span class="line">       <span class="comment">//__attribute__((xcl_pipeline_loop))</span></span><br><span class="line">       loop_2:</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; J_CNT; j++) &#123;</span><br><span class="line">           arrayA[i * J_CNT + j] = a[i * J_CNT + j];</span><br><span class="line">           arrayB[i * J_CNT + j] = b[i * J_CNT + j];</span><br><span class="line">           c[i * J_CNT + j] = arrayA[i * J_CNT + j]+arrayB[i * J_CNT + j];</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/11/15/SDAccel/优化/kernel_to_gmem/gmem-carry-dependency-分析/#more" rel="contents">
@@ -993,7 +1582,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2,751
+                  2,745
                 </span>
               
 
@@ -1150,7 +1739,18 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mxnet/" itemprop="url" rel="index">
+                  <a href="/categories/Deep-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Deep Learning</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learning/mxnet/" itemprop="url" rel="index">
                     <span itemprop="name">mxnet</span>
                   </a>
                 </span>
@@ -1719,7 +2319,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1730,7 +2330,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1741,7 +2341,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
