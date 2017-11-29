@@ -4,42 +4,8 @@
 
     
   <url>
-    <loc>http://xuke225.github.io.git/2017/11/23/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%962/</loc>
-    <lastmod>2017-11-27T08:54:33.363Z</lastmod>
-    <data>
-        <display>
-        <title>SDAccel矩阵乘法优化（二）</title>
-        <pubTime>2017-11-22T16:00:00.000Z</pubTime>
-        
-        <tag>SDAccel</tag>
-         
-        <tag>综合案例</tag>
-         
-        <tag>矩阵乘法</tag>
-         
-        <tag>优化</tag>
-         
-        <tag>Local Memory</tag>
-         
-         
-           
-             
-              <breadCrumb title="SDAccel" url="http://xuke225.github.io.git/categories/SDAccel/"/>
-          
-             
-              <breadCrumb title="优化" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
-          
-             
-              <breadCrumb title="综合案例" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://xuke225.github.io.git/2017/11/22/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%961/</loc>
-    <lastmod>2017-11-27T08:54:30.091Z</lastmod>
+    <lastmod>2017-11-29T06:41:22.448Z</lastmod>
     <data>
         <display>
         <title>SDAccel矩阵乘法优化（一）</title>
@@ -71,7 +37,7 @@
     
   <url>
     <loc>http://xuke225.github.io.git/2017/11/24/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%963/</loc>
-    <lastmod>2017-11-27T08:54:18.923Z</lastmod>
+    <lastmod>2017-11-29T06:41:21.145Z</lastmod>
     <data>
         <display>
         <title>SDAccel矩阵乘法优化（三）</title>
@@ -105,11 +71,45 @@
     
   <url>
     <loc>http://xuke225.github.io.git/2017/11/25/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%964/</loc>
-    <lastmod>2017-11-27T08:54:09.258Z</lastmod>
+    <lastmod>2017-11-29T06:41:19.530Z</lastmod>
     <data>
         <display>
         <title>SDAccel矩阵乘法优化（四）</title>
         <pubTime>2017-11-24T16:00:00.000Z</pubTime>
+        
+        <tag>SDAccel</tag>
+         
+        <tag>综合案例</tag>
+         
+        <tag>矩阵乘法</tag>
+         
+        <tag>优化</tag>
+         
+        <tag>Local Memory</tag>
+         
+         
+           
+             
+              <breadCrumb title="SDAccel" url="http://xuke225.github.io.git/categories/SDAccel/"/>
+          
+             
+              <breadCrumb title="优化" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
+          
+             
+              <breadCrumb title="综合案例" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://xuke225.github.io.git/2017/11/23/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%962/</loc>
+    <lastmod>2017-11-29T06:40:48.499Z</lastmod>
+    <data>
+        <display>
+        <title>SDAccel矩阵乘法优化（二）</title>
+        <pubTime>2017-11-22T16:00:00.000Z</pubTime>
         
         <tag>SDAccel</tag>
          
