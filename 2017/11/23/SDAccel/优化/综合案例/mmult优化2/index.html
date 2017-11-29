@@ -97,7 +97,7 @@
 <meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/204c361338d39d9a3ce57f7a94347ebd.png">
 <meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/7da81db7839a827c1ee82b665dfb0d9d.png">
 <meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/18831f5a85127d53a257ecb44dcb6e59.png">
-<meta property="og:updated_time" content="2017-11-29T07:21:10.247Z">
+<meta property="og:updated_time" content="2017-11-29T07:50:57.693Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDAccel矩阵乘法优化（二）">
 <meta name="twitter:description" content="从一个矩阵乘法的例子一步一步进行功能设计与性能优化。SDAccel矩阵乘法优化（一）SDAccel矩阵乘法优化（二）SDAccel矩阵乘法优化（三）SDAccel矩阵乘法优化（四）   mmult实现及优化步骤   步骤 实现功能 关键概念/ Keywords     1、cpu实现 即在host端实现简单的矩阵乘法，便于比对数据与性能对比   2、OpenCL实现 在device端实现基于Ope">
@@ -430,7 +430,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,207
+                  1,226
                 </span>
               
 
@@ -512,6 +512,7 @@
 <ul>
 <li>硬件实现结果</li>
 </ul>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://github.com/Xilinx/SDAccel_Examples/tree/master/getting_started/cpu_to_fpga" target="_blank" rel="noopener">xilinx github Xilinx/SDAccel_Examples/cpu_to_fpga</a><br>ug1253 SDx Pragma Reference Guide 2017.2<br>ug1207 SDAccel Environment Optmizaton Guide</p>
 
       
     </div>
@@ -745,7 +746,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#mmult实现及优化步骤"><span class="nav-number">1.</span> <span class="nav-text">mmult实现及优化步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案分析及优化思路一（Local-Memory）"><span class="nav-number">2.</span> <span class="nav-text">方案分析及优化思路一（Local Memory）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-number">2.1.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实验结果分析"><span class="nav-number">2.2.</span> <span class="nav-text">实验结果分析</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#mmult实现及优化步骤"><span class="nav-number">1.</span> <span class="nav-text">mmult实现及优化步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案分析及优化思路一（Local-Memory）"><span class="nav-number">2.</span> <span class="nav-text">方案分析及优化思路一（Local Memory）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-number">2.1.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实验结果分析"><span class="nav-number">2.2.</span> <span class="nav-text">实验结果分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>

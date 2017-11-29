@@ -71,6 +71,7 @@
 <li>硬件实现结果</li>
 </ul>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>到此为止，我们已经完整的分析了一个SDAceel的例子。从CPU实现，再到FPGA实现，并一步一步进行优化设计。在FPGA的优化中主要包括两种优化方向：其一是基于带宽（<code>Bandwidth</code>）和数据吞吐率(<code>Throughput</code>)的优化；其二是基于计算性能(<code>Performance</code>)的优化。通常在设计的过程中，新手往往只会考虑到计算性能的优化，不断地提高并行度，但是在提高并行度的过程中，往往会导致带宽严重不足，数据吞吐率低，进一步使得并行的效果受到带宽的限制，以至于无法实现并行的效果。在实现矩阵乘法的例子中，我们首先做了基本的功能实现，紧接着对于<code>Local Memory</code>和<code>Burst Write/Read</code>的优化就是在提高访存效率，进而提高数据吞吐率。最后关于指令的优化，才是对于计算性能上的优化。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://github.com/Xilinx/SDAccel_Examples/tree/master/getting_started/cpu_to_fpga" target="_blank" rel="noopener">xilinx github Xilinx/SDAccel_Examples/cpu_to_fpga</a><br>ug1253 SDx Pragma Reference Guide 2017.2<br>ug1207 SDAccel Environment Optmizaton Guide</p>
 ]]></content>
       
         <categories>
@@ -162,6 +163,7 @@
 <ul>
 <li>硬件实现结果</li>
 </ul>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://github.com/Xilinx/SDAccel_Examples/tree/master/getting_started/cpu_to_fpga" target="_blank" rel="noopener">xilinx github Xilinx/SDAccel_Examples/cpu_to_fpga</a><br>ug1253 SDx Pragma Reference Guide 2017.2<br>ug1207 SDAccel Environment Optmizaton Guide</p>
 ]]></content>
       
         <categories>
@@ -251,6 +253,7 @@
 <ul>
 <li>硬件实现结果</li>
 </ul>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://github.com/Xilinx/SDAccel_Examples/tree/master/getting_started/cpu_to_fpga" target="_blank" rel="noopener">xilinx github Xilinx/SDAccel_Examples/cpu_to_fpga</a><br>ug1253 SDx Pragma Reference Guide 2017.2<br>ug1207 SDAccel Environment Optmizaton Guide</p>
 ]]></content>
       
         <categories>
@@ -345,6 +348,7 @@
 <ul>
 <li>硬件实现结果</li>
 </ul>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://github.com/Xilinx/SDAccel_Examples/tree/master/getting_started/cpu_to_fpga" target="_blank" rel="noopener">xilinx github Xilinx/SDAccel_Examples/cpu_to_fpga</a><br>ug1253 SDx Pragma Reference Guide 2017.2<br>ug1207 SDAccel Environment Optmizaton Guide</p>
 ]]></content>
       
         <categories>

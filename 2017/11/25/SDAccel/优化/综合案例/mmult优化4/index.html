@@ -100,7 +100,7 @@
 <meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/1d973057d6b3609af2256ab9a19e4edf.png">
 <meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/98602da9079cd03cf8ccc7045d21ea04.png">
 <meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/513370e7eff99b2da9e41d14edfe265d.png">
-<meta property="og:updated_time" content="2017-11-29T07:17:09.592Z">
+<meta property="og:updated_time" content="2017-11-29T07:51:09.877Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDAccel矩阵乘法优化（四）">
 <meta name="twitter:description" content="从一个矩阵乘法的例子一步一步进行功能设计与性能优化。SDAccel矩阵乘法优化（一）SDAccel矩阵乘法优化（二）SDAccel矩阵乘法优化（三）SDAccel矩阵乘法优化（四）  mmult实现及优化步骤   步骤 实现功能 关键概念/ Keywords     1、cpu实现 即在host端实现简单的矩阵乘法，便于比对数据与性能对比   2、OpenCL实现 在device端实现基于Open">
@@ -433,7 +433,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2,101
+                  2,120
                 </span>
               
 
@@ -524,6 +524,7 @@
 <li>硬件实现结果</li>
 </ul>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>到此为止，我们已经完整的分析了一个SDAceel的例子。从CPU实现，再到FPGA实现，并一步一步进行优化设计。在FPGA的优化中主要包括两种优化方向：其一是基于带宽（<code>Bandwidth</code>）和数据吞吐率(<code>Throughput</code>)的优化；其二是基于计算性能(<code>Performance</code>)的优化。通常在设计的过程中，新手往往只会考虑到计算性能的优化，不断地提高并行度，但是在提高并行度的过程中，往往会导致带宽严重不足，数据吞吐率低，进一步使得并行的效果受到带宽的限制，以至于无法实现并行的效果。在实现矩阵乘法的例子中，我们首先做了基本的功能实现，紧接着对于<code>Local Memory</code>和<code>Burst Write/Read</code>的优化就是在提高访存效率，进而提高数据吞吐率。最后关于指令的优化，才是对于计算性能上的优化。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://github.com/Xilinx/SDAccel_Examples/tree/master/getting_started/cpu_to_fpga" target="_blank" rel="noopener">xilinx github Xilinx/SDAccel_Examples/cpu_to_fpga</a><br>ug1253 SDx Pragma Reference Guide 2017.2<br>ug1207 SDAccel Environment Optmizaton Guide</p>
 
       
     </div>
@@ -753,7 +754,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#mmult实现及优化步骤"><span class="nav-number">1.</span> <span class="nav-text">mmult实现及优化步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案分析及优化思路三（指令优化）"><span class="nav-number">2.</span> <span class="nav-text">方案分析及优化思路三（指令优化）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-number">2.1.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实验结果分析"><span class="nav-number">2.2.</span> <span class="nav-text">实验结果分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#mmult实现及优化步骤"><span class="nav-number">1.</span> <span class="nav-text">mmult实现及优化步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案分析及优化思路三（指令优化）"><span class="nav-number">2.</span> <span class="nav-text">方案分析及优化思路三（指令优化）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-number">2.1.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实验结果分析"><span class="nav-number">2.2.</span> <span class="nav-text">实验结果分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
