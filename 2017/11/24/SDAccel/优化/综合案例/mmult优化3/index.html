@@ -72,7 +72,7 @@
 
 
 
-  <meta name="keywords" content="SDAccel,综合案例,矩阵乘法,优化,Burst," />
+  <meta name="keywords" content="SDAccel,优化,综合案例,矩阵乘法,Burst," />
 
 
 
@@ -86,7 +86,7 @@
 
 
 <meta name="description" content="从一个矩阵乘法的例子一步一步进行功能设计与性能优化。SDAccel矩阵乘法优化（一）SDAccel矩阵乘法优化（二）SDAccel矩阵乘法优化（三）SDAccel矩阵乘法优化（四）   mmult实现及优化步骤   步骤 实现功能 关键概念/ Keywords     1、cpu实现 即在host端实现简单的矩阵乘法，">
-<meta name="keywords" content="SDAccel,综合案例,矩阵乘法,优化,Burst">
+<meta name="keywords" content="SDAccel,优化,综合案例,矩阵乘法,Burst">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SDAccel矩阵乘法优化（三）">
 <meta property="og:url" content="http://xuke225.github.io.git/2017/11/24/SDAccel/优化/综合案例/mmult优化3/index.html">
@@ -96,7 +96,8 @@
 <meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/78a27d3a0dfbdabcbb72001593a6d2d0.png">
 <meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/bcad78af9618b750611d8b90c59fda4c.png">
 <meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/f69d0874e55c442f9cdc404cf86be084.png">
-<meta property="og:updated_time" content="2017-11-29T06:41:21.145Z">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/4fc2106b796d24656f67f7fb82c07668.png">
+<meta property="og:updated_time" content="2017-11-29T07:18:30.072Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDAccel矩阵乘法优化（三）">
 <meta name="twitter:description" content="从一个矩阵乘法的例子一步一步进行功能设计与性能优化。SDAccel矩阵乘法优化（一）SDAccel矩阵乘法优化（二）SDAccel矩阵乘法优化（三）SDAccel矩阵乘法优化（四）   mmult实现及优化步骤   步骤 实现功能 关键概念/ Keywords     1、cpu实现 即在host端实现简单的矩阵乘法，便于比对数据与性能对比   2、OpenCL实现 在device端实现基于Ope">
@@ -429,7 +430,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,233
+                  1,239
                 </span>
               
 
@@ -507,6 +508,10 @@
 <li>综合结果分析<br>＊ 首先，硬件代码没有优化指令，不需要关注指令是否实现。<br>＊ 然后，相比于<code>Local Memory</code>版本的矩阵乘法实现，<code>Burst Read/Write</code>的实现方式主要是将两个原本在一个循环体内的输入切分到两个for循环中分开读入。从<code>Pipleline</code>的角度考虑：第一段for循环<code>pipeline</code>成功；第二段的for循环只有<code>write_data</code>的for循环成功，最外层的两个for循环成功完成<code>flatten</code>但是<code>write_data</code>与次外层的for循环因为含有<code>LOOP BODY</code>的原因，无法成功<code>flatten</code>，因此也无法完成整体的<code>pipeline</code>；第三段for循环<code>pipeline</code>成功。<br>＊ 从pipeline成功后的II角度考虑:第一段for循环<code>pipeline</code>后的<code>II=1</code>,解决了之前 <code>gmem carry dependency</code>的问题;第二三段for循环<code>pipeline</code>后的<code>II=1</code>。</li>
 </ul>
 <ul>
+<li>硬件仿真结果</li>
+</ul>
+<p><img src="http://oz3lw4cji.bkt.clouddn.com/4fc2106b796d24656f67f7fb82c07668.png" alt=""></p>
+<ul>
 <li>硬件实现结果</li>
 </ul>
 
@@ -561,11 +566,11 @@
           
             <a href="/tags/SDAccel/" rel="tag"><i class="fa fa-tag"></i> SDAccel</a>
           
+            <a href="/tags/优化/" rel="tag"><i class="fa fa-tag"></i> 优化</a>
+          
             <a href="/tags/综合案例/" rel="tag"><i class="fa fa-tag"></i> 综合案例</a>
           
             <a href="/tags/矩阵乘法/" rel="tag"><i class="fa fa-tag"></i> 矩阵乘法</a>
-          
-            <a href="/tags/优化/" rel="tag"><i class="fa fa-tag"></i> 优化</a>
           
             <a href="/tags/Burst/" rel="tag"><i class="fa fa-tag"></i> Burst</a>
           

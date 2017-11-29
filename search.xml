@@ -65,6 +65,9 @@
 <li>综合结果分析<br>＊ 首先，硬件代码没有优化指令，log文件中首先将三个数组进行了对应维度的切割，然后也成功的对最内层的循环进行了<code>unroll</code>处理。<br>＊ 然后，相比于<code>Burst Read/Write</code>版本的矩阵乘法实现，该版本主要是加上了两个优化指令，实现内层循环的并行化。从<code>Pipleline</code>的角度考虑：第一段for循环<code>pipeline</code>成功；第二段的for循环嵌套中<code>write_data</code>对应的for循环并行展开，接着对其外层的for循环进行<code>flatten</code>,最终，整体实现<code>pipeline</code>；第三段for循环<code>pipeline</code>成功。<br>＊ 从pipeline成功后的II角度考虑:所有for循环<code>pipeline</code>后的<code>II=1</code>。</li>
 </ul>
 <ul>
+<li>硬件仿真结果<br><img src="http://oz3lw4cji.bkt.clouddn.com/513370e7eff99b2da9e41d14edfe265d.png" alt=""></li>
+</ul>
+<ul>
 <li>硬件实现结果</li>
 </ul>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>到此为止，我们已经完整的分析了一个SDAceel的例子。从CPU实现，再到FPGA实现，并一步一步进行优化设计。在FPGA的优化中主要包括两种优化方向：其一是基于带宽（<code>Bandwidth</code>）和数据吞吐率(<code>Throughput</code>)的优化；其二是基于计算性能(<code>Performance</code>)的优化。通常在设计的过程中，新手往往只会考虑到计算性能的优化，不断地提高并行度，但是在提高并行度的过程中，往往会导致带宽严重不足，数据吞吐率低，进一步使得并行的效果受到带宽的限制，以至于无法实现并行的效果。在实现矩阵乘法的例子中，我们首先做了基本的功能实现，紧接着对于<code>Local Memory</code>和<code>Burst Write/Read</code>的优化就是在提高访存效率，进而提高数据吞吐率。最后关于指令的优化，才是对于计算性能上的优化。</p>
@@ -85,11 +88,11 @@
             
             <tag> SDAccel </tag>
             
+            <tag> 优化 </tag>
+            
             <tag> 综合案例 </tag>
             
             <tag> 矩阵乘法 </tag>
-            
-            <tag> 优化 </tag>
             
             <tag> Local Memory </tag>
             
@@ -153,6 +156,10 @@
 <li>综合结果分析<br>＊ 首先，硬件代码没有优化指令，不需要关注指令是否实现。<br>＊ 然后，相比于<code>Local Memory</code>版本的矩阵乘法实现，<code>Burst Read/Write</code>的实现方式主要是将两个原本在一个循环体内的输入切分到两个for循环中分开读入。从<code>Pipleline</code>的角度考虑：第一段for循环<code>pipeline</code>成功；第二段的for循环只有<code>write_data</code>的for循环成功，最外层的两个for循环成功完成<code>flatten</code>但是<code>write_data</code>与次外层的for循环因为含有<code>LOOP BODY</code>的原因，无法成功<code>flatten</code>，因此也无法完成整体的<code>pipeline</code>；第三段for循环<code>pipeline</code>成功。<br>＊ 从pipeline成功后的II角度考虑:第一段for循环<code>pipeline</code>后的<code>II=1</code>,解决了之前 <code>gmem carry dependency</code>的问题;第二三段for循环<code>pipeline</code>后的<code>II=1</code>。</li>
 </ul>
 <ul>
+<li>硬件仿真结果</li>
+</ul>
+<p><img src="http://oz3lw4cji.bkt.clouddn.com/4fc2106b796d24656f67f7fb82c07668.png" alt=""></p>
+<ul>
 <li>硬件实现结果</li>
 </ul>
 ]]></content>
@@ -172,11 +179,11 @@
             
             <tag> SDAccel </tag>
             
+            <tag> 优化 </tag>
+            
             <tag> 综合案例 </tag>
             
             <tag> 矩阵乘法 </tag>
-            
-            <tag> 优化 </tag>
             
             <tag> Burst </tag>
             
@@ -238,6 +245,10 @@
 </ul>
 <p>＊ 首先，硬件代码没有优化指令，不需要关注指令是否实现。<br>＊ 然后，相比于原始版本的矩阵乘法实现，<code>Local Memory</code>的实现方式首先将整体的代码风格进行了调整，切分成三段并列的<code>for</code>循环形式。从<code>Pipleline</code>的角度考虑：第一段for循环<code>pipeline</code>成功；第二段的for循环只有<code>write_data</code>的for循环成功，最外层的两个for循环成功完成<code>flatten</code>但是<code>write_data</code>与次外层的for循环因为含有<code>LOOP BODY</code>的原因，无法成功<code>flatten</code>，因此也无法完成整体的<code>pipeline</code>；第三段for循环<code>pipeline</code>成功。<br>＊ 从pipeline成功后的II角度考虑:第一段for循环<code>pipeline</code>后的<code>II=2</code>,原因依然是 <code>gmem carry dependency</code>;第二三段for循环<code>pipeline</code>后的<code>II=1</code>。</p>
 <ul>
+<li>硬件仿真结果</li>
+</ul>
+<p><img src="http://oz3lw4cji.bkt.clouddn.com/18831f5a85127d53a257ecb44dcb6e59.png" alt=""></p>
+<ul>
 <li>硬件实现结果</li>
 </ul>
 ]]></content>
@@ -257,11 +268,11 @@
             
             <tag> SDAccel </tag>
             
+            <tag> 优化 </tag>
+            
             <tag> 综合案例 </tag>
             
             <tag> 矩阵乘法 </tag>
-            
-            <tag> 优化 </tag>
             
             <tag> Local Memory </tag>
             
@@ -328,6 +339,10 @@
 <p><span id="inline-red">分析综合结果的方法：</span><br>＊ 首先分析对于添加的优化指令是否综合实现，若不能实现，原因是什么？<br>＊ 然后分析代码<code>pipeline</code>的情况。SDAccel对于嵌套的for循环来讲：<span id="inline-blue">pipeline内层的for循环全部unroll，pipeline外层的for循环试图进行Flattening，Flatten成功则统一到一个pipeline中。</span><br>＊ 对于<code>pipeline</code>的循环进一步分析II值是多少，理论能优化到多少？</p>
 <p>从上述日志分析可知，该硬件的综合实现有很多问题：<br>＊ 首先，硬件代码没有优化指令，不需要关注指令是否实现。<br>＊ 然后，对于实现的三层for循环，只是实现了最内层<code>LOOP3</code>循环的<code>pipeline</code>，中间层未实现<code>Flatten</code>的原因是：<code>the outer loop is not a perfect loop.</code>。而<code>LOOP2</code>向<code>LOOP1</code>继续试图进行<code>Flattening</code>,成功则<code>LOOP2</code>与<code>LOOP1</code>统一为<code>LOOP1_LOOP2</code>。一般情况下对于Flattening不成功的原因有两种：一种是外层for循环中夹杂内层for循环的结构；另一种是内层for循环的循环边界是变量。具体循环的类型如下图所示。所以此例中<code>LOOP2</code>不能与<code>LOOP3</code>实现<code>Flatten</code>的原因是前者。也就是在<code>LOOP2</code>循环体中有<code>out[i * dim + j] = 0;</code>操作，而<code>out</code>数组在内层<code>LOOP3</code>中同样用到。反过来说，假如说编译器对<code>LOOP2</code>与<code>LOOP3</code>进行<code>Flatten</code>，那么对于<code>out[i * dim + j] = 0</code>操作在同一个循环中将不知如何与内部的循环体进行融合。<br><img src="http://oz3lw4cji.bkt.clouddn.com/9fcff7ae5de5f6541839db30cee5a1c7.png" alt="loop nest class"><br>＊ 最后对于试图<code>Pipeline</code>的<code>LOOP3</code>进行<code>II</code>值的分析，从log文件中可知II值过大，以至于无法进行<code>Pipeline</code>,原因是产生接口<code>gmem</code>的<code>carried dependence</code>。所以，所有的<code>loop</code>都未能实现<code>pipeline</code>。<br>关于<code>gmem</code>的<code>carried dependence</code>问题可以关注我的另一篇文章 <a href="https://xuke225.github.io/2017/11/15/SDAccel/%E4%BC%98%E5%8C%96/kernel_to_gmem/gmem-carry-dependency-%E5%88%86%E6%9E%90/" target="_blank" rel="noopener">gmem carry dependency 分析</a></p>
 <ul>
+<li>硬件仿真结果</li>
+</ul>
+<p><img src="http://oz3lw4cji.bkt.clouddn.com/a1d9c0cf9b615dd9ced9d8806c5df6bc.png" alt=""></p>
+<ul>
 <li>硬件实现结果</li>
 </ul>
 ]]></content>
@@ -347,11 +362,11 @@
             
             <tag> SDAccel </tag>
             
+            <tag> 优化 </tag>
+            
             <tag> 综合案例 </tag>
             
             <tag> 矩阵乘法 </tag>
-            
-            <tag> 优化 </tag>
             
         </tags>
         

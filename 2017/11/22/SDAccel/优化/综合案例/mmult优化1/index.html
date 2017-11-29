@@ -72,7 +72,7 @@
 
 
 
-  <meta name="keywords" content="SDAccel,综合案例,矩阵乘法,优化," />
+  <meta name="keywords" content="SDAccel,优化,综合案例,矩阵乘法," />
 
 
 
@@ -86,7 +86,7 @@
 
 
 <meta name="description" content="从一个矩阵乘法的例子一步一步进行功能设计与性能优化。SDAccel矩阵乘法优化（一）SDAccel矩阵乘法优化（二）SDAccel矩阵乘法优化（三）SDAccel矩阵乘法优化（四）  mmult实现及优化步骤   步骤 实现功能 关键概念/ Keywords     1、cpu实现 即在host端实现简单的矩阵乘法，便">
-<meta name="keywords" content="SDAccel,综合案例,矩阵乘法,优化">
+<meta name="keywords" content="SDAccel,优化,综合案例,矩阵乘法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SDAccel矩阵乘法优化（一）">
 <meta property="og:url" content="http://xuke225.github.io.git/2017/11/22/SDAccel/优化/综合案例/mmult优化1/index.html">
@@ -98,7 +98,8 @@
 <meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/6ce926b1698a23ef7495a0bf7ac2676d.png">
 <meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/9fd0edfee83d73464d03fcbc8ba11d0b.png">
 <meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/9fcff7ae5de5f6541839db30cee5a1c7.png">
-<meta property="og:updated_time" content="2017-11-29T06:41:22.448Z">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/a1d9c0cf9b615dd9ced9d8806c5df6bc.png">
+<meta property="og:updated_time" content="2017-11-29T07:43:13.886Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDAccel矩阵乘法优化（一）">
 <meta name="twitter:description" content="从一个矩阵乘法的例子一步一步进行功能设计与性能优化。SDAccel矩阵乘法优化（一）SDAccel矩阵乘法优化（二）SDAccel矩阵乘法优化（三）SDAccel矩阵乘法优化（四）  mmult实现及优化步骤   步骤 实现功能 关键概念/ Keywords     1、cpu实现 即在host端实现简单的矩阵乘法，便于比对数据与性能对比   2、OpenCL实现 在device端实现基于Open">
@@ -431,7 +432,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2,654
+                  2,660
                 </span>
               
 
@@ -512,6 +513,10 @@
 <p><span id="inline-red">分析综合结果的方法：</span><br>＊ 首先分析对于添加的优化指令是否综合实现，若不能实现，原因是什么？<br>＊ 然后分析代码<code>pipeline</code>的情况。SDAccel对于嵌套的for循环来讲：<span id="inline-blue">pipeline内层的for循环全部unroll，pipeline外层的for循环试图进行Flattening，Flatten成功则统一到一个pipeline中。</span><br>＊ 对于<code>pipeline</code>的循环进一步分析II值是多少，理论能优化到多少？</p>
 <p>从上述日志分析可知，该硬件的综合实现有很多问题：<br>＊ 首先，硬件代码没有优化指令，不需要关注指令是否实现。<br>＊ 然后，对于实现的三层for循环，只是实现了最内层<code>LOOP3</code>循环的<code>pipeline</code>，中间层未实现<code>Flatten</code>的原因是：<code>the outer loop is not a perfect loop.</code>。而<code>LOOP2</code>向<code>LOOP1</code>继续试图进行<code>Flattening</code>,成功则<code>LOOP2</code>与<code>LOOP1</code>统一为<code>LOOP1_LOOP2</code>。一般情况下对于Flattening不成功的原因有两种：一种是外层for循环中夹杂内层for循环的结构；另一种是内层for循环的循环边界是变量。具体循环的类型如下图所示。所以此例中<code>LOOP2</code>不能与<code>LOOP3</code>实现<code>Flatten</code>的原因是前者。也就是在<code>LOOP2</code>循环体中有<code>out[i * dim + j] = 0;</code>操作，而<code>out</code>数组在内层<code>LOOP3</code>中同样用到。反过来说，假如说编译器对<code>LOOP2</code>与<code>LOOP3</code>进行<code>Flatten</code>，那么对于<code>out[i * dim + j] = 0</code>操作在同一个循环中将不知如何与内部的循环体进行融合。<br><img src="http://oz3lw4cji.bkt.clouddn.com/9fcff7ae5de5f6541839db30cee5a1c7.png" alt="loop nest class"><br>＊ 最后对于试图<code>Pipeline</code>的<code>LOOP3</code>进行<code>II</code>值的分析，从log文件中可知II值过大，以至于无法进行<code>Pipeline</code>,原因是产生接口<code>gmem</code>的<code>carried dependence</code>。所以，所有的<code>loop</code>都未能实现<code>pipeline</code>。<br>关于<code>gmem</code>的<code>carried dependence</code>问题可以关注我的另一篇文章 <a href="https://xuke225.github.io/2017/11/15/SDAccel/%E4%BC%98%E5%8C%96/kernel_to_gmem/gmem-carry-dependency-%E5%88%86%E6%9E%90/" target="_blank" rel="noopener">gmem carry dependency 分析</a></p>
 <ul>
+<li>硬件仿真结果</li>
+</ul>
+<p><img src="http://oz3lw4cji.bkt.clouddn.com/a1d9c0cf9b615dd9ced9d8806c5df6bc.png" alt=""></p>
+<ul>
 <li>硬件实现结果</li>
 </ul>
 
@@ -566,11 +571,11 @@
           
             <a href="/tags/SDAccel/" rel="tag"><i class="fa fa-tag"></i> SDAccel</a>
           
+            <a href="/tags/优化/" rel="tag"><i class="fa fa-tag"></i> 优化</a>
+          
             <a href="/tags/综合案例/" rel="tag"><i class="fa fa-tag"></i> 综合案例</a>
           
             <a href="/tags/矩阵乘法/" rel="tag"><i class="fa fa-tag"></i> 矩阵乘法</a>
-          
-            <a href="/tags/优化/" rel="tag"><i class="fa fa-tag"></i> 优化</a>
           
         </div>
       
