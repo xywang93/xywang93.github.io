@@ -4,6 +4,67 @@
 
     
   <url>
+    <loc>http://xuke225.github.io.git/2017/11/27/SDAccel/%E4%BC%98%E5%8C%96/kernel_opt/OpenCL_dataflow_pipe/</loc>
+    <lastmod>2017-12-18T02:36:39.641Z</lastmod>
+    <data>
+        <display>
+        <title>SDAccel Dataflow 那点事（二）</title>
+        <pubTime>2017-11-26T16:00:00.000Z</pubTime>
+        
+        <tag>SDAccel</tag>
+         
+        <tag>优化</tag>
+         
+        <tag>dataflow</tag>
+         
+        <tag>pipe</tag>
+         
+         
+           
+             
+              <breadCrumb title="SDAccel" url="http://xuke225.github.io.git/categories/SDAccel/"/>
+          
+             
+              <breadCrumb title="dataflow" url="http://xuke225.github.io.git/categories/SDAccel/dataflow/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://xuke225.github.io.git/2017/11/26/SDAccel/%E4%BC%98%E5%8C%96/kernel_opt/OpenCL_dataflow_function/</loc>
+    <lastmod>2017-12-18T02:34:45.410Z</lastmod>
+    <data>
+        <display>
+        <title>SDAccel Dataflow 那点事（一）</title>
+        <pubTime>2017-11-25T16:00:00.000Z</pubTime>
+        
+        <tag>SDAccel</tag>
+         
+        <tag>优化</tag>
+         
+        <tag>dataflow</tag>
+         
+        <tag>function</tag>
+         
+         
+           
+             
+              <breadCrumb title="SDAccel" url="http://xuke225.github.io.git/categories/SDAccel/"/>
+          
+             
+              <breadCrumb title="优化" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
+          
+             
+              <breadCrumb title="dataflow" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/dataflow/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://xuke225.github.io.git/2017/11/25/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%964/</loc>
     <lastmod>2017-11-29T07:51:09.877Z</lastmod>
     <data>
@@ -13,11 +74,11 @@
         
         <tag>SDAccel</tag>
          
-        <tag>优化</tag>
-         
         <tag>综合案例</tag>
          
         <tag>矩阵乘法</tag>
+         
+        <tag>优化</tag>
          
         <tag>Local Memory</tag>
          
@@ -47,11 +108,11 @@
         
         <tag>SDAccel</tag>
          
-        <tag>优化</tag>
-         
         <tag>综合案例</tag>
          
         <tag>矩阵乘法</tag>
+         
+        <tag>优化</tag>
          
         <tag>Burst</tag>
          
@@ -81,11 +142,11 @@
         
         <tag>SDAccel</tag>
          
-        <tag>优化</tag>
-         
         <tag>综合案例</tag>
          
         <tag>矩阵乘法</tag>
+         
+        <tag>优化</tag>
          
         <tag>Local Memory</tag>
          
@@ -115,11 +176,11 @@
         
         <tag>SDAccel</tag>
          
-        <tag>优化</tag>
-         
         <tag>综合案例</tag>
          
         <tag>矩阵乘法</tag>
+         
+        <tag>优化</tag>
          
          
            
