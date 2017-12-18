@@ -98,7 +98,7 @@
 <meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/08ba6a45ed0db177d0d3d990478caf3e.png">
 <meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/42f2d336176fb922a30d30691a77e81f.png">
 <meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/0d1e0e0ba375769beb6cd81797392592.png">
-<meta property="og:updated_time" content="2017-12-18T02:36:39.641Z">
+<meta property="og:updated_time" content="2017-12-18T02:41:58.791Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDAccel Dataflow 那点事（二）">
 <meta name="twitter:description" content="dataflow可谓是FPGA性能体现的绝佳表现方式，数据在硬件中能流动起来，靠的就是dataflow!下面我们将探究SDAccel OpenCL开发方式下两种dataflow的实现方式：pipe传输方式与function传输方式。以及SDAccel HLS 开发方式下两种dataflow的编程风格：loop 与 streamSDAccel Dataflow 那点事（一）SDAccel Dataf">
@@ -372,7 +372,18 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SDAccel/dataflow/" itemprop="url" rel="index">
+                  <a href="/categories/SDAccel/优化/" itemprop="url" rel="index">
+                    <span itemprop="name">优化</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SDAccel/优化/dataflow/" itemprop="url" rel="index">
                     <span itemprop="name">dataflow</span>
                   </a>
                 </span>
@@ -447,7 +458,10 @@
       
         <blockquote class="blockquote-center"><br>dataflow可谓是FPGA性能体现的绝佳表现方式，数据在硬件中能流动起来，靠的就是dataflow!<br>下面我们将探究SDAccel OpenCL开发方式下两种dataflow的实现方式：<code>pipe</code>传输方式与<code>function</code>传输方式。<br>以及SDAccel HLS 开发方式下两种dataflow的编程风格：<code>loop</code> 与 <code>stream</code><br><a href="https://xuke225.github.io/2017/11/15/SDAccel/" target="_blank" rel="noopener">SDAccel Dataflow 那点事（一）</a><br><a href="">SDAccel Dataflow 那点事（二）</a><br><a href="">SDAccel Dataflow 那点事（三）</a><br><a href="">SDAccel Dataflow 那点事（四）</a><br></blockquote>
 
+
+
 <h3 id="dataflow-pipe-方式简介"><a href="#dataflow-pipe-方式简介" class="headerlink" title="dataflow pipe 方式简介"></a>dataflow pipe 方式简介</h3><p>对于<code>OpenCL</code>来说，<code>Dataflow</code>的对象除了<code>function</code>的方式之外，还有<code>Kernel</code>的方式，因此，<code>Dataflow</code>在<code>OpenCL</code>中还有一种在<code>Kernel</code>与<code>Kernel</code>之间的传输方式,也就是通过<code>pipe</code>传输。<code>pipe</code>的传输机制采用的其实是<code>FIFO</code>的方式，因此在使用<code>pipe</code>传输的过程中需要设置<code>FIFO</code>的深度，也就是在传输过程中有多少的缓存深度。</p>
+<a id="more"></a>
 <h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><ul>
 <li>实现示意图</li>
 </ul>
