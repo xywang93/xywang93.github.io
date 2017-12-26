@@ -72,7 +72,7 @@
 
 
 
-  <meta name="keywords" content="SDAccel,优化,综合案例,矩阵乘法,Burst," />
+  <meta name="keywords" content="SDAccel,优化,dataflow,function," />
 
 
 
@@ -85,23 +85,20 @@
 
 
 
-<meta name="description" content="从一个矩阵乘法的例子一步一步进行功能设计与性能优化。SDAccel矩阵乘法优化（一）SDAccel矩阵乘法优化（二）SDAccel矩阵乘法优化（三）SDAccel矩阵乘法优化（四）   mmult实现及优化步骤   步骤 实现功能 关键概念/ Keywords     1、cpu实现 即在host端实现简单的矩阵乘法，">
-<meta name="keywords" content="SDAccel,优化,综合案例,矩阵乘法,Burst">
+<meta name="description" content="dataflow可谓是FPGA性能体现的绝佳表现方式，数据在硬件中能流动起来，靠的就是dataflow!下面我们将探究SDAccel OpenCL开发方式下两种dataflow的实现方式：pipe传输方式与function传输方式。以及SDAccel HLS 开发方式下两种dataflow的编程风格：loop 与 st">
+<meta name="keywords" content="SDAccel,优化,dataflow,function">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SDAccel矩阵乘法优化（三）">
-<meta property="og:url" content="http://xuke225.github.io.git/2017/11/24/SDAccel/优化/综合案例/mmult优化3/index.html">
+<meta property="og:title" content="SDAccel Dataflow 那点事（一）">
+<meta property="og:url" content="http://xuke225.github.io.git/2017/11/26/SDAccel/优化/dataflow/OpenCL_dataflow_function/index.html">
 <meta property="og:site_name" content="AI 异构">
-<meta property="og:description" content="从一个矩阵乘法的例子一步一步进行功能设计与性能优化。SDAccel矩阵乘法优化（一）SDAccel矩阵乘法优化（二）SDAccel矩阵乘法优化（三）SDAccel矩阵乘法优化（四）   mmult实现及优化步骤   步骤 实现功能 关键概念/ Keywords     1、cpu实现 即在host端实现简单的矩阵乘法，便于比对数据与性能对比   2、OpenCL实现 在device端实现基于Ope">
+<meta property="og:description" content="dataflow可谓是FPGA性能体现的绝佳表现方式，数据在硬件中能流动起来，靠的就是dataflow!下面我们将探究SDAccel OpenCL开发方式下两种dataflow的实现方式：pipe传输方式与function传输方式。以及SDAccel HLS 开发方式下两种dataflow的编程风格：loop 与 streamSDAccel Dataflow 那点事（一）SDAccel Dataf">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/78a27d3a0dfbdabcbb72001593a6d2d0.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/bcad78af9618b750611d8b90c59fda4c.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/f69d0874e55c442f9cdc404cf86be084.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/4fc2106b796d24656f67f7fb82c07668.png">
-<meta property="og:updated_time" content="2017-11-29T07:51:02.710Z">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/630a6ce95be94ecc3f596cc46f969e28.png">
+<meta property="og:updated_time" content="2017-12-18T02:42:05.495Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SDAccel矩阵乘法优化（三）">
-<meta name="twitter:description" content="从一个矩阵乘法的例子一步一步进行功能设计与性能优化。SDAccel矩阵乘法优化（一）SDAccel矩阵乘法优化（二）SDAccel矩阵乘法优化（三）SDAccel矩阵乘法优化（四）   mmult实现及优化步骤   步骤 实现功能 关键概念/ Keywords     1、cpu实现 即在host端实现简单的矩阵乘法，便于比对数据与性能对比   2、OpenCL实现 在device端实现基于Ope">
-<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/78a27d3a0dfbdabcbb72001593a6d2d0.png">
+<meta name="twitter:title" content="SDAccel Dataflow 那点事（一）">
+<meta name="twitter:description" content="dataflow可谓是FPGA性能体现的绝佳表现方式，数据在硬件中能流动起来，靠的就是dataflow!下面我们将探究SDAccel OpenCL开发方式下两种dataflow的实现方式：pipe传输方式与function传输方式。以及SDAccel HLS 开发方式下两种dataflow的编程风格：loop 与 streamSDAccel Dataflow 那点事（一）SDAccel Dataf">
+<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/630a6ce95be94ecc3f596cc46f969e28.png">
 
 
 
@@ -131,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://xuke225.github.io.git/2017/11/24/SDAccel/优化/综合案例/mmult优化3/"/>
+  <link rel="canonical" href="http://xuke225.github.io.git/2017/11/26/SDAccel/优化/dataflow/OpenCL_dataflow_function/"/>
 
 
 
 
 
-  <title>SDAccel矩阵乘法优化（三） | AI 异构</title>
+  <title>SDAccel Dataflow 那点事（一） | AI 异构</title>
   
 
 
@@ -308,7 +305,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://xuke225.github.io.git/2017/11/24/SDAccel/优化/综合案例/mmult优化3/">
+    <link itemprop="mainEntityOfPage" href="http://xuke225.github.io.git/2017/11/26/SDAccel/优化/dataflow/OpenCL_dataflow_function/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="许柯">
@@ -325,7 +322,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">SDAccel矩阵乘法优化（三）</h2>
+          <h2 class="post-title" itemprop="name headline">SDAccel Dataflow 那点事（一）</h2>
         
 
         <div class="post-meta">
@@ -337,8 +334,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-24T00:00:00+08:00">
-                2017-11-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-26T00:00:00+08:00">
+                2017-11-26
               </time>
             
 
@@ -382,8 +379,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SDAccel/优化/综合案例/" itemprop="url" rel="index">
-                    <span itemprop="name">综合案例</span>
+                  <a href="/categories/SDAccel/优化/dataflow/" itemprop="url" rel="index">
+                    <span itemprop="name">dataflow</span>
                   </a>
                 </span>
 
@@ -401,8 +398,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/24/SDAccel/优化/综合案例/mmult优化3/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count hc-comment-count" data-xid="2017/11/24/SDAccel/优化/综合案例/mmult优化3/" itemprop="commentsCount"></span>
+                <a href="/2017/11/26/SDAccel/优化/dataflow/OpenCL_dataflow_function/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/11/26/SDAccel/优化/dataflow/OpenCL_dataflow_function/" itemprop="commentsCount"></span>
                 </a>
               </span>
               <!--/noindex-->
@@ -430,7 +427,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,258
+                  941
                 </span>
               
 
@@ -455,66 +452,28 @@
       
 
       
-        <blockquote class="blockquote-center"><br><img src="http://oz3lw4cji.bkt.clouddn.com/78a27d3a0dfbdabcbb72001593a6d2d0.png" alt=""><br>从一个矩阵乘法的例子一步一步进行功能设计与性能优化。<br><a href="https://xuke225.github.io/2017/11/22/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%961/" target="_blank" rel="noopener">SDAccel矩阵乘法优化（一）</a><br><a href="https://xuke225.github.io/2017/11/23/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%962/" target="_blank" rel="noopener">SDAccel矩阵乘法优化（二）</a><br><a href="https://xuke225.github.io/2017/11/24/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%963/" target="_blank" rel="noopener">SDAccel矩阵乘法优化（三）</a><br><a href="https://xuke225.github.io/2017/11/25/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%964/" target="_blank" rel="noopener">SDAccel矩阵乘法优化（四）</a><br></blockquote>
+        <blockquote class="blockquote-center"><br>dataflow可谓是FPGA性能体现的绝佳表现方式，数据在硬件中能流动起来，靠的就是dataflow!<br>下面我们将探究SDAccel OpenCL开发方式下两种dataflow的实现方式：<code>pipe</code>传输方式与<code>function</code>传输方式。<br>以及SDAccel HLS 开发方式下两种dataflow的编程风格：<code>loop</code> 与 <code>stream</code><br><a href="https://xuke225.github.io/2017/11/15/SDAccel/" target="_blank" rel="noopener">SDAccel Dataflow 那点事（一）</a><br><a href="">SDAccel Dataflow 那点事（二）</a><br><a href="">SDAccel Dataflow 那点事（三）</a><br><a href="">SDAccel Dataflow 那点事（四）</a><br></blockquote>
 
 
-<h3 id="mmult实现及优化步骤"><a href="#mmult实现及优化步骤" class="headerlink" title="mmult实现及优化步骤"></a>mmult实现及优化步骤</h3><table>
-<thead>
-<tr>
-<th>步骤</th>
-<th>实现功能</th>
-<th>关键概念/ Keywords</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1、cpu实现</td>
-<td>即在<code>host</code>端实现简单的矩阵乘法，便于比对数据与性能对比</td>
-</tr>
-<tr>
-<td>2、OpenCL实现</td>
-<td>在<code>device</code>端实现基于OpenCL的FPGA矩阵乘法硬件设计.</td>
-<td><strong>Key</strong> <strong>Concepts</strong><br> - OpenCL APIs</td>
-</tr>
-<tr>
-<td>3、加入<code>Local Memory</code></td>
-<td>采用 <code>Local Memory</code> 减少<strong>数据访存</strong>次数</td>
-<td><strong>Key</strong> <strong>Concepts</strong><br> - Kernel Optimization<br> - Local Memory</td>
-</tr>
-<tr>
-<td>4、实现读写的突发传输</td>
-<td>采用突发传输的方式更好的实现<code>DDR</code>与 <code>Local Memory</code>数据的读写访问</td>
-<td><strong>Key</strong> <strong>Concepts</strong><br> - Kernel Optimization<br> - Burst Read/Write</td>
-</tr>
-<tr>
-<td>5、数组分割</td>
-<td>通过循环展开与数组分割的方式，实现更好的计算性能</td>
-<td><strong>Key</strong> <strong>Concepts</strong><br> - Array Partition<br> - Loop Unroll<br><strong>Keywords</strong><br> - xcl_pipeline_loop<br> - xcl_array_partition(complete, dim)<br> - opencl_unroll_hint</td>
-</tr>
-</tbody>
-</table>
+<h3 id="dataflow-function-方式简介"><a href="#dataflow-function-方式简介" class="headerlink" title="dataflow function 方式简介"></a>dataflow function 方式简介</h3><p>下图是<code>Dataflow</code>优化的示意图。在不做<code>Dataflow</code>之前，<code>func_C</code>的输入需要依赖<code>func_A</code>和<code>func_B</code>的计算处理，8个时钟周期才能完成一次<code>fun_C</code>的计算结果输出。在做完<code>Dataflow</code>之后，<code>func_A</code>和<code>func_C</code>的启动间隔加快，使得5个周期就可以完成一次<code>func_C</code>的计算结果输出。从理论上上来说，<code>Dataflow</code>也属于更高层次上的一种<code>Pipeline</code>。<br><img src="http://oz3lw4cji.bkt.clouddn.com/630a6ce95be94ecc3f596cc46f969e28.png" alt=""></p>
 <a id="more"></a>
-<h3 id="方案分析及优化思路二（Burst-Read-Write）"><a href="#方案分析及优化思路二（Burst-Read-Write）" class="headerlink" title="方案分析及优化思路二（Burst Read/Write）"></a>方案分析及优化思路二（Burst Read/Write）</h3><p>承接第二篇<code>Local Memory</code>的实现方法进一步进行优化处理，主要解决<code>gmem carry dependency</code>的问题。在这里，不采用<code>Max Memory Ports</code>的方法，因为采用多个接口灰消耗大量的LUT资源，并且大大的限制时钟频率的提升。其实，前面分析过了造成<code>gmem carry dependency</code>的原因，在矩阵乘法的实现过程中，我们完全可以将两个输入的数据分开，不需要在一个for循环中同时进行数据的读取而导致一个for循环在pipeline的过程中需要对两个接口进行读取，进而实现了Burst突发传输。</p>
-<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_SIZE 64</span></span><br><span class="line"></span><br><span class="line">kernel __attribute__((reqd_work_group_size(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>)))</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mmult</span><span class="params">( __global <span class="keyword">int</span>* in1,  <span class="comment">//Read-only input matrix1</span></span></span></span><br><span class="line"><span class="function"><span class="params">            __global <span class="keyword">int</span>* in2,  <span class="comment">//Read-only input matrix2</span></span></span></span><br><span class="line"><span class="function"><span class="params">            __global <span class="keyword">int</span>* out,  <span class="comment">//Output matrix</span></span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">int</span> dim             <span class="comment">//One dimension of the matrix</span></span></span></span><br><span class="line"><span class="function"><span class="params">          )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//Local memory to store input matrices</span></span><br><span class="line">    <span class="comment">//Local memory is implemented as BRAM memory blocks</span></span><br><span class="line">    __local <span class="keyword">int</span> local_in1[MAX_SIZE][MAX_SIZE];</span><br><span class="line">    __local <span class="keyword">int</span> local_in2[MAX_SIZE][MAX_SIZE];</span><br><span class="line">    __local <span class="keyword">int</span> local_out[MAX_SIZE][MAX_SIZE];</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Burst reads on input matrices from DDR memory</span></span><br><span class="line">    <span class="comment">//Burst read for matrix local_in1 and local_in2</span></span><br><span class="line">    read_in1: <span class="keyword">for</span>(<span class="keyword">int</span> iter = <span class="number">0</span>, i = <span class="number">0</span>, j = <span class="number">0</span>; iter &lt; dim * dim; iter++, j++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(j == dim)&#123; j = <span class="number">0</span>; i++; &#125;</span><br><span class="line">        local_in1[i][j] = in1[iter];</span><br><span class="line">    &#125;</span><br><span class="line">    read_in2: <span class="keyword">for</span>(<span class="keyword">int</span> iter = <span class="number">0</span>, i = <span class="number">0</span>, j = <span class="number">0</span>; iter &lt; dim * dim; iter++, j++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(j == dim)&#123; j = <span class="number">0</span>; i++; &#125;</span><br><span class="line">        local_in2[i][j] = in2[iter];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Reads the input_data from local memory, performs the computations</span></span><br><span class="line">    <span class="comment">//and writes the data to local memory</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; dim; i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; dim; j++)&#123;</span><br><span class="line">            local_out[i][j] = <span class="number">0</span>;</span><br><span class="line">            write_data: <span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; dim; k++)&#123;</span><br><span class="line">                local_out[i][j] += local_in1[i][k] * local_in2[k][ j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Burst write from local_out to DDR memory</span></span><br><span class="line">    write_out: <span class="keyword">for</span>(<span class="keyword">int</span> iter = <span class="number">0</span>, i = <span class="number">0</span>, j = <span class="number">0</span>; iter &lt; dim * dim; iter++, j++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(j == dim)&#123; j = <span class="number">0</span>; i++; &#125;</span><br><span class="line">        out[iter] = local_out[i][j];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="实验结果分析"><a href="#实验结果分析" class="headerlink" title="实验结果分析"></a>实验结果分析</h4><ul>
-<li>vivado hls log文件分析</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">WARNING: [XFORM 203-542] Cannot flatten a loop nest &apos;Loop-3.1&apos; (/home/lab611/workspace/xuke/mmult_test/src/mmult.cl:132:22) in function &apos;mmult&apos; :</span><br><span class="line">WARNING: [XFORM 203-542] the outer loop is not a perfect loop.</span><br><span class="line">INFO: [XFORM 203-541] Flattening a loop nest &apos;Loop-3&apos; (/home/lab611/workspace/xuke/mmult_test/src/mmult.cl:131:18) in function &apos;mmult&apos;.</span><br><span class="line">INFO: [XFORM 203-811] Inferring bus burst read of variable length on port &apos;gmem&apos; (/home/lab611/workspace/xuke/mmult_test/src/mmult.cl:122:9).</span><br><span class="line">INFO: [XFORM 203-811] Inferring bus burst read of variable length on port &apos;gmem&apos; (/home/lab611/workspace/xuke/mmult_test/src/mmult.cl:126:9).</span><br><span class="line">INFO: [XFORM 203-811] Inferring bus burst write of variable length on port &apos;gmem&apos; (/home/lab611/workspace/xuke/mmult_test/src/mmult.cl:143:9).</span><br><span class="line">INFO: [HLS 200-111] Finished Architecture Synthesis Time (s): cpu = 00:00:00.79 ; elapsed = 00:00:00.89 . Memory (MB): peak = 494.320 ; gain = 156.758 ; free physical = 19833 ; free virtual = 45208</span><br><span class="line">INFO: [HLS 200-10] Starting hardware synthesis ...</span><br><span class="line">INFO: [HLS 200-10] Synthesizing &apos;mmult&apos; ...</span><br><span class="line">WARNING: [SYN 201-107] Renaming port name &apos;mmult/out&apos; to &apos;mmult/out_r&apos; to avoid the conflict with HDL keywords or other object names.</span><br><span class="line">INFO: [HLS 200-10] ----------------------------------------------------------------</span><br><span class="line">INFO: [HLS 200-42] -- Implementing module &apos;mmult&apos;</span><br><span class="line">INFO: [HLS 200-10] ----------------------------------------------------------------</span><br><span class="line">INFO: [SCHED 204-11] Starting scheduling ...</span><br><span class="line">INFO: [SCHED 204-61] Pipelining loop &apos;read_in1&apos;.</span><br><span class="line">INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.</span><br><span class="line">INFO: [SCHED 204-61] Pipelining loop &apos;read_in2&apos;.</span><br><span class="line">INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 3.</span><br><span class="line">INFO: [SCHED 204-61] Pipelining loop &apos;write_data&apos;.</span><br><span class="line">INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 8.</span><br><span class="line">INFO: [SCHED 204-61] Pipelining loop &apos;write_out&apos;.</span><br><span class="line">INFO: [SCHED 204-61] Pipelining result: Target II: 1, Final II: 1, Depth: 4.</span><br><span class="line">INFO: [SCHED 204-11] Finished scheduling.</span><br></pre></td></tr></table></figure>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><p>下面我们通过一个简单的向量乘法的例子来说明dataflow的function层面的实现。</p>
 <ul>
-<li>HLS Report</li>
+<li>实现示意图</li>
 </ul>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/bcad78af9618b750611d8b90c59fda4c.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/f69d0874e55c442f9cdc404cf86be084.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Data Flow based Adder will be implemented as below:</span><br><span class="line">                _____________</span><br><span class="line">                |             |&lt;----- Input Vector from Global Memory</span><br><span class="line">                |  read_input |       __</span><br><span class="line">                |_____________|-----&gt;|  |</span><br><span class="line">                 _____________       |  | buffer_in</span><br><span class="line">                |             |&lt;-----|__|</span><br><span class="line">                | compute_add |       __</span><br><span class="line">                |_____________|-----&gt;|  |</span><br><span class="line">                 _____________       |  | buffer_out</span><br><span class="line">                |              |&lt;----|__|</span><br><span class="line">                | write_result |</span><br><span class="line">                |______________|-----&gt; Output result to Global Memory</span><br></pre></td></tr></table></figure>
 <ul>
-<li>综合结果分析<br>＊ 首先，硬件代码没有优化指令，不需要关注指令是否实现。<br>＊ 然后，相比于<code>Local Memory</code>版本的矩阵乘法实现，<code>Burst Read/Write</code>的实现方式主要是将两个原本在一个循环体内的输入切分到两个for循环中分开读入。从<code>Pipleline</code>的角度考虑：第一段for循环<code>pipeline</code>成功；第二段的for循环只有<code>write_data</code>的for循环成功，最外层的两个for循环成功完成<code>flatten</code>但是<code>write_data</code>与次外层的for循环因为含有<code>LOOP BODY</code>的原因，无法成功<code>flatten</code>，因此也无法完成整体的<code>pipeline</code>；第三段for循环<code>pipeline</code>成功。<br>＊ 从pipeline成功后的II角度考虑:第一段for循环<code>pipeline</code>后的<code>II=1</code>,解决了之前 <code>gmem carry dependency</code>的问题;第二三段for循环<code>pipeline</code>后的<code>II=1</code>。</li>
+<li>host端代码</li>
 </ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//OpenCL utility layer include</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"xcl2.hpp"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DATA_SIZE 4096</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INCR_VALUE 10</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//Allocate Memory in Host Memory</span></span><br><span class="line">    <span class="keyword">size_t</span> vector_size_bytes = <span class="keyword">sizeof</span>(<span class="keyword">int</span>) * DATA_SIZE;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>,aligned_allocator&lt;<span class="keyword">int</span>&gt;&gt; source_input     (DATA_SIZE);</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>,aligned_allocator&lt;<span class="keyword">int</span>&gt;&gt; source_hw_results(DATA_SIZE);</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>,aligned_allocator&lt;<span class="keyword">int</span>&gt;&gt; source_sw_results(DATA_SIZE);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Create the test data and Software Result</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; DATA_SIZE ; i++)&#123;</span><br><span class="line">        source_input[i] = i;</span><br><span class="line">        source_sw_results[i] = i + INCR_VALUE;</span><br><span class="line">        source_hw_results[i] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//OPENCL HOST CODE AREA START</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;cl::Device&gt; devices = xcl::get_xil_devices();</span><br><span class="line">    cl::Device device = devices[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    cl::<span class="function">Context <span class="title">context</span><span class="params">(device)</span></span>;</span><br><span class="line">    cl::<span class="function">CommandQueue <span class="title">q</span><span class="params">(context, device, CL_QUEUE_PROFILING_ENABLE)</span></span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> device_name = device.getInfo&lt;CL_DEVICE_NAME&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Create Program and Kernel</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> binaryFile = xcl::find_binary_file(device_name,<span class="string">"adder"</span>);</span><br><span class="line">    cl::Program::Binaries bins = xcl::import_binary_file(binaryFile);</span><br><span class="line">    devices.resize(<span class="number">1</span>);</span><br><span class="line">    cl::<span class="function">Program <span class="title">program</span><span class="params">(context, devices, bins)</span></span>;</span><br><span class="line">    cl::<span class="function">Kernel <span class="title">krnl_adder</span><span class="params">(program,<span class="string">"adder"</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Allocate Buffer in Global Memory</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;cl::Memory&gt; inBufVec, outBufVec;</span><br><span class="line">    cl::<span class="function">Buffer <span class="title">buffer_input</span> <span class="params">(context, CL_MEM_USE_HOST_PTR | CL_MEM_READ_ONLY,</span></span></span><br><span class="line">            vector_size_bytes,source_input.data());</span><br><span class="line">    cl::<span class="function">Buffer <span class="title">buffer_output</span><span class="params">(context, CL_MEM_USE_HOST_PTR | CL_MEM_WRITE_ONLY,</span></span></span><br><span class="line">            vector_size_bytes,source_hw_results.data());</span><br><span class="line">    inBufVec.push_back(buffer_input);</span><br><span class="line">    outBufVec.push_back(buffer_output);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Copy input data to device global memory</span></span><br><span class="line">    q.enqueueMigrateMemObjects(inBufVec,<span class="number">0</span><span class="comment">/* 0 means from host*/</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> inc = INCR_VALUE;</span><br><span class="line">    <span class="keyword">int</span> size = DATA_SIZE;</span><br><span class="line">    <span class="comment">//Set the Kernel Arguments</span></span><br><span class="line">    <span class="keyword">int</span> narg=<span class="number">0</span>;</span><br><span class="line">    krnl_adder.setArg(narg++,buffer_input);</span><br><span class="line">    krnl_adder.setArg(narg++,buffer_output);</span><br><span class="line">    krnl_adder.setArg(narg++,inc);</span><br><span class="line">    krnl_adder.setArg(narg++,size);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Launch the Kernel</span></span><br><span class="line">    q.enqueueTask(krnl_adder);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Copy Result from Device Global Memory to Host Local Memory</span></span><br><span class="line">    q.enqueueMigrateMemObjects(outBufVec,CL_MIGRATE_MEM_OBJECT_HOST);</span><br><span class="line">    q.finish();</span><br><span class="line"></span><br><span class="line"><span class="comment">//OPENCL HOST CODE AREA END</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Compare the results of the Device to the simulation</span></span><br><span class="line">    <span class="keyword">int</span> match = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; DATA_SIZE ; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span> (source_hw_results[i] != source_sw_results[i])&#123;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Error: Result mismatch"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"i = "</span> &lt;&lt; i &lt;&lt; <span class="string">" CPU result = "</span> &lt;&lt; source_sw_results[i]</span><br><span class="line">                &lt;&lt; <span class="string">" Device result = "</span> &lt;&lt; source_hw_results[i] &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">            match = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"TEST "</span> &lt;&lt; (match ? <span class="string">"FAILED"</span> : <span class="string">"PASSED"</span>) &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> (match ? EXIT_FAILURE :  EXIT_SUCCESS);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>硬件仿真结果</li>
+<li>device端代码</li>
 </ul>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/4fc2106b796d24656f67f7fb82c07668.png" alt=""></p>
-<ul>
-<li>硬件实现结果</li>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BUFFER_SIZE 4096</span></span><br><span class="line"><span class="comment">//Includes</span></span><br><span class="line"><span class="comment">// Read Data from Global Memory and write into buffer_in</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">read_input</span><span class="params">(__global <span class="keyword">int</span> *in, <span class="keyword">int</span> * buffer_in,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">int</span> size)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; size ; i++)&#123;</span><br><span class="line">        buffer_in[i] =  in[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Read Input data from buffer_in and write the result into buffer_out</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">compute_add</span><span class="params">(<span class="keyword">int</span> * buffer_in , <span class="keyword">int</span> * buffer_out</span></span></span><br><span class="line"><span class="function"><span class="params">        , <span class="keyword">int</span> inc, <span class="keyword">int</span> size)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; size ; i++)&#123;</span><br><span class="line">        buffer_out[i] = buffer_in[i] + inc;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Read result from buffer_out and write the result to Global Memory</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">write_result</span><span class="params">(__global <span class="keyword">int</span> *out, <span class="keyword">int</span>* buffer_out,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">int</span> size)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; size ; i++)&#123;</span><br><span class="line">        out[i] = buffer_out[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    Vector Addition Kernel Implementation using dataflow</span></span><br><span class="line"><span class="comment">    Arguments:</span></span><br><span class="line"><span class="comment">        in   (input)  --&gt; Input Vector</span></span><br><span class="line"><span class="comment">        out  (output) --&gt; Output Vector</span></span><br><span class="line"><span class="comment">        inc  (input)  --&gt; Increment</span></span><br><span class="line"><span class="comment">        size (input)  --&gt; Size of Vector in Integer</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">__kernel</span><br><span class="line">__attribute__ ((reqd_work_group_size(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>)))</span><br><span class="line">__attribute__ ((xcl_dataflow))</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">adder</span><span class="params">(__global <span class="keyword">int</span> *in, __global <span class="keyword">int</span> *out, <span class="keyword">int</span> inc, <span class="keyword">int</span> size)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> buffer_in[BUFFER_SIZE];</span><br><span class="line">    <span class="keyword">int</span> buffer_out[BUFFER_SIZE];</span><br><span class="line"></span><br><span class="line">    read_input(in,buffer_in,size);</span><br><span class="line">    compute_add(buffer_in,buffer_out,inc,size);</span><br><span class="line">    write_result(out,buffer_out,size);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h3><ul>
+<li>硬件仿真波形图</li>
 </ul>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://github.com/Xilinx/SDAccel_Examples/tree/master/getting_started/cpu_to_fpga" target="_blank" rel="noopener">xilinx github Xilinx/SDAccel_Examples/cpu_to_fpga</a><br>ug1253 SDx Pragma Reference Guide 2017.2<br>ug1207 SDAccel Environment Optmizaton Guide</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://github.com/Xilinx/SDAccel_Examples/tree/master/getting_started/dataflow" target="_blank" rel="noopener">xilinx github SDAccel_Examples/getting_started/dataflow/</a><br>ug1253 SDx Pragma Reference Guide 2017.2<br>ug1207 SDAccel Environment Optmizaton Guide</p>
 
       
     </div>
@@ -535,7 +494,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://xuke225.github.io.git/2017/11/24/SDAccel/优化/综合案例/mmult优化3/" title="SDAccel矩阵乘法优化（三）">http://xuke225.github.io.git/2017/11/24/SDAccel/优化/综合案例/mmult优化3/</a>
+    <a href="http://xuke225.github.io.git/2017/11/26/SDAccel/优化/dataflow/OpenCL_dataflow_function/" title="SDAccel Dataflow 那点事（一）">http://xuke225.github.io.git/2017/11/26/SDAccel/优化/dataflow/OpenCL_dataflow_function/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -569,11 +528,9 @@
           
             <a href="/tags/优化/" rel="tag"><i class="fa fa-tag"></i> 优化</a>
           
-            <a href="/tags/综合案例/" rel="tag"><i class="fa fa-tag"></i> 综合案例</a>
+            <a href="/tags/dataflow/" rel="tag"><i class="fa fa-tag"></i> dataflow</a>
           
-            <a href="/tags/矩阵乘法/" rel="tag"><i class="fa fa-tag"></i> 矩阵乘法</a>
-          
-            <a href="/tags/Burst/" rel="tag"><i class="fa fa-tag"></i> Burst</a>
+            <a href="/tags/function/" rel="tag"><i class="fa fa-tag"></i> function</a>
           
         </div>
       
@@ -586,8 +543,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/23/SDAccel/优化/综合案例/mmult优化2/" rel="next" title="SDAccel矩阵乘法优化（二）">
-                <i class="fa fa-chevron-left"></i> SDAccel矩阵乘法优化（二）
+              <a href="/2017/11/25/SDAccel/优化/综合案例/mmult优化4/" rel="next" title="SDAccel矩阵乘法优化（四）">
+                <i class="fa fa-chevron-left"></i> SDAccel矩阵乘法优化（四）
               </a>
             
           </div>
@@ -596,8 +553,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/25/SDAccel/优化/综合案例/mmult优化4/" rel="prev" title="SDAccel矩阵乘法优化（四）">
-                SDAccel矩阵乘法优化（四） <i class="fa fa-chevron-right"></i>
+              <a href="/2017/11/27/SDAccel/优化/dataflow/OpenCL_dataflow_pipe/" rel="prev" title="SDAccel Dataflow 那点事（二）">
+                SDAccel Dataflow 那点事（二） <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -748,7 +705,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#mmult实现及优化步骤"><span class="nav-number">1.</span> <span class="nav-text">mmult实现及优化步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案分析及优化思路二（Burst-Read-Write）"><span class="nav-number">2.</span> <span class="nav-text">方案分析及优化思路二（Burst Read/Write）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-number">2.1.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实验结果分析"><span class="nav-number">2.2.</span> <span class="nav-text">实验结果分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#dataflow-function-方式简介"><span class="nav-number">1.</span> <span class="nav-text">dataflow function 方式简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现"><span class="nav-number">2.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实验结果"><span class="nav-number">3.</span> <span class="nav-text">实验结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
@@ -925,7 +882,7 @@
 		_hcwp.push({widget:"Bloggerstream", widget_id: 97885, selector:".hc-comment-count", label: "{\%COUNT%\}" });
 
 		
-		_hcwp.push({widget:"Stream", widget_id: 97885, xid: "2017/11/24/SDAccel/优化/综合案例/mmult优化3/"});
+		_hcwp.push({widget:"Stream", widget_id: 97885, xid: "2017/11/26/SDAccel/优化/dataflow/OpenCL_dataflow_function/"});
 		
 
 		(function() {

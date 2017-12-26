@@ -3,8 +3,48 @@
   
     
     <entry>
+      <title><![CDATA[Xilinx OpenCL的存储模型]]></title>
+      <url>/2017/12/26/SDAccel/%E5%9F%BA%E7%A1%80/OpenCL%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</url>
+      <content type="html"><![CDATA[<blockquote class="blockquote-center"><br><br><img src="http://oz3lw4cji.bkt.clouddn.com/ba8a91ba461c7aee85797c3a0d624746.png" alt=""><br><br></blockquote>
+
+<p>通过上图可知，在OpenCL中提供的存储模型中，有如下几种Memory类型</p>
+<a id="more"></a>
+<h3 id="Host-Memory"><a href="#Host-Memory" class="headerlink" title="Host Memory"></a>Host Memory</h3><p>Host Memory指的是连接在主板上的内存条，仅供host进行数据读取。</p>
+<h3 id="Off-Chip-Global-memory"><a href="#Off-Chip-Global-memory" class="headerlink" title="Off-Chip Global memory"></a>Off-Chip Global memory</h3><p>Off-Chip Global memory 指的是在FPGA板卡上通过硬件与<code>FPGA</code>芯片连接的内存条。数据存取所花费的时间相对较长，但是容量相对较大。<br><img src="http://oz3lw4cji.bkt.clouddn.com/0051b0fb402e185c86f45a4fb5fd5e49.png" alt=""></p>
+<ul>
+<li>Off-Chip Global Memory<br>Off-Chip Global Memory Host端可以通过PCIe进行数据读写，Device端同样可以进行数据的读写</li>
+<li>Off-Chip Constant Global Memory<br>Constant Global Memory同样是在FPGA板卡上通过硬件与<code>FPGA</code>芯片连接的内存条。不同的是Host端只能进行写入，Device端只能进行读出。适用于参数数据的传输。<h3 id="On-Chip-Memory"><a href="#On-Chip-Memory" class="headerlink" title="On-Chip Memory"></a>On-Chip Memory</h3>On-Chip Memory 主要是采用FPGA中BRAM资源组成，具有随机存储和低延时的特点，但是资源有限。</li>
+<li>On-Chip Global Memory<br><img src="http://oz3lw4cji.bkt.clouddn.com/3d304d01541ddc4d6f277ca75a822790.png" alt=""></li>
+<li>On-Chip Pipes<br><img src="http://oz3lw4cji.bkt.clouddn.com/105ed4ec6822b54ef66e2dc578ac140d.png" alt=""></li>
+<li>Local Memory &amp; Private Memory<br>Local Memory可用于所有的<code>work-item</code><br>Private Memory仅用于<code>single work-item</code><br><img src="http://oz3lw4cji.bkt.clouddn.com/9e1a687b0b73cbfdd6ba0e07eced7c7b.png" alt=""></li>
+</ul>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://china.xilinx.com/video/hardware/opencl-memory-architecture.html" target="_blank" rel="noopener">OpenCL Memory Architecture</a><br>SDAccel Environment  Optimization Guide (UG1207)</p>
+]]></content>
+      
+        <categories>
+            
+            <category> SDAccel </category>
+            
+            <category> 基础 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> SDAccel </tag>
+            
+            <tag> 基础 </tag>
+            
+            <tag> 存储模型 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[SDAccel Dataflow 那点事（二）]]></title>
-      <url>/2017/11/27/SDAccel/%E4%BC%98%E5%8C%96/kernel_opt/OpenCL_dataflow_pipe/</url>
+      <url>/2017/11/27/SDAccel/%E4%BC%98%E5%8C%96/dataflow/OpenCL_dataflow_pipe/</url>
       <content type="html"><![CDATA[<blockquote class="blockquote-center"><br>dataflow可谓是FPGA性能体现的绝佳表现方式，数据在硬件中能流动起来，靠的就是dataflow!<br>下面我们将探究SDAccel OpenCL开发方式下两种dataflow的实现方式：<code>pipe</code>传输方式与<code>function</code>传输方式。<br>以及SDAccel HLS 开发方式下两种dataflow的编程风格：<code>loop</code> 与 <code>stream</code><br><a href="https://xuke225.github.io/2017/11/15/SDAccel/" target="_blank" rel="noopener">SDAccel Dataflow 那点事（一）</a><br><a href="">SDAccel Dataflow 那点事（二）</a><br><a href="">SDAccel Dataflow 那点事（三）</a><br><a href="">SDAccel Dataflow 那点事（四）</a><br></blockquote>
 
 
@@ -77,7 +117,7 @@
     
     <entry>
       <title><![CDATA[SDAccel Dataflow 那点事（一）]]></title>
-      <url>/2017/11/26/SDAccel/%E4%BC%98%E5%8C%96/kernel_opt/OpenCL_dataflow_function/</url>
+      <url>/2017/11/26/SDAccel/%E4%BC%98%E5%8C%96/dataflow/OpenCL_dataflow_function/</url>
       <content type="html"><![CDATA[<blockquote class="blockquote-center"><br>dataflow可谓是FPGA性能体现的绝佳表现方式，数据在硬件中能流动起来，靠的就是dataflow!<br>下面我们将探究SDAccel OpenCL开发方式下两种dataflow的实现方式：<code>pipe</code>传输方式与<code>function</code>传输方式。<br>以及SDAccel HLS 开发方式下两种dataflow的编程风格：<code>loop</code> 与 <code>stream</code><br><a href="https://xuke225.github.io/2017/11/15/SDAccel/" target="_blank" rel="noopener">SDAccel Dataflow 那点事（一）</a><br><a href="">SDAccel Dataflow 那点事（二）</a><br><a href="">SDAccel Dataflow 那点事（三）</a><br><a href="">SDAccel Dataflow 那点事（四）</a><br></blockquote>
 
 

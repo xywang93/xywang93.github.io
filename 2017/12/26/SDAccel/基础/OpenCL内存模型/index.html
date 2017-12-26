@@ -72,7 +72,7 @@
 
 
 
-  <meta name="keywords" content="AI 异构" />
+  <meta name="keywords" content="SDAccel,基础,存储模型," />
 
 
 
@@ -85,13 +85,24 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="AI 异构">
-<meta property="og:url" content="http://xuke225.github.io.git/tags/Burst/index.html">
+<meta name="description" content="通过上图可知，在OpenCL中提供的存储模型中，有如下几种Memory类型">
+<meta name="keywords" content="SDAccel,基础,存储模型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Xilinx OpenCL的存储模型">
+<meta property="og:url" content="http://xuke225.github.io.git/2017/12/26/SDAccel/基础/OpenCL内存模型/index.html">
 <meta property="og:site_name" content="AI 异构">
+<meta property="og:description" content="通过上图可知，在OpenCL中提供的存储模型中，有如下几种Memory类型">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/ba8a91ba461c7aee85797c3a0d624746.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/0051b0fb402e185c86f45a4fb5fd5e49.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/3d304d01541ddc4d6f277ca75a822790.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/105ed4ec6822b54ef66e2dc578ac140d.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/9e1a687b0b73cbfdd6ba0e07eced7c7b.png">
+<meta property="og:updated_time" content="2017-12-26T13:08:03.781Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AI 异构">
+<meta name="twitter:title" content="Xilinx OpenCL的存储模型">
+<meta name="twitter:description" content="通过上图可知，在OpenCL中提供的存储模型中，有如下几种Memory类型">
+<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/ba8a91ba461c7aee85797c3a0d624746.png">
 
 
 
@@ -121,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="http://xuke225.github.io.git/tags/Burst/"/>
+  <link rel="canonical" href="http://xuke225.github.io.git/2017/12/26/SDAccel/基础/OpenCL内存模型/"/>
 
 
 
 
 
-  <title>标签: Burst | AI 异构</title>
+  <title>Xilinx OpenCL的存储模型 | AI 异构</title>
   
 
 
@@ -146,7 +157,7 @@
     
   
 
-  <div class="container sidebar-position-right ">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -284,54 +295,266 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h2>Burst<small>标签</small>
-        </h2>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xuke225.github.io.git/2017/12/26/SDAccel/基础/OpenCL内存模型/">
 
-      <h3 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="许柯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oz3lw4cji.bkt.clouddn.com/%E7%94%9F%E6%B4%BB%E7%85%A7%E2%80%94%E8%AE%B8%E6%9F%AF.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AI 异构">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2017/11/24/SDAccel/优化/综合案例/mmult优化3/" itemprop="url">
-              
-                <span itemprop="name">SDAccel矩阵乘法优化（三）</span>
-              
-            </a>
         
-      </h3>
+          <h2 class="post-title" itemprop="name headline">Xilinx OpenCL的存储模型</h2>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-24T00:00:00+08:00"
-              content="2017-11-24" >
-          11-24
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-26T00:00:00+08:00">
+                2017-12-26
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SDAccel/" itemprop="url" rel="index">
+                    <span itemprop="name">SDAccel</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SDAccel/基础/" itemprop="url" rel="index">
+                    <span itemprop="name">基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/26/SDAccel/基础/OpenCL内存模型/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2017/12/26/SDAccel/基础/OpenCL内存模型/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  266
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote class="blockquote-center"><br><br><img src="http://oz3lw4cji.bkt.clouddn.com/ba8a91ba461c7aee85797c3a0d624746.png" alt=""><br><br></blockquote>
+
+<p>通过上图可知，在OpenCL中提供的存储模型中，有如下几种Memory类型</p>
+<a id="more"></a>
+<h3 id="Host-Memory"><a href="#Host-Memory" class="headerlink" title="Host Memory"></a>Host Memory</h3><p>Host Memory指的是连接在主板上的内存条，仅供host进行数据读取。</p>
+<h3 id="Off-Chip-Global-memory"><a href="#Off-Chip-Global-memory" class="headerlink" title="Off-Chip Global memory"></a>Off-Chip Global memory</h3><p>Off-Chip Global memory 指的是在FPGA板卡上通过硬件与<code>FPGA</code>芯片连接的内存条。数据存取所花费的时间相对较长，但是容量相对较大。<br><img src="http://oz3lw4cji.bkt.clouddn.com/0051b0fb402e185c86f45a4fb5fd5e49.png" alt=""></p>
+<ul>
+<li>Off-Chip Global Memory<br>Off-Chip Global Memory Host端可以通过PCIe进行数据读写，Device端同样可以进行数据的读写</li>
+<li>Off-Chip Constant Global Memory<br>Constant Global Memory同样是在FPGA板卡上通过硬件与<code>FPGA</code>芯片连接的内存条。不同的是Host端只能进行写入，Device端只能进行读出。适用于参数数据的传输。<h3 id="On-Chip-Memory"><a href="#On-Chip-Memory" class="headerlink" title="On-Chip Memory"></a>On-Chip Memory</h3>On-Chip Memory 主要是采用FPGA中BRAM资源组成，具有随机存储和低延时的特点，但是资源有限。</li>
+<li>On-Chip Global Memory<br><img src="http://oz3lw4cji.bkt.clouddn.com/3d304d01541ddc4d6f277ca75a822790.png" alt=""></li>
+<li>On-Chip Pipes<br><img src="http://oz3lw4cji.bkt.clouddn.com/105ed4ec6822b54ef66e2dc578ac140d.png" alt=""></li>
+<li>Local Memory &amp; Private Memory<br>Local Memory可用于所有的<code>work-item</code><br>Private Memory仅用于<code>single work-item</code><br><img src="http://oz3lw4cji.bkt.clouddn.com/9e1a687b0b73cbfdd6ba0e07eced7c7b.png" alt=""></li>
+</ul>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://china.xilinx.com/video/hardware/opencl-memory-architecture.html" target="_blank" rel="noopener">OpenCL Memory Architecture</a><br>SDAccel Environment  Optimization Guide (UG1207)</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    许柯
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xuke225.github.io.git/2017/12/26/SDAccel/基础/OpenCL内存模型/" title="Xilinx OpenCL的存储模型">http://xuke225.github.io.git/2017/12/26/SDAccel/基础/OpenCL内存模型/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <div>
+      
+        <div>
+	
+		<div style="text-align:center;color: #ccc;font-size:14px;">
+			-------------本文结束
+			<i class="fa fa-paw"></i>
+			感谢您的阅读-------------
+		</div>
+	
+</div>
+
+      
+    </div>
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SDAccel/" rel="tag"><i class="fa fa-tag"></i> SDAccel</a>
+          
+            <a href="/tags/基础/" rel="tag"><i class="fa fa-tag"></i> 基础</a>
+          
+            <a href="/tags/存储模型/" rel="tag"><i class="fa fa-tag"></i> 存储模型</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/27/SDAccel/优化/dataflow/OpenCL_dataflow_pipe/" rel="next" title="SDAccel Dataflow 那点事（二）">
+                <i class="fa fa-chevron-left"></i> SDAccel Dataflow 那点事（二）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -339,6 +562,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="hypercomments_widget"></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -359,8 +591,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -433,6 +674,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Host-Memory"><span class="nav-number">1.</span> <span class="nav-text">Host Memory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Off-Chip-Global-memory"><span class="nav-number">2.</span> <span class="nav-text">Off-Chip Global memory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#On-Chip-Memory"><span class="nav-number">3.</span> <span class="nav-text">On-Chip Memory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -576,6 +833,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
@@ -599,6 +860,8 @@
 
 		_hcwp.push({widget:"Bloggerstream", widget_id: 97885, selector:".hc-comment-count", label: "{\%COUNT%\}" });
 
+		
+		_hcwp.push({widget:"Stream", widget_id: 97885, xid: "2017/12/26/SDAccel/基础/OpenCL内存模型/"});
 		
 
 		(function() {
