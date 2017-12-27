@@ -93,12 +93,13 @@
 <meta property="og:site_name" content="AI 异构">
 <meta property="og:description" content="dataflow可谓是FPGA性能体现的绝佳表现方式，数据在硬件中能流动起来，靠的就是dataflow!下面我们将探究SDAccel OpenCL开发方式下两种dataflow的实现方式：pipe传输方式与function传输方式。以及SDAccel HLS 开发方式下两种dataflow的编程风格：loop 与 streamSDAccel Dataflow 那点事（一）SDAccel Dataf">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/67be912a7072aad94e097cb54c4f5a47.png">
 <meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/630a6ce95be94ecc3f596cc46f969e28.png">
-<meta property="og:updated_time" content="2017-12-27T02:13:31.471Z">
+<meta property="og:updated_time" content="2017-12-27T05:36:29.798Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDAccel Dataflow 那点事（一）">
 <meta name="twitter:description" content="dataflow可谓是FPGA性能体现的绝佳表现方式，数据在硬件中能流动起来，靠的就是dataflow!下面我们将探究SDAccel OpenCL开发方式下两种dataflow的实现方式：pipe传输方式与function传输方式。以及SDAccel HLS 开发方式下两种dataflow的编程风格：loop 与 streamSDAccel Dataflow 那点事（一）SDAccel Dataf">
-<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/630a6ce95be94ecc3f596cc46f969e28.png">
+<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/67be912a7072aad94e097cb54c4f5a47.png">
 
 
 
@@ -452,7 +453,7 @@
       
 
       
-        <blockquote class="blockquote-center"><br>dataflow可谓是FPGA性能体现的绝佳表现方式，数据在硬件中能流动起来，靠的就是dataflow!<br>下面我们将探究SDAccel OpenCL开发方式下两种dataflow的实现方式：<code>pipe</code>传输方式与<code>function</code>传输方式。<br>以及SDAccel HLS 开发方式下两种dataflow的编程风格：<code>loop</code> 与 <code>stream</code><br><a href="https://xuke225.github.io/2017/11/15/SDAccel/" target="_blank" rel="noopener">SDAccel Dataflow 那点事（一）</a><br><a href="">SDAccel Dataflow 那点事（二）</a><br><a href="">SDAccel Dataflow 那点事（三）</a><br><a href="">SDAccel Dataflow 那点事（四）</a><br></blockquote>
+        <blockquote class="blockquote-center"><br><br><img src="http://oz3lw4cji.bkt.clouddn.com/67be912a7072aad94e097cb54c4f5a47.png" alt=""><br>dataflow可谓是FPGA性能体现的绝佳表现方式，数据在硬件中能流动起来，靠的就是dataflow!<br>下面我们将探究SDAccel OpenCL开发方式下两种dataflow的实现方式：<code>pipe</code>传输方式与<code>function</code>传输方式。<br>以及SDAccel HLS 开发方式下两种dataflow的编程风格：<code>loop</code> 与 <code>stream</code><br><a href="https://xuke225.github.io/2017/11/15/SDAccel/" target="_blank" rel="noopener">SDAccel Dataflow 那点事（一）</a><br><a href="">SDAccel Dataflow 那点事（二）</a><br><a href="">SDAccel Dataflow 那点事（三）</a><br><a href="">SDAccel Dataflow 那点事（四）</a><br></blockquote>
 
 
 <h3 id="dataflow-function-方式简介"><a href="#dataflow-function-方式简介" class="headerlink" title="dataflow function 方式简介"></a>dataflow function 方式简介</h3><p>下图是<code>Dataflow</code>优化的示意图。在不做<code>Dataflow</code>之前，<code>func_C</code>的输入需要依赖<code>func_A</code>和<code>func_B</code>的计算处理，8个时钟周期才能完成一次<code>fun_C</code>的计算结果输出。在做完<code>Dataflow</code>之后，<code>func_A</code>和<code>func_C</code>的启动间隔加快，使得5个周期就可以完成一次<code>func_C</code>的计算结果输出。从理论上上来说，<code>Dataflow</code>也属于更高层次上的一种<code>Pipeline</code>。<br><img src="http://oz3lw4cji.bkt.clouddn.com/630a6ce95be94ecc3f596cc46f969e28.png" alt=""></p>
