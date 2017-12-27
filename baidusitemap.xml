@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://xuke225.github.io.git/2017/11/07/hello-world/</loc>
+    <lastmod>2017-12-27T02:02:00.687Z</lastmod>
+    <data>
+        <display>
+        <title>Hello World</title>
+        <pubTime>2017-11-06T16:00:00.000Z</pubTime>
+        
+        <tag>test</tag>
+         
+        <tag>hello web</tag>
+         
+         
+           
+             
+              <breadCrumb title="test" url="http://xuke225.github.io.git/categories/test/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://xuke225.github.io.git/2017/12/26/SDAccel/%E5%9F%BA%E7%A1%80/OpenCL%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</loc>
     <lastmod>2017-12-26T13:08:03.781Z</lastmod>
     <data>
@@ -104,11 +126,11 @@
         
         <tag>SDAccel</tag>
          
-        <tag>优化</tag>
-         
         <tag>综合案例</tag>
          
         <tag>矩阵乘法</tag>
+         
+        <tag>优化</tag>
          
         <tag>Local Memory</tag>
          
@@ -138,11 +160,11 @@
         
         <tag>SDAccel</tag>
          
-        <tag>优化</tag>
-         
         <tag>综合案例</tag>
          
         <tag>矩阵乘法</tag>
+         
+        <tag>优化</tag>
          
         <tag>Burst</tag>
          
@@ -172,11 +194,11 @@
         
         <tag>SDAccel</tag>
          
-        <tag>优化</tag>
-         
         <tag>综合案例</tag>
          
         <tag>矩阵乘法</tag>
+         
+        <tag>优化</tag>
          
         <tag>Local Memory</tag>
          
@@ -206,11 +228,11 @@
         
         <tag>SDAccel</tag>
          
-        <tag>优化</tag>
-         
         <tag>综合案例</tag>
          
         <tag>矩阵乘法</tag>
+         
+        <tag>优化</tag>
          
          
            
@@ -335,28 +357,6 @@
           
              
               <breadCrumb title="host" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/host/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://xuke225.github.io.git/2017/11/07/hello-world/</loc>
-    <lastmod>2017-11-24T07:04:34.316Z</lastmod>
-    <data>
-        <display>
-        <title>Hello World</title>
-        <pubTime>2017-11-06T16:00:00.000Z</pubTime>
-        
-        <tag>test</tag>
-         
-        <tag>hello web</tag>
-         
-         
-           
-             
-              <breadCrumb title="test" url="http://xuke225.github.io.git/categories/test/"/>
           
         </display>
     </data>
