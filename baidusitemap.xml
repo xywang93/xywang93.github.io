@@ -4,6 +4,98 @@
 
     
   <url>
+    <loc>http://xuke225.github.io.git/2017/11/26/SDAccel/%E4%BC%98%E5%8C%96/dataflow/OpenCL_dataflow_function/</loc>
+    <lastmod>2017-12-27T02:13:31.471Z</lastmod>
+    <data>
+        <display>
+        <title>SDAccel Dataflow 那点事（一）</title>
+        <pubTime>2017-11-25T16:00:00.000Z</pubTime>
+        
+        <tag>SDAccel</tag>
+         
+        <tag>优化</tag>
+         
+        <tag>dataflow</tag>
+         
+        <tag>function</tag>
+         
+         
+           
+             
+              <breadCrumb title="SDAccel" url="http://xuke225.github.io.git/categories/SDAccel/"/>
+          
+             
+              <breadCrumb title="优化" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
+          
+             
+              <breadCrumb title="dataflow" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/dataflow/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://xuke225.github.io.git/2017/11/10/SDAccel/%E4%BC%98%E5%8C%96/host/overlap/</loc>
+    <lastmod>2017-12-27T02:12:36.086Z</lastmod>
+    <data>
+        <display>
+        <title>host overlap</title>
+        <pubTime>2017-11-09T16:00:00.000Z</pubTime>
+        
+        <tag>SDAccel</tag>
+         
+        <tag>优化</tag>
+         
+        <tag>host</tag>
+         
+         
+           
+             
+              <breadCrumb title="SDAccel" url="http://xuke225.github.io.git/categories/SDAccel/"/>
+          
+             
+              <breadCrumb title="优化" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
+          
+             
+              <breadCrumb title="host" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/host/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://xuke225.github.io.git/2017/11/09/SDAccel/%E4%BC%98%E5%8C%96/kernel_to_gmem/gmem-4bank/</loc>
+    <lastmod>2017-12-27T02:11:13.591Z</lastmod>
+    <data>
+        <display>
+        <title>gmem_4bank</title>
+        <pubTime>2017-11-08T16:00:00.000Z</pubTime>
+        
+        <tag>SDAccel</tag>
+         
+        <tag>优化</tag>
+         
+        <tag>kernel_to_gmem</tag>
+         
+         
+           
+             
+              <breadCrumb title="SDAccel" url="http://xuke225.github.io.git/categories/SDAccel/"/>
+          
+             
+              <breadCrumb title="优化" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
+          
+             
+              <breadCrumb title="kernel_to_gmem" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/kernel-to-gmem/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://xuke225.github.io.git/2017/11/07/hello-world/</loc>
     <lastmod>2017-12-27T02:02:00.687Z</lastmod>
     <data>
@@ -53,38 +145,6 @@
 
     
   <url>
-    <loc>http://xuke225.github.io.git/2017/11/26/SDAccel/%E4%BC%98%E5%8C%96/dataflow/OpenCL_dataflow_function/</loc>
-    <lastmod>2017-12-18T02:42:05.495Z</lastmod>
-    <data>
-        <display>
-        <title>SDAccel Dataflow 那点事（一）</title>
-        <pubTime>2017-11-25T16:00:00.000Z</pubTime>
-        
-        <tag>SDAccel</tag>
-         
-        <tag>优化</tag>
-         
-        <tag>dataflow</tag>
-         
-        <tag>function</tag>
-         
-         
-           
-             
-              <breadCrumb title="SDAccel" url="http://xuke225.github.io.git/categories/SDAccel/"/>
-          
-             
-              <breadCrumb title="优化" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
-          
-             
-              <breadCrumb title="dataflow" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/dataflow/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://xuke225.github.io.git/2017/11/27/SDAccel/%E4%BC%98%E5%8C%96/dataflow/OpenCL_dataflow_pipe/</loc>
     <lastmod>2017-12-18T02:41:58.791Z</lastmod>
     <data>
@@ -126,11 +186,11 @@
         
         <tag>SDAccel</tag>
          
+        <tag>优化</tag>
+         
         <tag>综合案例</tag>
          
         <tag>矩阵乘法</tag>
-         
-        <tag>优化</tag>
          
         <tag>Local Memory</tag>
          
@@ -160,11 +220,11 @@
         
         <tag>SDAccel</tag>
          
+        <tag>优化</tag>
+         
         <tag>综合案例</tag>
          
         <tag>矩阵乘法</tag>
-         
-        <tag>优化</tag>
          
         <tag>Burst</tag>
          
@@ -194,11 +254,11 @@
         
         <tag>SDAccel</tag>
          
+        <tag>优化</tag>
+         
         <tag>综合案例</tag>
          
         <tag>矩阵乘法</tag>
-         
-        <tag>优化</tag>
          
         <tag>Local Memory</tag>
          
@@ -228,11 +288,11 @@
         
         <tag>SDAccel</tag>
          
+        <tag>优化</tag>
+         
         <tag>综合案例</tag>
          
         <tag>矩阵乘法</tag>
-         
-        <tag>优化</tag>
          
          
            
@@ -297,66 +357,6 @@
           
              
               <breadCrumb title="kernel_to_gmem" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/kernel-to-gmem/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://xuke225.github.io.git/2017/11/09/SDAccel/%E4%BC%98%E5%8C%96/kernel_to_gmem/gmem-4bank/</loc>
-    <lastmod>2017-11-25T13:15:58.244Z</lastmod>
-    <data>
-        <display>
-        <title>gmem_4bank</title>
-        <pubTime>2017-11-08T16:00:00.000Z</pubTime>
-        
-        <tag>SDAccel</tag>
-         
-        <tag>优化</tag>
-         
-        <tag>kernel_to_gmem</tag>
-         
-         
-           
-             
-              <breadCrumb title="SDAccel" url="http://xuke225.github.io.git/categories/SDAccel/"/>
-          
-             
-              <breadCrumb title="优化" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
-          
-             
-              <breadCrumb title="kernel_to_gmem" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/kernel-to-gmem/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://xuke225.github.io.git/2017/11/10/SDAccel/%E4%BC%98%E5%8C%96/host/overlap/</loc>
-    <lastmod>2017-11-25T13:14:54.819Z</lastmod>
-    <data>
-        <display>
-        <title>host overlap</title>
-        <pubTime>2017-11-09T16:00:00.000Z</pubTime>
-        
-        <tag>SDAccel</tag>
-         
-        <tag>优化</tag>
-         
-        <tag>host</tag>
-         
-         
-           
-             
-              <breadCrumb title="SDAccel" url="http://xuke225.github.io.git/categories/SDAccel/"/>
-          
-             
-              <breadCrumb title="优化" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
-          
-             
-              <breadCrumb title="host" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/host/"/>
           
         </display>
     </data>
