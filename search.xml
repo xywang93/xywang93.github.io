@@ -43,9 +43,9 @@
     </entry>
     
     <entry>
-      <title><![CDATA[SDAccel Dataflow 那点事（二）]]></title>
+      <title><![CDATA[SDAccel Dataflow 那点事儿（二）]]></title>
       <url>/2017/11/27/SDAccel/%E4%BC%98%E5%8C%96/dataflow/OpenCL_dataflow_pipe/</url>
-      <content type="html"><![CDATA[<blockquote class="blockquote-center"><br><br><img src="http://oz3lw4cji.bkt.clouddn.com/67be912a7072aad94e097cb54c4f5a47.png" alt=""><br>dataflow可谓是FPGA性能体现的绝佳表现方式，数据在硬件中能流动起来，靠的就是dataflow!<br>下面我们将探究SDAccel OpenCL开发方式下两种dataflow的实现方式：<code>pipe</code>传输方式与<code>function</code>传输方式。<br>以及SDAccel HLS 开发方式下两种dataflow的编程风格：<code>loop</code> 与 <code>stream</code><br><a href="https://xuke225.github.io/2017/11/15/SDAccel/" target="_blank" rel="noopener">SDAccel Dataflow 那点事（一）</a><br><a href="">SDAccel Dataflow 那点事（二）</a><br><a href="">SDAccel Dataflow 那点事（三）</a><br><a href="">SDAccel Dataflow 那点事（四）</a><br></blockquote>
+      <content type="html"><![CDATA[<blockquote class="blockquote-center"><br><br><img src="http://oz3lw4cji.bkt.clouddn.com/67be912a7072aad94e097cb54c4f5a47.png" alt=""><br>dataflow可谓是FPGA性能体现的绝佳表现方式，数据在硬件中能流动起来，靠的就是dataflow!<br>下面我们将探究SDAccel OpenCL开发方式下两种dataflow的实现方式：<code>pipe</code>传输方式与<code>function</code>传输方式。<br>以及SDAccel HLS 开发方式下两种dataflow的编程风格：<code>loop</code> 与 <code>stream</code><br><a href="https://xuke225.github.io/2017/11/15/SDAccel/" target="_blank" rel="noopener">SDAccel Dataflow 那点事儿（一）</a><br><a href="">SDAccel Dataflow 那点事儿（二）</a><br><a href="">SDAccel Dataflow 那点事儿（三）</a><br><a href="">SDAccel Dataflow 那点事儿（四）</a><br></blockquote>
 
 
 
@@ -116,7 +116,7 @@
     </entry>
     
     <entry>
-      <title><![CDATA[SDAccel Dataflow 那点事（一）]]></title>
+      <title><![CDATA[SDAccel Dataflow 那点事儿（一）]]></title>
       <url>/2017/11/26/SDAccel/%E4%BC%98%E5%8C%96/dataflow/OpenCL_dataflow_function/</url>
       <content type="html"><![CDATA[<blockquote class="blockquote-center"><br><br><img src="http://oz3lw4cji.bkt.clouddn.com/67be912a7072aad94e097cb54c4f5a47.png" alt=""><br>dataflow可谓是FPGA性能体现的绝佳表现方式，数据在硬件中能流动起来，靠的就是dataflow!<br>下面我们将探究SDAccel OpenCL开发方式下两种dataflow的实现方式：<code>pipe</code>传输方式与<code>function</code>传输方式。<br>以及SDAccel HLS 开发方式下两种dataflow的编程风格：<code>loop</code> 与 <code>stream</code><br><a href="https://xuke225.github.io/2017/11/15/SDAccel/" target="_blank" rel="noopener">SDAccel Dataflow 那点事（一）</a><br><a href="">SDAccel Dataflow 那点事（二）</a><br><a href="">SDAccel Dataflow 那点事（三）</a><br><a href="">SDAccel Dataflow 那点事（四）</a><br></blockquote>
 
@@ -734,6 +734,52 @@
     </entry>
     
     <entry>
+      <title><![CDATA[MXNet model zoo 多网络推理]]></title>
+      <url>/2017/11/09/DeepLearning/mxnet/MXNET%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E7%BD%91%E7%BB%9C%E6%AD%A3%E5%90%91%E6%8E%A8%E7%90%86/</url>
+      <content type="html"><![CDATA[<h3 id="预备工作"><a href="#预备工作" class="headerlink" title="预备工作"></a>预备工作</h3><ul>
+<li>从MXNET model zoo 中下载对应的模型参数及json配置文件 <a href="http://mxnet.incubator.apache.org/model_zoo/index.html" target="_blank" rel="noopener">链接</a></li>
+<li>下载 synset.txt 便于程序读取分类结果</li>
+</ul>
+<h3 id="源码实现"><a href="#源码实现" class="headerlink" title="源码实现"></a>源码实现</h3><a id="more"></a>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> mxnet <span class="keyword">as</span> mx</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2,sys,time</span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> namedtuple</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loadModel</span><span class="params">(modelname)</span>:</span></span><br><span class="line">        t1 = time.time()</span><br><span class="line">        sym, arg_params, aux_params = mx.model.load_checkpoint(modelname, <span class="number">0</span>)</span><br><span class="line">        t2 = time.time()</span><br><span class="line">        t = <span class="number">1000</span>*(t2-t1)</span><br><span class="line">        print(<span class="string">"Loaded in %2.2f milliseconds"</span> % t)</span><br><span class="line"> <span class="comment">#       arg_params['prob_label'] = mx.nd.array([0])</span></span><br><span class="line"> <span class="comment">#       arg_params['softmax_label'] = mx.nd.array([0])</span></span><br><span class="line">        mod = mx.mod.Module(symbol=sym , context=mx.gpu() , label_names=<span class="keyword">None</span>)</span><br><span class="line">        mod.bind(for_training=<span class="keyword">False</span>, data_shapes=[(<span class="string">'data'</span>, (<span class="number">1</span>,<span class="number">3</span>,<span class="number">224</span>,<span class="number">224</span>))])</span><br><span class="line">        mod.set_params(arg_params,aux_params,allow_missing=<span class="keyword">True</span>)</span><br><span class="line">        <span class="keyword">return</span> mod</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loadCategories</span><span class="params">()</span>:</span></span><br><span class="line">        synsetfile = open(<span class="string">'../picture/synset.txt'</span>, <span class="string">'r'</span>)</span><br><span class="line">        synsets = []</span><br><span class="line">        <span class="keyword">for</span> l <span class="keyword">in</span> synsetfile:</span><br><span class="line">                synsets.append(l.rstrip())</span><br><span class="line">        <span class="keyword">return</span> synsets</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">prepareNDArray</span><span class="params">(filename)</span>:</span></span><br><span class="line">        img = cv2.imread(filename)</span><br><span class="line">        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)</span><br><span class="line">        img = cv2.resize(img, (<span class="number">224</span>, <span class="number">224</span>,))</span><br><span class="line">        img = np.swapaxes(img, <span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line">        img = np.swapaxes(img, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">        img = img[np.newaxis, :]</span><br><span class="line">        <span class="keyword">return</span> mx.nd.array(img)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(filename, model, categories, n)</span>:</span></span><br><span class="line">        array = prepareNDArray(filename)</span><br><span class="line">        Batch = namedtuple(<span class="string">'Batch'</span>, [<span class="string">'data'</span>])</span><br><span class="line">        t1 = time.time()</span><br><span class="line">        model.forward(Batch([array]))</span><br><span class="line">        t2 = time.time()</span><br><span class="line">        t = <span class="number">1000</span>*(t2-t1)</span><br><span class="line">        print(<span class="string">"Predicted in %2.2f millsecond"</span> % t)</span><br><span class="line">        prob = model.get_outputs()[<span class="number">0</span>].asnumpy()</span><br><span class="line">        prob = np.squeeze(prob)</span><br><span class="line">        sortedprobindex = np.argsort(prob)[::<span class="number">-1</span>]</span><br><span class="line">        topn = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> sortedprobindex[<span class="number">0</span>:n]:</span><br><span class="line">                topn.append((prob[i], categories[i]))</span><br><span class="line">        <span class="keyword">return</span> topn</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">init</span><span class="params">(modelname)</span>:</span></span><br><span class="line">        model = loadModel(modelname)</span><br><span class="line">        cats = loadCategories()</span><br><span class="line">        <span class="keyword">return</span> model, cats</span><br></pre></td></tr></table></figure>
+<h3 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">filename = sys.argv[<span class="number">1</span>]</span><br><span class="line">print(<span class="string">"*** Inception v3"</span>)</span><br><span class="line">inceptionv3,c = init(<span class="string">"../model/Inception-BN/Inception-BN"</span>)</span><br><span class="line">print(predict(<span class="string">'../picture/cat.jpg'</span>,inceptionv3,c,<span class="number">1</span>))</span><br><span class="line">print(<span class="string">"*** squeezenet_v1.0"</span>)</span><br><span class="line">squeeze_v1_0,c = init(<span class="string">"../model/squeezenet/squeezenet_v1.0"</span>)</span><br><span class="line">print(predict(<span class="string">'../picture/cat.jpg'</span>,squeeze_v1_0,c,<span class="number">1</span>))</span><br><span class="line">print(<span class="string">"*** squeezenet_v1.1"</span>)</span><br><span class="line">squeeze_v1_1,c = init(<span class="string">"../model/squeezenet/squeezenet_v1.1"</span>)</span><br><span class="line">print(predict(<span class="string">'../picture/cat.jpg'</span>,squeeze_v1_1,c,<span class="number">1</span>))</span><br><span class="line">print(<span class="string">"*** nin"</span>)</span><br><span class="line">nin,c = init(<span class="string">"../model/nin/nin"</span>)</span><br><span class="line">print(predict(<span class="string">'../picture/cat.jpg'</span>,nin,c,<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+<pre><code>*** Inception v3
+Loaded in 20.42 milliseconds
+Predicted in 0.19 millsecond
+[(0.34680301, &apos;n02112018 Pomeranian&apos;)]
+*** squeezenet_v1.0
+Loaded in 2.94 milliseconds
+Predicted in 0.08 millsecond
+[(0.22845435, &apos;n02326432 hare&apos;)]
+*** squeezenet_v1.1
+Loaded in 2.93 milliseconds
+Predicted in 0.08 millsecond
+[(0.71776724, &apos;n02123045 tabby, tabby cat&apos;)]
+*** nin
+Loaded in 5.85 milliseconds
+Predicted in 0.14 millsecond
+[(0.67466462, &apos;n02119022 red fox, Vulpes vulpes&apos;)]
+</code></pre>]]></content>
+      
+        <categories>
+            
+            <category> Deep Learning </category>
+            
+            <category> mxnet </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> mxnet </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[gmem_4bank]]></title>
       <url>/2017/11/09/SDAccel/%E4%BC%98%E5%8C%96/kernel_to_gmem/gmem-4bank/</url>
       <content type="html"><![CDATA[<h2 id="例程描述"><a href="#例程描述" class="headerlink" title="例程描述"></a>例程描述</h2><div class="note default"><p>测试Kernel与Global Memory之间的带宽 multi bank（4块DDR独立数据传输）clEnqueueMapBuffer 与 clEnqueueUnmapMemobject 在 host 到 Global Memory 的数据优化</p></div>
@@ -783,52 +829,6 @@
             <tag> 优化 </tag>
             
             <tag> kernel_to_gmem </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[MXNet model zoo 多网络推理]]></title>
-      <url>/2017/11/09/DeepLearning/mxnet/MXNET%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E7%BD%91%E7%BB%9C%E6%AD%A3%E5%90%91%E6%8E%A8%E7%90%86/</url>
-      <content type="html"><![CDATA[<h3 id="预备工作"><a href="#预备工作" class="headerlink" title="预备工作"></a>预备工作</h3><ul>
-<li>从MXNET model zoo 中下载对应的模型参数及json配置文件 <a href="http://mxnet.incubator.apache.org/model_zoo/index.html" target="_blank" rel="noopener">链接</a></li>
-<li>下载 synset.txt 便于程序读取分类结果</li>
-</ul>
-<h3 id="源码实现"><a href="#源码实现" class="headerlink" title="源码实现"></a>源码实现</h3><a id="more"></a>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> mxnet <span class="keyword">as</span> mx</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> cv2,sys,time</span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> namedtuple</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loadModel</span><span class="params">(modelname)</span>:</span></span><br><span class="line">        t1 = time.time()</span><br><span class="line">        sym, arg_params, aux_params = mx.model.load_checkpoint(modelname, <span class="number">0</span>)</span><br><span class="line">        t2 = time.time()</span><br><span class="line">        t = <span class="number">1000</span>*(t2-t1)</span><br><span class="line">        print(<span class="string">"Loaded in %2.2f milliseconds"</span> % t)</span><br><span class="line"> <span class="comment">#       arg_params['prob_label'] = mx.nd.array([0])</span></span><br><span class="line"> <span class="comment">#       arg_params['softmax_label'] = mx.nd.array([0])</span></span><br><span class="line">        mod = mx.mod.Module(symbol=sym , context=mx.gpu() , label_names=<span class="keyword">None</span>)</span><br><span class="line">        mod.bind(for_training=<span class="keyword">False</span>, data_shapes=[(<span class="string">'data'</span>, (<span class="number">1</span>,<span class="number">3</span>,<span class="number">224</span>,<span class="number">224</span>))])</span><br><span class="line">        mod.set_params(arg_params,aux_params,allow_missing=<span class="keyword">True</span>)</span><br><span class="line">        <span class="keyword">return</span> mod</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loadCategories</span><span class="params">()</span>:</span></span><br><span class="line">        synsetfile = open(<span class="string">'../picture/synset.txt'</span>, <span class="string">'r'</span>)</span><br><span class="line">        synsets = []</span><br><span class="line">        <span class="keyword">for</span> l <span class="keyword">in</span> synsetfile:</span><br><span class="line">                synsets.append(l.rstrip())</span><br><span class="line">        <span class="keyword">return</span> synsets</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">prepareNDArray</span><span class="params">(filename)</span>:</span></span><br><span class="line">        img = cv2.imread(filename)</span><br><span class="line">        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)</span><br><span class="line">        img = cv2.resize(img, (<span class="number">224</span>, <span class="number">224</span>,))</span><br><span class="line">        img = np.swapaxes(img, <span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line">        img = np.swapaxes(img, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">        img = img[np.newaxis, :]</span><br><span class="line">        <span class="keyword">return</span> mx.nd.array(img)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(filename, model, categories, n)</span>:</span></span><br><span class="line">        array = prepareNDArray(filename)</span><br><span class="line">        Batch = namedtuple(<span class="string">'Batch'</span>, [<span class="string">'data'</span>])</span><br><span class="line">        t1 = time.time()</span><br><span class="line">        model.forward(Batch([array]))</span><br><span class="line">        t2 = time.time()</span><br><span class="line">        t = <span class="number">1000</span>*(t2-t1)</span><br><span class="line">        print(<span class="string">"Predicted in %2.2f millsecond"</span> % t)</span><br><span class="line">        prob = model.get_outputs()[<span class="number">0</span>].asnumpy()</span><br><span class="line">        prob = np.squeeze(prob)</span><br><span class="line">        sortedprobindex = np.argsort(prob)[::<span class="number">-1</span>]</span><br><span class="line">        topn = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> sortedprobindex[<span class="number">0</span>:n]:</span><br><span class="line">                topn.append((prob[i], categories[i]))</span><br><span class="line">        <span class="keyword">return</span> topn</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">init</span><span class="params">(modelname)</span>:</span></span><br><span class="line">        model = loadModel(modelname)</span><br><span class="line">        cats = loadCategories()</span><br><span class="line">        <span class="keyword">return</span> model, cats</span><br></pre></td></tr></table></figure>
-<h3 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">filename = sys.argv[<span class="number">1</span>]</span><br><span class="line">print(<span class="string">"*** Inception v3"</span>)</span><br><span class="line">inceptionv3,c = init(<span class="string">"../model/Inception-BN/Inception-BN"</span>)</span><br><span class="line">print(predict(<span class="string">'../picture/cat.jpg'</span>,inceptionv3,c,<span class="number">1</span>))</span><br><span class="line">print(<span class="string">"*** squeezenet_v1.0"</span>)</span><br><span class="line">squeeze_v1_0,c = init(<span class="string">"../model/squeezenet/squeezenet_v1.0"</span>)</span><br><span class="line">print(predict(<span class="string">'../picture/cat.jpg'</span>,squeeze_v1_0,c,<span class="number">1</span>))</span><br><span class="line">print(<span class="string">"*** squeezenet_v1.1"</span>)</span><br><span class="line">squeeze_v1_1,c = init(<span class="string">"../model/squeezenet/squeezenet_v1.1"</span>)</span><br><span class="line">print(predict(<span class="string">'../picture/cat.jpg'</span>,squeeze_v1_1,c,<span class="number">1</span>))</span><br><span class="line">print(<span class="string">"*** nin"</span>)</span><br><span class="line">nin,c = init(<span class="string">"../model/nin/nin"</span>)</span><br><span class="line">print(predict(<span class="string">'../picture/cat.jpg'</span>,nin,c,<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
-<pre><code>*** Inception v3
-Loaded in 20.42 milliseconds
-Predicted in 0.19 millsecond
-[(0.34680301, &apos;n02112018 Pomeranian&apos;)]
-*** squeezenet_v1.0
-Loaded in 2.94 milliseconds
-Predicted in 0.08 millsecond
-[(0.22845435, &apos;n02326432 hare&apos;)]
-*** squeezenet_v1.1
-Loaded in 2.93 milliseconds
-Predicted in 0.08 millsecond
-[(0.71776724, &apos;n02123045 tabby, tabby cat&apos;)]
-*** nin
-Loaded in 5.85 milliseconds
-Predicted in 0.14 millsecond
-[(0.67466462, &apos;n02119022 red fox, Vulpes vulpes&apos;)]
-</code></pre>]]></content>
-      
-        <categories>
-            
-            <category> Deep Learning </category>
-            
-            <category> mxnet </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> mxnet </tag>
             
         </tags>
         
