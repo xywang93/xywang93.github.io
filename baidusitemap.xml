@@ -4,6 +4,33 @@
 
     
   <url>
+    <loc>http://xuke225.github.io.git/2017/12/26/SDAccel/%E5%9F%BA%E7%A1%80/OpenCL%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</loc>
+    <lastmod>2018-01-03T09:22:16.404Z</lastmod>
+    <data>
+        <display>
+        <title>Xilinx OpenCL的存储模型</title>
+        <pubTime>2017-12-25T16:00:00.000Z</pubTime>
+        
+        <tag>SDAccel</tag>
+         
+        <tag>基础</tag>
+         
+        <tag>存储模型</tag>
+         
+         
+           
+             
+              <breadCrumb title="SDAccel" url="http://xuke225.github.io.git/categories/SDAccel/"/>
+          
+             
+              <breadCrumb title="基础" url="http://xuke225.github.io.git/categories/SDAccel/%E5%9F%BA%E7%A1%80/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://xuke225.github.io.git/2017/11/27/SDAccel/%E4%BC%98%E5%8C%96/dataflow/OpenCL_dataflow_pipe/</loc>
     <lastmod>2017-12-27T05:36:32.868Z</lastmod>
     <data>
@@ -143,33 +170,6 @@
            
              
               <breadCrumb title="test" url="http://xuke225.github.io.git/categories/test/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://xuke225.github.io.git/2017/12/26/SDAccel/%E5%9F%BA%E7%A1%80/OpenCL%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</loc>
-    <lastmod>2017-12-26T13:08:03.781Z</lastmod>
-    <data>
-        <display>
-        <title>Xilinx OpenCL的存储模型</title>
-        <pubTime>2017-12-25T16:00:00.000Z</pubTime>
-        
-        <tag>SDAccel</tag>
-         
-        <tag>基础</tag>
-         
-        <tag>存储模型</tag>
-         
-         
-           
-             
-              <breadCrumb title="SDAccel" url="http://xuke225.github.io.git/categories/SDAccel/"/>
-          
-             
-              <breadCrumb title="基础" url="http://xuke225.github.io.git/categories/SDAccel/%E5%9F%BA%E7%A1%80/"/>
           
         </display>
     </data>
