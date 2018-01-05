@@ -4,8 +4,8 @@
 
     
   <url>
-    <loc>http://xuke225.github.io.git/2017/11/26/SDAccel/%E4%BC%98%E5%8C%96/dataflow/OpenCL_dataflow_function/</loc>
-    <lastmod>2018-01-03T10:13:52.699Z</lastmod>
+    <loc>http://xywang93.github.io.git/2017/11/26/SDAccel/%E4%BC%98%E5%8C%96/dataflow/OpenCL_dataflow_function/</loc>
+    <lastmod>2018-01-03T10:13:54.000Z</lastmod>
     <data>
         <display>
         <title>SDAccel Dataflow 那点事儿（一）</title>
@@ -22,13 +22,13 @@
          
            
              
-              <breadCrumb title="SDAccel" url="http://xuke225.github.io.git/categories/SDAccel/"/>
+              <breadCrumb title="SDAccel" url="http://xywang93.github.io.git/categories/SDAccel/"/>
           
              
-              <breadCrumb title="优化" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
+              <breadCrumb title="优化" url="http://xywang93.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
           
              
-              <breadCrumb title="dataflow" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/dataflow/"/>
+              <breadCrumb title="dataflow" url="http://xywang93.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/dataflow/"/>
           
         </display>
     </data>
@@ -36,8 +36,8 @@
 
     
   <url>
-    <loc>http://xuke225.github.io.git/2017/11/27/SDAccel/%E4%BC%98%E5%8C%96/dataflow/OpenCL_dataflow_pipe/</loc>
-    <lastmod>2018-01-03T10:13:49.065Z</lastmod>
+    <loc>http://xywang93.github.io.git/2017/11/27/SDAccel/%E4%BC%98%E5%8C%96/dataflow/OpenCL_dataflow_pipe/</loc>
+    <lastmod>2018-01-03T10:13:50.000Z</lastmod>
     <data>
         <display>
         <title>SDAccel Dataflow 那点事儿（二）</title>
@@ -54,13 +54,13 @@
          
            
              
-              <breadCrumb title="SDAccel" url="http://xuke225.github.io.git/categories/SDAccel/"/>
+              <breadCrumb title="SDAccel" url="http://xywang93.github.io.git/categories/SDAccel/"/>
           
              
-              <breadCrumb title="优化" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
+              <breadCrumb title="优化" url="http://xywang93.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
           
              
-              <breadCrumb title="dataflow" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/dataflow/"/>
+              <breadCrumb title="dataflow" url="http://xywang93.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/dataflow/"/>
           
         </display>
     </data>
@@ -68,8 +68,8 @@
 
     
   <url>
-    <loc>http://xuke225.github.io.git/2017/12/26/SDAccel/%E5%9F%BA%E7%A1%80/OpenCL%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</loc>
-    <lastmod>2018-01-03T09:22:16.404Z</lastmod>
+    <loc>http://xywang93.github.io.git/2017/12/26/SDAccel/%E5%9F%BA%E7%A1%80/OpenCL%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</loc>
+    <lastmod>2018-01-03T09:22:18.000Z</lastmod>
     <data>
         <display>
         <title>Xilinx OpenCL的存储模型</title>
@@ -84,10 +84,10 @@
          
            
              
-              <breadCrumb title="SDAccel" url="http://xuke225.github.io.git/categories/SDAccel/"/>
+              <breadCrumb title="SDAccel" url="http://xywang93.github.io.git/categories/SDAccel/"/>
           
              
-              <breadCrumb title="基础" url="http://xuke225.github.io.git/categories/SDAccel/%E5%9F%BA%E7%A1%80/"/>
+              <breadCrumb title="基础" url="http://xywang93.github.io.git/categories/SDAccel/%E5%9F%BA%E7%A1%80/"/>
           
         </display>
     </data>
@@ -95,8 +95,8 @@
 
     
   <url>
-    <loc>http://xuke225.github.io.git/2017/11/10/SDAccel/%E4%BC%98%E5%8C%96/host/overlap/</loc>
-    <lastmod>2017-12-27T02:12:36.086Z</lastmod>
+    <loc>http://xywang93.github.io.git/2017/11/10/SDAccel/%E4%BC%98%E5%8C%96/host/overlap/</loc>
+    <lastmod>2017-12-27T02:12:38.000Z</lastmod>
     <data>
         <display>
         <title>host overlap</title>
@@ -111,13 +111,13 @@
          
            
              
-              <breadCrumb title="SDAccel" url="http://xuke225.github.io.git/categories/SDAccel/"/>
+              <breadCrumb title="SDAccel" url="http://xywang93.github.io.git/categories/SDAccel/"/>
           
              
-              <breadCrumb title="优化" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
+              <breadCrumb title="优化" url="http://xywang93.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
           
              
-              <breadCrumb title="host" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/host/"/>
+              <breadCrumb title="host" url="http://xywang93.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/host/"/>
           
         </display>
     </data>
@@ -125,8 +125,8 @@
 
     
   <url>
-    <loc>http://xuke225.github.io.git/2017/11/09/SDAccel/%E4%BC%98%E5%8C%96/kernel_to_gmem/gmem-4bank/</loc>
-    <lastmod>2017-12-27T02:11:13.591Z</lastmod>
+    <loc>http://xywang93.github.io.git/2017/11/09/SDAccel/%E4%BC%98%E5%8C%96/kernel_to_gmem/gmem-4bank/</loc>
+    <lastmod>2017-12-27T02:11:14.000Z</lastmod>
     <data>
         <display>
         <title>gmem_4bank</title>
@@ -141,13 +141,13 @@
          
            
              
-              <breadCrumb title="SDAccel" url="http://xuke225.github.io.git/categories/SDAccel/"/>
+              <breadCrumb title="SDAccel" url="http://xywang93.github.io.git/categories/SDAccel/"/>
           
              
-              <breadCrumb title="优化" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
+              <breadCrumb title="优化" url="http://xywang93.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
           
              
-              <breadCrumb title="kernel_to_gmem" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/kernel-to-gmem/"/>
+              <breadCrumb title="kernel_to_gmem" url="http://xywang93.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/kernel-to-gmem/"/>
           
         </display>
     </data>
@@ -155,8 +155,8 @@
 
     
   <url>
-    <loc>http://xuke225.github.io.git/2017/11/07/hello-world/</loc>
-    <lastmod>2017-12-27T02:02:00.687Z</lastmod>
+    <loc>http://xywang93.github.io.git/2017/11/07/hello-world/</loc>
+    <lastmod>2017-12-27T02:02:02.000Z</lastmod>
     <data>
         <display>
         <title>Hello World</title>
@@ -169,7 +169,7 @@
          
            
              
-              <breadCrumb title="test" url="http://xuke225.github.io.git/categories/test/"/>
+              <breadCrumb title="test" url="http://xywang93.github.io.git/categories/test/"/>
           
         </display>
     </data>
@@ -177,8 +177,8 @@
 
     
   <url>
-    <loc>http://xuke225.github.io.git/2017/11/25/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%964/</loc>
-    <lastmod>2017-11-29T07:51:09.877Z</lastmod>
+    <loc>http://xywang93.github.io.git/2017/11/25/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%964/</loc>
+    <lastmod>2017-11-29T07:51:10.000Z</lastmod>
     <data>
         <display>
         <title>SDAccel矩阵乘法优化（四）</title>
@@ -197,13 +197,13 @@
          
            
              
-              <breadCrumb title="SDAccel" url="http://xuke225.github.io.git/categories/SDAccel/"/>
+              <breadCrumb title="SDAccel" url="http://xywang93.github.io.git/categories/SDAccel/"/>
           
              
-              <breadCrumb title="优化" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
+              <breadCrumb title="优化" url="http://xywang93.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
           
              
-              <breadCrumb title="综合案例" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/"/>
+              <breadCrumb title="综合案例" url="http://xywang93.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/"/>
           
         </display>
     </data>
@@ -211,8 +211,8 @@
 
     
   <url>
-    <loc>http://xuke225.github.io.git/2017/11/24/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%963/</loc>
-    <lastmod>2017-11-29T07:51:02.710Z</lastmod>
+    <loc>http://xywang93.github.io.git/2017/11/24/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%963/</loc>
+    <lastmod>2017-11-29T07:51:04.000Z</lastmod>
     <data>
         <display>
         <title>SDAccel矩阵乘法优化（三）</title>
@@ -231,13 +231,13 @@
          
            
              
-              <breadCrumb title="SDAccel" url="http://xuke225.github.io.git/categories/SDAccel/"/>
+              <breadCrumb title="SDAccel" url="http://xywang93.github.io.git/categories/SDAccel/"/>
           
              
-              <breadCrumb title="优化" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
+              <breadCrumb title="优化" url="http://xywang93.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
           
              
-              <breadCrumb title="综合案例" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/"/>
+              <breadCrumb title="综合案例" url="http://xywang93.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/"/>
           
         </display>
     </data>
@@ -245,8 +245,8 @@
 
     
   <url>
-    <loc>http://xuke225.github.io.git/2017/11/23/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%962/</loc>
-    <lastmod>2017-11-29T07:50:57.693Z</lastmod>
+    <loc>http://xywang93.github.io.git/2017/11/23/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%962/</loc>
+    <lastmod>2017-11-29T07:50:58.000Z</lastmod>
     <data>
         <display>
         <title>SDAccel矩阵乘法优化（二）</title>
@@ -265,13 +265,13 @@
          
            
              
-              <breadCrumb title="SDAccel" url="http://xuke225.github.io.git/categories/SDAccel/"/>
+              <breadCrumb title="SDAccel" url="http://xywang93.github.io.git/categories/SDAccel/"/>
           
              
-              <breadCrumb title="优化" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
+              <breadCrumb title="优化" url="http://xywang93.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
           
              
-              <breadCrumb title="综合案例" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/"/>
+              <breadCrumb title="综合案例" url="http://xywang93.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/"/>
           
         </display>
     </data>
@@ -279,8 +279,8 @@
 
     
   <url>
-    <loc>http://xuke225.github.io.git/2017/11/22/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%961/</loc>
-    <lastmod>2017-11-29T07:50:47.553Z</lastmod>
+    <loc>http://xywang93.github.io.git/2017/11/22/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%961/</loc>
+    <lastmod>2017-11-29T07:50:48.000Z</lastmod>
     <data>
         <display>
         <title>SDAccel矩阵乘法优化（一）</title>
@@ -297,13 +297,13 @@
          
            
              
-              <breadCrumb title="SDAccel" url="http://xuke225.github.io.git/categories/SDAccel/"/>
+              <breadCrumb title="SDAccel" url="http://xywang93.github.io.git/categories/SDAccel/"/>
           
              
-              <breadCrumb title="优化" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
+              <breadCrumb title="优化" url="http://xywang93.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
           
              
-              <breadCrumb title="综合案例" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/"/>
+              <breadCrumb title="综合案例" url="http://xywang93.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/"/>
           
         </display>
     </data>
@@ -311,8 +311,8 @@
 
     
   <url>
-    <loc>http://xuke225.github.io.git/2017/11/09/DeepLearning/mxnet/MXNET%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E7%BD%91%E7%BB%9C%E6%AD%A3%E5%90%91%E6%8E%A8%E7%90%86/</loc>
-    <lastmod>2017-11-26T07:54:54.931Z</lastmod>
+    <loc>http://xywang93.github.io.git/2017/11/09/DeepLearning/mxnet/MXNET%20%E5%AE%9E%E7%8E%B0%E5%A4%9A%E7%BD%91%E7%BB%9C%E6%AD%A3%E5%90%91%E6%8E%A8%E7%90%86/</loc>
+    <lastmod>2017-11-26T07:54:56.000Z</lastmod>
     <data>
         <display>
         <title>MXNet model zoo 多网络推理</title>
@@ -323,10 +323,10 @@
          
            
              
-              <breadCrumb title="Deep Learning" url="http://xuke225.github.io.git/categories/Deep-Learning/"/>
+              <breadCrumb title="Deep Learning" url="http://xywang93.github.io.git/categories/Deep-Learning/"/>
           
              
-              <breadCrumb title="mxnet" url="http://xuke225.github.io.git/categories/Deep-Learning/mxnet/"/>
+              <breadCrumb title="mxnet" url="http://xywang93.github.io.git/categories/Deep-Learning/mxnet/"/>
           
         </display>
     </data>
@@ -334,8 +334,8 @@
 
     
   <url>
-    <loc>http://xuke225.github.io.git/2017/11/15/SDAccel/%E4%BC%98%E5%8C%96/kernel_to_gmem/gmem-carry-dependency-%E5%88%86%E6%9E%90/</loc>
-    <lastmod>2017-11-25T13:17:16.497Z</lastmod>
+    <loc>http://xywang93.github.io.git/2017/11/15/SDAccel/%E4%BC%98%E5%8C%96/kernel_to_gmem/gmem-carry-dependency-%E5%88%86%E6%9E%90/</loc>
+    <lastmod>2017-11-25T13:17:18.000Z</lastmod>
     <data>
         <display>
         <title>gmem carry dependency 分析</title>
@@ -350,13 +350,13 @@
          
            
              
-              <breadCrumb title="SDAccel" url="http://xuke225.github.io.git/categories/SDAccel/"/>
+              <breadCrumb title="SDAccel" url="http://xywang93.github.io.git/categories/SDAccel/"/>
           
              
-              <breadCrumb title="优化" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
+              <breadCrumb title="优化" url="http://xywang93.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/"/>
           
              
-              <breadCrumb title="kernel_to_gmem" url="http://xuke225.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/kernel-to-gmem/"/>
+              <breadCrumb title="kernel_to_gmem" url="http://xywang93.github.io.git/categories/SDAccel/%E4%BC%98%E5%8C%96/kernel-to-gmem/"/>
           
         </display>
     </data>
