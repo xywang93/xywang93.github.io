@@ -1977,7 +1977,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #2fe039;
+  background: #f6b9ff;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3100,9 +3100,9 @@ hr {
   color: #000;
 }
 .site-meta .site-title {
-  font-size: 28px;
-  font-family: 'Comic Sans MS', STHupo;
-  color: #63b8ff;
+  font-size: 40px;
+  font-family: Jokerman, LiSu;
+  color: #000;
 }
 .footer {
   background: none;
