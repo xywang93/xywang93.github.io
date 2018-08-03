@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Deep Learning,Tensorpack," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="异构 AI" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Tensorpack架构  DataFlow是一个用于在Python中高效地加载数据的库。除了DataFlow之外，本地TF运营商也可以用于数据加载。它们最终将被封装在相同的InputSource接口下并进行预取。 可以使用任何基于TF的符号函数库来定义模型，其中包括tensorpack中的一小组函数。 ModelDe">
+<meta name="keywords" content="Deep Learning,Tensorpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tnesorpack入门教程">
+<meta property="og:url" content="http://xywang93.github.io.git/2018/04/01/DeepLearning/Tensorpack/Tensorpack简介/index.html">
+<meta property="og:site_name" content="异构 AI">
+<meta property="og:description" content="Tensorpack架构  DataFlow是一个用于在Python中高效地加载数据的库。除了DataFlow之外，本地TF运营商也可以用于数据加载。它们最终将被封装在相同的InputSource接口下并进行预取。 可以使用任何基于TF的符号函数库来定义模型，其中包括tensorpack中的一小组函数。 ModelDesc是连接模型的接口和InputSource的接口。 Tensorpack的Tr">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/19876566c073a98092648443139221e6.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/98b00ec58d4658755b92f14dab5fa520.png">
+<meta property="og:updated_time" content="2018-07-30T15:02:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tnesorpack入门教程">
+<meta name="twitter:description" content="Tensorpack架构  DataFlow是一个用于在Python中高效地加载数据的库。除了DataFlow之外，本地TF运营商也可以用于数据加载。它们最终将被封装在相同的InputSource接口下并进行预取。 可以使用任何基于TF的符号函数库来定义模型，其中包括tensorpack中的一小组函数。 ModelDesc是连接模型的接口和InputSource的接口。 Tensorpack的Tr">
+<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/19876566c073a98092648443139221e6.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xywang93.github.io.git/2018/04/01/DeepLearning/Tensorpack/Tensorpack简介/"/>
+
+
+
+
+
+  <title>Tnesorpack入门教程 | 异构 AI</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">异构 AI</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xywang93.github.io.git/2018/04/01/DeepLearning/Tensorpack/Tensorpack简介/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王晓芸">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oz5oe1xth.bkt.clouddn.com/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="异构 AI">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Tnesorpack入门教程</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-01T00:00:00+08:00">
+                2018-04-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Deep Learning</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learning/Tensorpack/" itemprop="url" rel="index">
+                    <span itemprop="name">Tensorpack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/01/DeepLearning/Tensorpack/Tensorpack简介/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/04/01/DeepLearning/Tensorpack/Tensorpack简介/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  6,221
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Tensorpack架构"><a href="#Tensorpack架构" class="headerlink" title="Tensorpack架构"></a>Tensorpack架构</h3><p><img src="http://oz3lw4cji.bkt.clouddn.com/19876566c073a98092648443139221e6.png" alt=""></p>
+<ul>
+<li><code>DataFlow</code>是一个用于在Python中高效地加载数据的库。除了DataFlow之外，本地TF运营商也可以用于数据加载。它们最终将被封装在相同的<code>InputSource</code>接口下并进行预取。</li>
+<li>可以使用任何基于TF的符号函数库来定义模型，其中包括tensorpack中的一小组函数。 <code>ModelDesc</code>是连接模型的接口和<code>InputSource</code>的接口。</li>
+<li>Tensorpack的<code>Trainers</code>用于管理训练过程中的循环迭代。它们还包括用于多GPU或分布式训练的数据并行逻辑。同时，也拥有很强大的定制能力。</li>
+<li><code>Callbacks</code>就像<code>tf.train.SessionRunHook</code>或者<code>plugins</code>。在训练过程中，除了主迭代以外，您想要做的所有事情都可以通过回调进行定义并轻松重用。</li>
+<li>所有组件尽管完美地结合在一起，但都具有高度的去相关性：您可以：<ul>
+<li>单独使用DataFlow作为数据加载库，根本不用tensorfow。</li>
+<li>使用tensorpack构建具有多GPU或分布式支持的图结构，然后使用自己的循环进行训练。</li>
+<li>自行构建图形，并使用tensorpack回调进行训练。</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<h3 id="DataFlow-数据流接口"><a href="#DataFlow-数据流接口" class="headerlink" title="DataFlow(数据流接口)"></a>DataFlow(数据流接口)</h3><h4 id="DataFlow是什么？"><a href="#DataFlow是什么？" class="headerlink" title="DataFlow是什么？"></a>DataFlow是什么？</h4><p>DataFlow是一个用于构建Python迭代器以提高数据加载效率的库。</p>
+<p><strong>定义</strong>：DataFlow有一个<code>get_data()</code>生成器方法，它产生数据点(<code>datapoints</code>)。datapoints是被称为数据点组件(components of a datapoin)的Python列表对象。</p>
+<p><strong>例子</strong>：要训练MNIST数据集，需要使用<code>DataFlow</code>的<code>get_data()</code>方法，该方法需要生成两个组件的数据点（列表）：一个形状为<code>(64,28,28)</code>的numpy的数组(图片数据)和一个形状<code>(64， )</code>数组（图片标签）。</p>
+<h4 id="DataFlow的组成"><a href="#DataFlow的组成" class="headerlink" title="DataFlow的组成"></a>DataFlow的组成</h4><p>有一个标准接口的好处是能够提供最大的代码可重用性。 tensorpack中有很多现有的DataFlow实用程序，您可以使用这些实用程序来组合具有长数据管道的复杂DataFlow。常见的流水线通常会<strong>从磁盘（或其他来源）读取</strong>，<strong>应用转换（ apply transformations）</strong>，<strong>分组批处理（group into batches）</strong> ，<strong>预取数据（group into batches）</strong>。一个简单的例子如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># a DataFlow you implement to produce [tensor1, tensor2, ..] lists from whatever sources:</span></span><br><span class="line">df = MyDataFlow(dir=<span class="string">'/my/data'</span>, shuffle=<span class="keyword">True</span>)</span><br><span class="line"><span class="comment"># resize the image component of each datapoint</span></span><br><span class="line">df = AugmentImageComponent(df, [imgaug.Resize((<span class="number">225</span>, <span class="number">225</span>))])</span><br><span class="line"><span class="comment"># group data into batches of size 128</span></span><br><span class="line">df = BatchData(df, <span class="number">128</span>)</span><br><span class="line"><span class="comment"># start 3 processes to run the dataflow in parallel</span></span><br><span class="line">df = PrefetchDataZMQ(df, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="为什么要使用DataFlow"><a href="#为什么要使用DataFlow" class="headerlink" title="为什么要使用DataFlow"></a>为什么要使用DataFlow</h4><ul>
+<li><strong>很简单</strong>：用纯Python编写所有内容，并重用现有的实用程序。相反，在TF操作员中编写数据加载器通常很痛苦，性能很难调整。</li>
+<li><strong>速度非常快</strong>：可以构建具有并行性的快速DataFlow。在tensorpack中使用DataFlow，可以采用<code>Input Pipeline</code>,进一步加速图形中的数据加载。</li>
+</ul>
+<blockquote>
+<p>尽管如此，tensorpack还支持用本地TF操作与TF数据集加载数据。</p>
+</blockquote>
+<h4 id="使用DataFlow（Tensorpack外部）"><a href="#使用DataFlow（Tensorpack外部）" class="headerlink" title="使用DataFlow（Tensorpack外部）"></a>使用DataFlow（Tensorpack外部）</h4><p>通常，tensorpack <code>InputSource</code>接口将DataFlow链接到图结构进行训练。如果在某些自定义代码中使用DataFlow，需要<strong>首先调用<code>reset_state()</code>初始化</strong>，然后使用生成器：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">df = SomeDataFlow()</span><br><span class="line"></span><br><span class="line">df.reset_state() <span class="comment">#初始化</span></span><br><span class="line">generator = df.get_data()</span><br><span class="line"><span class="keyword">for</span> dp <span class="keyword">in</span> generator:</span><br><span class="line">    <span class="comment"># dp is now a list. do whatever</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>DataFlow独立于tensorpack和TensorFlow</strong>。要导入tensorpack.dataflow，甚至不必安装TensorFlow。<strong>可以简单地将其用作数据处理管道并将其插入任何其他框架</strong>。</p>
+</blockquote>
+<h3 id="Input-Pipeline（输入流水线）"><a href="#Input-Pipeline（输入流水线）" class="headerlink" title="Input Pipeline（输入流水线）"></a>Input Pipeline（输入流水线）</h3><blockquote>
+<p>本教程包含关于“如何高效地读取数据以使用TensorFlow”以及tensorpack如何支持这些方法的主题的一般性讨论。 您不必阅读它，因为这些是tensorpack接口下的细节，但知道它可以帮助您在构建任务时，高效的选择最佳输入管道。</p>
+</blockquote>
+<h4 id="数据准备并行化"><a href="#数据准备并行化" class="headerlink" title="数据准备并行化"></a>数据准备并行化</h4><p><img src="http://oz3lw4cji.bkt.clouddn.com/98b00ec58d4658755b92f14dab5fa520.png" alt=""></p>
+<p>无论使用什么框架，都可以有一个常识：<strong>Prepare data in parallel with the training!</strong><br>原因如下：</p>
+<ul>
+<li>数据准备通常会耗费不重要的时间（取决于实际问题）。</li>
+<li><strong>数据准备与训练是独立的</strong>！这个并行的最根本前提！</li>
+<li><strong>数据准备与训练通常使用完全不同的资源</strong>（参见上图）：Training过程使用GPU，加载数据的过程通过磁盘，处理数据采用CPU，拷贝数据到TF经过的是内存带宽，而拷贝到GPU是通过PCI-e总线。因此训练和数据准备两项任务一起完成并不会降低工作效率。事实上，你可以进一步并行化数据准备实现的不同阶段，因为他们也使用不同的资源。</li>
+</ul>
+<p>我们可以简单的计算一下：</p>
+<blockquote>
+<p>4台P100 GPU可以852张/秒的速度训练ResNet50，这些图像的大小为852 <em> 224 </em> 224 <em> 3 </em> 4bytes = 489MB。 假设你有 5GB / s的memcpy带宽（如果你运行单线程拷贝，大致就像这样），只需复制一次数据就需要0.1s ——<strong>将训练速度减慢10％</strong>。 并且在预处理期间还有很多运算成本依然需要耗费大量时间！。</p>
+</blockquote>
+<p><strong>未能隐藏数据准备延迟是看不到良好GPU利用率的主要原因</strong>。 因此一定要选择一个能够延迟隐藏的框架。 但是大多数其他TensorFlow封装都是基于<code>feed_dict</code>设计的。 Tensorpack有内置的机制来隐藏上述阶段的延迟。 这是Tensorpack速度更快的主要原因。</p>
+<h4 id="Python-Reader-or-TF-Reader"><a href="#Python-Reader-or-TF-Reader" class="headerlink" title="Python Reader or TF Reader ?"></a>Python Reader or TF Reader ?</h4><p>无论您使用什么来加载/预处理数据，上述讨论都是有效的，无论是Python代码还是TensorFlow运算符，或者是两者的组合。这两个都支持tensorpack，推荐使用Python。</p>
+<h5 id="TensorFlow-Reader优点"><a href="#TensorFlow-Reader优点" class="headerlink" title="TensorFlow Reader优点"></a>TensorFlow Reader优点</h5><p>人们经常认为他们应该使用tf.data，因为它很快。</p>
+<ul>
+<li>事实上，它一般情况下很快，但不一定。使用Python，您可以访问许多其他快速库，这些库在TF中可能不受支持。</li>
+<li>Python足够快。只要数据准备与训练保持同步，并且上图中所有四个模块的延迟都隐藏起来，<strong>更快的读取不会对整体吞吐量产生任何影响</strong>。 对于大多数类型的问题，直到多GPU ImageNet训练的规模，如果您使用快速库（例如<code>tensorpack.dataflow</code>），Python可以提供足够的速度。</li>
+</ul>
+<h5 id="TensorFlow-Reader缺点"><a href="#TensorFlow-Reader缺点" class="headerlink" title="TensorFlow Reader缺点"></a>TensorFlow Reader缺点</h5><p>TensorFlow Reader的缺点显而易见——<strong>接口设计太复杂了！</strong><br>与运行数学模型不同，数据处理是一项复杂且结构不良（ poorly-structured）的任务。 您需要处理不同的格式，处理特殊案例，嘈杂的数据，数据组合。 这样做需要条件操作，循环，数据结构，有时甚至是异常处理。 这些操作自然不是符号图的该做的相关任务。</p>
+<p>我们来看看用户对tf.data的要求：</p>
+<ul>
+<li>填充数据，混洗数据的不同方式</li>
+<li>处理数据中的任何值</li>
+<li>处理不是批量大小倍数的数据集</li>
+<li>排序/跳过一些数据</li>
+<li>将数据写入文件</li>
+</ul>
+<p>为了支持所有这些可以在Python中使用3行代码完成的功能，您需要一个新的TF API，或者向Dataset.from_generator（即Python再次）提出要求。<br>如果您的数据本来就非常干净并且格式正确，那么使用TF来读取数据才有意义。如果没有，你可能会想写一个脚本来格式化你的数据，但是你几乎已经写了一个Python加载器了！<br>考虑一下：编写一个Python脚本以便从某种格式转换为TF友好格式，然后是从这种格式转换为张量的TF脚本是浪费时间。 中间格式不一定存在。 您只需要正确的界面即可直接高效地将Python连接到图形。 <code>tensorpack.InputSource</code>就是这样的一个接口。</p>
+<h4 id="InputSource"><a href="#InputSource" class="headerlink" title="InputSource"></a>InputSource</h4><p><code>InputSource</code>是tensorpack中的抽象接口，用于描述输入来自哪里以及它们如何进入图形。例如，</p>
+<ul>
+<li>FeedInput：来自DataFlow并获取图表（缓慢）。</li>
+<li>QueueInput：来自DataFlow并由TF队列缓存在CPU上。</li>
+<li>StagingInput：来自某个<code>InputSource</code>，然后由TF StagingArea在GPU上预取。</li>
+<li>TFDatasetInput：来自<code>tf.data.Dataset</code>。</li>
+<li>dataflow_to_dataset：来自DataFlow，并由<code>tf.data.Dataset</code>进一步处理。</li>
+<li>TensorInput：来自你定义的张量（例如可以是读操作）。</li>
+<li>ZMQInput：来自一些ZeroMQ管道，读取/预处理可能发生在不同的过程中，甚至不同的机器中。</li>
+</ul>
+<blockquote>
+<p>通常，我们推荐<code>QueueInput + StagingInput</code>，因为它对大多数用例都很有用。 如果您的数据因任何原因必须来自单独的进程，请使用<code>ZMQInput</code>。 如果您仍然想使用TF读取操作，请定义一个<code>tf.data.Dataset</code>并使用<code>TFDatasetInput</code>。</p>
+</blockquote>
+<h3 id="Symbolic-Layers（符号层）"><a href="#Symbolic-Layers（符号层）" class="headerlink" title="Symbolic Layers（符号层）"></a>Symbolic Layers（符号层）</h3><p>Tensorpack包含一小部分通用模型基元，如conv / deconv，fc，bn，pooling层。 这些层的编写只是因为在tensorpack开发时没有其他选择。 现在，这些实现实际上可以<strong>直接调用<code>tf.layers</code></strong>。</p>
+<p>现在，<strong>可以在tensorpack中使用tf.layers或任何其他符号库</strong>。使用tensorpack实现，您还可以通过<code>argscope</code>和<code>LinearWrap</code>，以简化代码。</p>
+<blockquote>
+<p>请注意，为了保持代码和预先训练模型的向后兼容性，tensorpack层与tf.layers有一些细微差别，包括变量名称和默认选项。有关详细信息，请参阅tensorpack API文档。</p>
+</blockquote>
+<h4 id="argscope-and-LinearWrap"><a href="#argscope-and-LinearWrap" class="headerlink" title="argscope and LinearWrap"></a>argscope and LinearWrap</h4><p><code>argscope</code>为您提供默认参数的上下文。 <code>LinearWrap</code>是简化构建“线性结构”模型的糖衣语法(syntax sugar)。</p>
+<p>代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> argscope(Conv2D, filters=<span class="number">32</span>, kernel_size=<span class="number">3</span>, activation=tf.nn.relu):</span><br><span class="line">  l = (LinearWrap(image)  <span class="comment"># the starting brace is only for line-breaking</span></span><br><span class="line">       .Conv2D(<span class="string">'conv0'</span>)</span><br><span class="line">       .MaxPooling(<span class="string">'pool0'</span>, <span class="number">2</span>)</span><br><span class="line">       .Conv2D(<span class="string">'conv1'</span>, padding=<span class="string">'SAME'</span>)</span><br><span class="line">       .Conv2D(<span class="string">'conv2'</span>, kernel_size=<span class="number">5</span>)</span><br><span class="line">       .FullyConnected(<span class="string">'fc0'</span>, <span class="number">512</span>, activation=tf.nn.relu)</span><br><span class="line">       .Dropout(<span class="string">'dropout'</span>, rate=<span class="number">0.5</span>)</span><br><span class="line">       .tf.multiply(<span class="number">0.5</span>)</span><br><span class="line">       .apply(func, *args, **kwargs)</span><br><span class="line">       .FullyConnected(<span class="string">'fc1'</span>, units=<span class="number">10</span>, activation=tf.identity)())</span><br></pre></td></tr></table></figure></p>
+<p>上面示例代码等价如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">l = Conv2D(<span class="string">'conv0'</span>, image, <span class="number">32</span>, <span class="number">3</span>, activation=tf.nn.relu)</span><br><span class="line">l = MaxPooling(<span class="string">'pool0'</span>, l, <span class="number">2</span>)</span><br><span class="line">l = Conv2D(<span class="string">'conv1'</span>, l, <span class="number">32</span>, <span class="number">3</span>, padding=<span class="string">'SAME'</span>, activation=tf.nn.relu)</span><br><span class="line">l = Conv2D(<span class="string">'conv2'</span>, l, <span class="number">32</span>, <span class="number">5</span>, activation=tf.nn.relu)</span><br><span class="line">l = FullyConnected(<span class="string">'fc0'</span>, l, <span class="number">512</span>, activation=tf.nn.relu)</span><br><span class="line">l = Dropout(<span class="string">'dropout'</span>, l, rate=<span class="number">0.5</span>)</span><br><span class="line">l = tf.multiply(l, <span class="number">0.5</span>)</span><br><span class="line">l = func(l, *args, **kwargs)</span><br><span class="line">l = FullyConnected(<span class="string">'fc1'</span>, l, <span class="number">10</span>, activation=tf.identity)</span><br></pre></td></tr></table></figure>
+<h4 id="访问相关的张量"><a href="#访问相关的张量" class="headerlink" title="访问相关的张量"></a>访问相关的张量</h4><p>层中的变量将命名为<code>name / W</code>，<code>name / b</code>等。有关详细信息，请参阅每个图层的API文档。在构建图时，可以像这样访问变量：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">l = Conv2D(<span class="string">'conv1'</span>, l, <span class="number">32</span>, <span class="number">3</span>)</span><br><span class="line">print(l.variables.W)</span><br><span class="line">print(l.variables.b)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>但请注意，这是一种很冒险的方式，可能不适用于未来版本的TensorFlow。此方法也不适用于LinearWrap，并且无法访问由激活函数创建的变量。除非在API中有不同的说明，否则层的输出通常被命名为<code>name/output</code>。你可以打印张量来查看它的名字。</p>
+</blockquote>
+<h4 id="在Tensorpack外使用模型"><a href="#在Tensorpack外使用模型" class="headerlink" title="在Tensorpack外使用模型"></a>在Tensorpack外使用模型</h4><p>您可以单独使用tensorpack模型作为简单的符号函数库。为此，只需在定义模型时输入<code>TowerContext</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> TowerContext(<span class="string">''</span>, is_training=<span class="keyword">True</span>):</span><br><span class="line">  <span class="comment"># call any tensorpack layer</span></span><br></pre></td></tr></table></figure>
+<p>某些层（特别是BatchNorm）具有不同的训练/测试时间行为,此行为由TowerContext控制。如果您需要在测试时间使用它们的tensorpack版本，则需要在另一个上下文中为它们创建操作。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Open a `reuse=True` variable scope here if you're sharing variables, then:</span></span><br><span class="line"><span class="keyword">with</span> TowerContext(<span class="string">'some_name_or_empty_string'</span>, is_training=<span class="keyword">False</span>):</span><br><span class="line">  <span class="comment"># build the graph again</span></span><br></pre></td></tr></table></figure>
+<h4 id="在Tensorpack中使用其他符号库"><a href="#在Tensorpack中使用其他符号库" class="headerlink" title="在Tensorpack中使用其他符号库"></a>在Tensorpack中使用其他符号库</h4><p>在定义模型的过程中可以使用任何觉得舒服的库来构建图结构。<br>通常，<code>slim</code> / <code>tflearn</code> / <code>tensorlayer</code>只是符号函数包装器，调用它们与调用<code>tf.add</code>没什么区别。 不过，需要小心如何正规化/ BN更新应该在这些库中的处理。<br>这与使用 <code>sonnet</code>/ <code>Keras</code>有点不同。 <code>sonnet</code> / <code>Keras</code> 通过自己的模型类来管理变量范围，调用它们的符号函数总是创建新的变量范围。 请参阅Keras示例以了解如何在tensorpack内使用它。</p>
+<h3 id="Trainers"><a href="#Trainers" class="headerlink" title="Trainers"></a>Trainers</h3><p>Tensorpack训练器包含以下逻辑：</p>
+<ul>
+<li>构件图结构</li>
+<li>运行迭代（带回调）<blockquote>
+<p>通常我们不会直接触摸这些方法，而是在训练器上使用更高级的接口。我们只需选择要使用的训练器。但是他们如何工作的一些基本知识是有用的：</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="Tower-Trainer"><a href="#Tower-Trainer" class="headerlink" title="Tower Trainer"></a>Tower Trainer</h4><p>遵循TensorFlow中的术语，<code>Tower Trainer</code>是一个可调用的函数，它接受输入张量并将模型的<strong>一个重复项</strong>添加到图中。这种概念可以描述大多数类型的神经网络训练。<code>Tower</code>的概念主要用于支持：</p>
+<ul>
+<li>数据并行多GPU训练，其中在每个GPU上构建复制品。</li>
+<li>用于推理的图构造，其中复制是在推理模式下构建的。<br>用户需要提供Tower函数才能使用<code>TowerTrainer</code>。特别是，在使用<code>ModelDesc</code>接口时，<code>build_graph</code>方法将成为Tower函数。</li>
+</ul>
+<p>Tower函数需要遵循一些约定：</p>
+<ul>
+<li>它可能被<strong>多次调用</strong>以进行数据并行训练或推理。<ul>
+<li>因此，要使用tensorflow-hub模块，需要在tower函数外初始化模块，并在tower函数内调用模块。</li>
+</ul>
+</li>
+<li>它必须遵循变量集合<ul>
+<li>（必需）只能将可通过梯度下降调整的变量放入<code>TRAINABLE_VARIABLES</code>中。</li>
+<li>（推荐）将需要用于推理的不可训练变量放入<code>MODEL_VARIABLES</code>中。</li>
+</ul>
+</li>
+<li>它必须遵循变量范围：<ul>
+<li>在函数中创建的任何可训练变量的名称必须与“variable_scope_name / custom / name”类似。不要依赖于name_scope的名字。不要使用两次variable_scope的名字。</li>
+</ul>
+</li>
+<li>创建任何可训练变量都必须遵守<strong>重用</strong>变量范围。要遵守变量重用，请在函数中使用<code>tf.get_variable</code>而不是<code>tf.Variable</code>。另一方面，对于不可训练的变量，可以使用<code>tf.Variable</code>确保在每个tower中创建新变量，即使<code>reuse= True</code>时也是如此。</li>
+<li>总是在<code>TowerContext</code>下调用，可以通过<code>get_current_tower_contxt()</code>来访问它。上下文包含有关训练/推理模式，重用等信息。<blockquote>
+<p>这些约定很容易遵循，并且大多数层封装（例如，tf.layers / slim / tensorlayer）确实遵循它们。 请注意，某些Keras层不遵循这些约定，如果在tensorpack中使用，将需要一些变通方法。</p>
+</blockquote>
+</li>
+</ul>
+<p>当然你也可以不这样编写，但所有现有的tensorpack trainers都是TowerTrainer的子类。</p>
+<h4 id="MultiGPU-Trainers"><a href="#MultiGPU-Trainers" class="headerlink" title="MultiGPU Trainers"></a>MultiGPU Trainers</h4><p>对于数据并行多GPU训练，不同的多GPU训练将实施不同的分配策略。他们以有效的方式照顾器件布局，梯度平均和同步，并且都达到了官方TF基准测试的相同性能。只需要一行代码更改即可使用它们，即<code>trainer=SyncMultiGPUTrainerReplicated()</code>。<br>请注意使用这些trains时的一些<strong>常见问题</strong>：</p>
+<ul>
+<li><p>在每次迭代中，所有GPU（模型的所有复制品）从InputSource中获取张量，而不是全部和分割。 所以总的批量大小将变成<code>(batch size of InputSource) * #GPU</code></p>
+<blockquote>
+<p>为数据并行训练分割张量根本没有意义。 首先，为什么要将时间串联起来分成大批量然后再分开呢？ 其次，这会对数据造成不必要的形状限制。 通过让每个GPU训练自己的输入张量，他们可以同时训练不同形状的输入。</p>
+</blockquote>
+</li>
+<li><p>tower函数（您的模型代码）将被称为乘法时间。 因此，在修改这些函数中的全局状态时需要小心，例如 将操作添加到TF集合中。</p>
+</li>
+</ul>
+<h4 id="Distributed-Trainers"><a href="#Distributed-Trainers" class="headerlink" title="Distributed Trainers"></a>Distributed Trainers</h4><p>分布式培训需要提供高性能allreduce实现的horovod库。要运行分布式培训，首先正确安装horovod，然后参阅HorovodTrainer的文档。</p>
+<p>Tensorpack已经使用TF的本地API实现了一些其他分布式训练，但即使在今天，TF对分布式训练的本地支持也不是很高的性能。 因此这些训练没有积极维护，不推荐使用。</p>
+<h3 id="Training-Interface"><a href="#Training-Interface" class="headerlink" title="Training Interface"></a>Training Interface</h3><p>Tensorpack有一个详尽的接口以获得最大的灵活性。当不想过多定制，训练时可以使用tensorpack提供的接口来简化代码。</p>
+<h4 id="使用ModelDesc和TrainConfig"><a href="#使用ModelDesc和TrainConfig" class="headerlink" title="使用ModelDesc和TrainConfig"></a>使用ModelDesc和TrainConfig</h4><p>这是旧Tensorpack用户最熟悉的接口，仅用于单一成本任务（ single-cost tasks ）。这个接口有很多例子。<br><code>SingleCost trainers</code>需要4个参数来设置图：<code>InputDesc</code>，<code>InputSource</code>，<code>get_cost</code>函数和<code>optimizer</code>。<code>ModelDesc</code>通过将它们中的三个打包成一个对象来描述一个模型：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyModel</span><span class="params">(ModelDesc)</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">_get_inputs</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> [tf.placeholder(dtype, shape, name), tf.placeholder(dtype, shape, name), ... ]</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">_build_graph</span><span class="params">(self, inputs)</span>:</span></span><br><span class="line">    tensorA, tensorB = inputs</span><br><span class="line">    <span class="comment"># build the graph</span></span><br><span class="line">    self.cost = xxx   <span class="comment"># define the cost tensor</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">_get_optimizer</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> tf.train.GradientDescentOptimizer(<span class="number">0.1</span>)</span><br></pre></td></tr></table></figure>
+<p><code>_get_inputs</code> 需要定义构建图的所有输入的元信息。</p>
+<p><code>_build_graph</code>获取与<code>_get_inputs</code>匹配的<code>inputs</code>张量列表。</p>
+<p>在<code>_build_graph</code>中可以使用任何符号函数，包括TensorFlow核心库函数和其他符号库。<code>_build_graph</code>是tower函数，所以需要<strong>遵循一些规则</strong>。同时还需要在此函数中设置<code>self.cost</code>。</p>
+<p>定义了这样一个模型后，使用<code>TrainConfig</code>和<code>launch_train_with_config</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">config = TrainConfig(</span><br><span class="line">   model=MyModel()</span><br><span class="line">   dataflow=my_dataflow,</span><br><span class="line">   <span class="comment"># data=my_inputsource, # alternatively, use a customized InputSource</span></span><br><span class="line">   callbacks=[...],    <span class="comment"># some default callbacks are automatically applied</span></span><br><span class="line">   <span class="comment"># some default monitors are automatically applied</span></span><br><span class="line">   steps_per_epoch=<span class="number">300</span>,   <span class="comment"># default to the size of your InputSource/DataFlow</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">trainer = SomeTrainer()</span><br><span class="line"><span class="comment"># trainer = SyncMultiGPUTrainerParameterServer(8)</span></span><br><span class="line">launch_train_with_config(config, trainer)</span><br></pre></td></tr></table></figure>
+<h4 id="Raw-Trainer-Interface"><a href="#Raw-Trainer-Interface" class="headerlink" title="Raw Trainer Interface"></a>Raw Trainer Interface</h4><p>要获得较低级别的控件，您还可以直接访问训练的方法：</p>
+<ul>
+<li><strong>构建图</strong>：对于一般训练，请自行构建图结构。 对于单成本训练（ single-cost trainer），请通过<code>SingleCostTrainer.setup_graph</code>构建图结构。</li>
+<li><strong>运行迭代</strong>：调用<code>Trainer.train()</code>或`Trainer.train_with_defaults()``，它为正常用例提供了一些默认选项。</li>
+</ul>
+<h3 id="Callbacks"><a href="#Callbacks" class="headerlink" title="Callbacks"></a>Callbacks</h3><p>回调是除了训练迭代以外的<strong>其他所有事情</strong>的接口。<br>除了最小化cost的实际训练迭代之外，你可能想要做一些其他事情。如下：</p>
+<ul>
+<li>在训练开始之前（例如：初始化保存程序，转储图）</li>
+<li>随着每次训练迭代（例如，在图中运行一些其他操作）</li>
+<li>在训练迭代之间（例如更新进度条，更新超参数）</li>
+<li>在周期之间（例如保存模型，运行一些验证）</li>
+<li>训练后（例如，在某处发送模型，发送消息到您的手机）</li>
+</ul>
+<p>人们传统上倾向于将训练循环与这些额外功能一起编写。这会使循环冗长，同一特征的代码可能会分开（设想一个特征，它需要在开始时进行初始化，然后在迭代之间进行一些实际工作）。</p>
+<p>通过编写回调来实现在每个地方做什么，tensorpack训练器将在适当的时候调用回调。因此，只要您使用tensorpack，这些功能就可以一条线（single line）的重复使用。</p>
+<p>例如，这些在训练ResNet时使用的回调：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">callbacks=[</span><br><span class="line">  <span class="comment"># save the model every epoch</span></span><br><span class="line">  ModelSaver(),</span><br><span class="line">  <span class="comment"># backup the model with best validation error</span></span><br><span class="line">  MinSaver(<span class="string">'val-error-top1'</span>),</span><br><span class="line">  <span class="comment"># run inference on another Dataflow every epoch, compute classification error and log to monitors</span></span><br><span class="line">  InferenceRunner(dataset_val, [</span><br><span class="line">      ClassificationError(<span class="string">'wrong-top1'</span>, <span class="string">'val-error-top1'</span>),</span><br><span class="line">      ClassificationError(<span class="string">'wrong-top5'</span>, <span class="string">'val-error-top5'</span>)]),</span><br><span class="line">  <span class="comment"># schedule the learning rate based on epoch number</span></span><br><span class="line">  ScheduledHyperParamSetter(<span class="string">'learning_rate'</span>,</span><br><span class="line">                            [(<span class="number">30</span>, <span class="number">1e-2</span>), (<span class="number">60</span>, <span class="number">1e-3</span>), (<span class="number">85</span>, <span class="number">1e-4</span>), (<span class="number">95</span>, <span class="number">1e-5</span>)]),</span><br><span class="line">  <span class="comment"># can manually change the learning rate through a file, without interrupting training</span></span><br><span class="line">  HumanHyperParamSetter(<span class="string">'learning_rate'</span>),</span><br><span class="line">  <span class="comment"># send validation error to my phone through pushbullet</span></span><br><span class="line">  SendStat(<span class="string">'curl -u your_id_xxx: https://api.pushbullet.com/v2/pushes \\</span></span><br><span class="line"><span class="string">             -d type=note -d title="validation error" \\</span></span><br><span class="line"><span class="string">             -d body=&#123;val-error-top1&#125; &gt; /dev/null 2&gt;&amp;1'</span>,</span><br><span class="line">             <span class="string">'val-error-top1'</span>),</span><br><span class="line">  <span class="comment"># record GPU utilizations during training</span></span><br><span class="line">  GPUUtilizationTracker(),</span><br><span class="line">  <span class="comment"># touch a file to pause the training and start a debug shell, to observe what's going on</span></span><br><span class="line">  InjectShell(shell=<span class="string">'ipython'</span>),</span><br><span class="line">  <span class="comment"># estimate time until completion</span></span><br><span class="line">  EstimatedTimeLeft()</span><br><span class="line">] + [    <span class="comment"># these callbacks are enabled by default already, though you can customize them</span></span><br><span class="line">  <span class="comment"># maintain those moving average summaries defined in the model (e.g. training loss, training error)</span></span><br><span class="line">  MovingAverageSummary(),</span><br><span class="line">  <span class="comment"># draw a progress bar</span></span><br><span class="line">  ProgressBar(),</span><br><span class="line">  <span class="comment"># run `tf.summary.merge_all` every epoch and log to monitors</span></span><br><span class="line">  MergeAllSummaries(),</span><br><span class="line">  <span class="comment"># run ops in GraphKeys.UPDATE_OPS collection along with training, if any</span></span><br><span class="line">  RunUpdateOps(),</span><br><span class="line">],</span><br><span class="line">monitors=[        <span class="comment"># monitors are a special kind of callbacks. these are also enabled by default</span></span><br><span class="line">  <span class="comment"># write everything to tensorboard</span></span><br><span class="line">  TFEventWriter(),</span><br><span class="line">  <span class="comment"># write all scalar data to a json file, for easy parsing</span></span><br><span class="line">  JSONWriter(),</span><br><span class="line">  <span class="comment"># print all scalar data every epoch (can be configured differently)</span></span><br><span class="line">  ScalarPrinter(),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>请注意，回调涵盖了训练的每个细节，从图操作到进度条。这意味着我们可以根据自己的喜好自定义训练的各个部分，例如，在进度条上显示不同的内容，以不同训练阶段评估部分结果等。</p>
+</blockquote>
+<p>这些功能并不总是必要的，但是想想如果你将这些逻辑与循环一起写入，主循环看起来有多混乱。如果您在需要时只用一条线即可启用这些功能，那么将变得多么简单。</p>
+<h3 id="Save-and-Load-models"><a href="#Save-and-Load-models" class="headerlink" title="Save and Load models"></a>Save and Load models</h3><h4 id="Work-with-TF-Checkpoint"><a href="#Work-with-TF-Checkpoint" class="headerlink" title="Work with TF Checkpoint"></a>Work with TF Checkpoint</h4><p><code>ModelSaver</code>回调以TensorFlow检查点(checkpoint)格式将模型保存到<code>logger.get_logger_dir()</code>定义的目录中。TF检查点通常包含<code>.data-xxxxx</code>文件和<code>.index</code>文件。两者都是必要的。<br><code>tf.train.NewCheckpointReader</code>是解析TensorFlow检查点的最佳工具。我们有两个示例脚本来演示它的用法，但请阅读TF文档以获取详细信息。</p>
+<ul>
+<li><code>scripts/ls-checkpoint.py</code>演示如何在检查点打印所有变量及其形状。</li>
+<li><code>scripts/dump-model-params.py</code>可用于删除检查点中不必要的变量。它需要一个<code>metagraph</code>文件（它也保存在ModelSaver中），只保存模型在推理时需要的变量。它可以将模型转储到以npz格式保存的<code>var-name：value</code>字典中。</li>
+</ul>
+<h4 id="Load-a-Model"><a href="#Load-a-Model" class="headerlink" title="Load a Model"></a>Load a Model</h4><p>模型加载（在训练或测试中）是通过<code>session_init</code>接口。 目前有两种方法可以恢复会话：<code>session_init = SaverRestore(…)</code>来恢复TF检查点，或<code>session_init = DictRestore(…)</code>来恢复字典。<code>get_model_loader</code>帮助决定使用文件名中哪一个。要加载多个模型，请使用<code>ChainInit</code>。<br>变量还原完全基于当前图中变量与session_init初始值设定项中的变量之间的<strong>名称匹配</strong>。仅出现在一侧的变量将被打印为警告。</p>
+<h4 id="Transfer-Learning"><a href="#Transfer-Learning" class="headerlink" title="Transfer Learning"></a>Transfer Learning</h4><p>迁移学习是很简单的。如果你想加载一些模型，只需使用相同的变量名称即可。如果你想重新训练一些层，只需重新命名相关层即可。</p>
+<h3 id="Summary-and-Logging"><a href="#Summary-and-Logging" class="headerlink" title="Summary and Logging"></a>Summary and Logging</h3><blockquote>
+<p>在训练期间，除迭代以外的所有内容均通过回调执行。本教程将解释如何在回调中处理汇总和日志记录，以及如何定制它们。默认的日志记录行为应该足够用于正常的用例，所以你可以跳过本教程。</p>
+</blockquote>
+<h4 id="TensorFlow-Summaries"><a href="#TensorFlow-Summaries" class="headerlink" title="TensorFlow Summaries"></a>TensorFlow Summaries</h4><p>这是TensorFlow如何最终被记录/保存/打印的总结：</p>
+<ul>
+<li><strong>What to Log</strong>：当在构造图代码中调用<code>tf.summary.xxx</code>时，TensorFlow会将一个操作添加到<code>tf.GraphKeys.SUMMARIES</code>集合（默认情况下）。</li>
+<li><strong>When to Log</strong>：<code>MergeAllSummaries</code>回调位于默认回调中。它每个周期（默认情况下）在<code>SUMMARIES</code>集合（默认情况下）运行，并将结果写入监视器。</li>
+<li><strong>Where to Log</strong>：默认情况下启用多个监视器。<ul>
+<li><code>TFEventWriter</code>通过<code>tensorboard</code>将东西写入所使用的事件中。</li>
+<li><code>ScalarPrinter</code>打印终端中的所有标量。</li>
+<li><code>JSONWriter</code>将标量保存到JSON文件。</li>
+</ul>
+</li>
+</ul>
+<p>所有的 “what, when, where”可以在图或者回调(callbacks)/监视器(monitors)设置中自定义。<br>由于<code>TF summaries</code>在默认情况下不会频繁被评估（每个epoch），如果内容是依赖于数据的，那么这些值可能具有很高的方差。 为了解决这个问题，你可以：</p>
+<ul>
+<li>更改“What to Log”：更频繁地记录日志，但请注意，记录某些summaries可能很昂贵。可能需要使用单独的集合进行频繁日志记录。</li>
+<li>更改“When to Log”：可以在标量张量上调用<code>tfutils.summary.add_moving_summary</code>，它将总结这些标量的移动平均值，而不是它们的即时值。移动平均由<code>MovingAverageSummary</code>回调（默认启用）维护。</li>
+</ul>
+<h4 id="Other-Logging-Data"><a href="#Other-Logging-Data" class="headerlink" title="Other Logging Data"></a>Other Logging Data</h4><p>除了TensorFlow summaries外，回调还可以在训练开始后的任何时候通过<code>self.trainer.monitors.put_xxx</code>将其他数据写入监视器后端。只要支持数据类型，数据将被分派到并记录到同一个地方。<br>因此，<strong>tensorboard不仅会显示图中的信息，还会显示我们自定义的数据</strong>。例如，验证集的准确度通常需要在TensorFlow图之外计算。通过一个统一的监视器后端，这个数字也会显示在tensorboard上。</p>
+<h3 id="Inference"><a href="#Inference" class="headerlink" title="Inference"></a>Inference</h3><h4 id="Inference-During-Training"><a href="#Inference-During-Training" class="headerlink" title="Inference During Training"></a>Inference During Training</h4><p>训练期间有两种方法可以进行推理。</p>
+<ul>
+<li>最简单的方法是编写回调函数，并使用<code>self.trainer.get_predictor()</code>在推理模式下获取可调用的函数。</li>
+<li>如果推理过程中遵循以下范例：“每个输入获取一些张量，并汇总结果”。可以使用<code>InferenceRunner</code>接口和一些<code>Inferencer</code>。这将进一步支持预取和数据并行推断。</li>
+</ul>
+<p>在这两种方法中，tower函数都会被再次调用，使用<code>TowerContext.is_training == False</code>构建不同的图。</p>
+<h4 id="Inference-After-Training"><a href="#Inference-After-Training" class="headerlink" title="Inference After Training"></a>Inference After Training</h4><p>Tensorpack<strong>不关心训练后的操作</strong>。它将模型保存为标准检查点格式，以及metagraph protobuf文件。它们足以用于TensorFlow进行任何部署方法。但是您需要阅读TF文档并自行完成。</p>
+<h3 id="FAQs"><a href="#FAQs" class="headerlink" title="FAQs"></a>FAQs</h3>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    王晓芸
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xywang93.github.io.git/2018/04/01/DeepLearning/Tensorpack/Tensorpack简介/" title="Tnesorpack入门教程">http://xywang93.github.io.git/2018/04/01/DeepLearning/Tensorpack/Tensorpack简介/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <div>
+      
+        <div>
+	
+		<div style="text-align:center;color: #ccc;font-size:14px;">
+			-------------本文结束
+			<i class="fa fa-paw"></i>
+			感谢您的阅读-------------
+		</div>
+	
+</div>
+
+      
+    </div>
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"><i class="fa fa-tag"></i> Deep Learning</a>
+          
+            <a href="/tags/Tensorpack/" rel="tag"><i class="fa fa-tag"></i> Tensorpack</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/15/DeepLearning/TensorFlow/15Tensorflow神经网络之DCGAN/" rel="next" title="Tensorflow神经网络之DCGAN">
+                <i class="fa fa-chevron-left"></i> Tensorflow神经网络之DCGAN
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/01/DeepLearning/PyTorch/PyTorch+60分钟入门/" rel="prev" title="PyTorch 60分钟入门">
+                PyTorch 60分钟入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="hypercomments_widget"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://oz5oe1xth.bkt.clouddn.com/avatar.png"
+                alt="王晓芸" />
+            
+              <p class="site-author-name" itemprop="name">王晓芸</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xuke225.github.io/" title="AI 异构" target="_blank">AI 异构</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Tensorpack架构"><span class="nav-number">1.</span> <span class="nav-text">Tensorpack架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DataFlow-数据流接口"><span class="nav-number">2.</span> <span class="nav-text">DataFlow(数据流接口)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DataFlow是什么？"><span class="nav-number">2.1.</span> <span class="nav-text">DataFlow是什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DataFlow的组成"><span class="nav-number">2.2.</span> <span class="nav-text">DataFlow的组成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么要使用DataFlow"><span class="nav-number">2.3.</span> <span class="nav-text">为什么要使用DataFlow</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用DataFlow（Tensorpack外部）"><span class="nav-number">2.4.</span> <span class="nav-text">使用DataFlow（Tensorpack外部）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Input-Pipeline（输入流水线）"><span class="nav-number">3.</span> <span class="nav-text">Input Pipeline（输入流水线）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数据准备并行化"><span class="nav-number">3.1.</span> <span class="nav-text">数据准备并行化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Python-Reader-or-TF-Reader"><span class="nav-number">3.2.</span> <span class="nav-text">Python Reader or TF Reader ?</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#TensorFlow-Reader优点"><span class="nav-number">3.2.1.</span> <span class="nav-text">TensorFlow Reader优点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#TensorFlow-Reader缺点"><span class="nav-number">3.2.2.</span> <span class="nav-text">TensorFlow Reader缺点</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#InputSource"><span class="nav-number">3.3.</span> <span class="nav-text">InputSource</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Symbolic-Layers（符号层）"><span class="nav-number">4.</span> <span class="nav-text">Symbolic Layers（符号层）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#argscope-and-LinearWrap"><span class="nav-number">4.1.</span> <span class="nav-text">argscope and LinearWrap</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#访问相关的张量"><span class="nav-number">4.2.</span> <span class="nav-text">访问相关的张量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在Tensorpack外使用模型"><span class="nav-number">4.3.</span> <span class="nav-text">在Tensorpack外使用模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在Tensorpack中使用其他符号库"><span class="nav-number">4.4.</span> <span class="nav-text">在Tensorpack中使用其他符号库</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Trainers"><span class="nav-number">5.</span> <span class="nav-text">Trainers</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Tower-Trainer"><span class="nav-number">5.1.</span> <span class="nav-text">Tower Trainer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MultiGPU-Trainers"><span class="nav-number">5.2.</span> <span class="nav-text">MultiGPU Trainers</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Distributed-Trainers"><span class="nav-number">5.3.</span> <span class="nav-text">Distributed Trainers</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Training-Interface"><span class="nav-number">6.</span> <span class="nav-text">Training Interface</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用ModelDesc和TrainConfig"><span class="nav-number">6.1.</span> <span class="nav-text">使用ModelDesc和TrainConfig</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Raw-Trainer-Interface"><span class="nav-number">6.2.</span> <span class="nav-text">Raw Trainer Interface</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Callbacks"><span class="nav-number">7.</span> <span class="nav-text">Callbacks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Save-and-Load-models"><span class="nav-number">8.</span> <span class="nav-text">Save and Load models</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Work-with-TF-Checkpoint"><span class="nav-number">8.1.</span> <span class="nav-text">Work with TF Checkpoint</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Load-a-Model"><span class="nav-number">8.2.</span> <span class="nav-text">Load a Model</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Transfer-Learning"><span class="nav-number">8.3.</span> <span class="nav-text">Transfer Learning</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary-and-Logging"><span class="nav-number">9.</span> <span class="nav-text">Summary and Logging</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TensorFlow-Summaries"><span class="nav-number">9.1.</span> <span class="nav-text">TensorFlow Summaries</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Other-Logging-Data"><span class="nav-number">9.2.</span> <span class="nav-text">Other Logging Data</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Inference"><span class="nav-number">10.</span> <span class="nav-text">Inference</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Inference-During-Training"><span class="nav-number">10.1.</span> <span class="nav-text">Inference During Training</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Inference-After-Training"><span class="nav-number">10.2.</span> <span class="nav-text">Inference After Training</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FAQs"><span class="nav-number">11.</span> <span class="nav-text">FAQs</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王晓芸</span>
+
+  
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 97885, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 97885, xid: "2018/04/01/DeepLearning/Tensorpack/Tensorpack简介/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/97885/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

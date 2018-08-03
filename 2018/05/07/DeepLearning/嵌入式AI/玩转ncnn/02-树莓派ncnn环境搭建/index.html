@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Deep Learning,嵌入式AI,NCNN,入门," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="异构 AI" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="树莓派NCNN环境搭建前言镜像已经做好了，传到百度网盘中了（请大家及时保存，不定期删除！） 链接: https://pan.baidu.com/s/1fhiX86L8iL8tsLbsiVa6Wg 密码: e64s SD卡要求：至少16GB，板卡型号为树莓派3B+（其他型号未知） 板卡介绍本系列教程采用树莓派3B+开发板">
+<meta name="keywords" content="Deep Learning,嵌入式AI,NCNN,入门">
+<meta property="og:type" content="article">
+<meta property="og:title" content="树莓派NCNN环境搭建">
+<meta property="og:url" content="http://xywang93.github.io.git/2018/05/07/DeepLearning/嵌入式AI/玩转ncnn/02-树莓派ncnn环境搭建/index.html">
+<meta property="og:site_name" content="异构 AI">
+<meta property="og:description" content="树莓派NCNN环境搭建前言镜像已经做好了，传到百度网盘中了（请大家及时保存，不定期删除！） 链接: https://pan.baidu.com/s/1fhiX86L8iL8tsLbsiVa6Wg 密码: e64s SD卡要求：至少16GB，板卡型号为树莓派3B+（其他型号未知） 板卡介绍本系列教程采用树莓派3B+开发板：板卡特点：  1.4GHz 64位4核 ARM Cortex-A53 CPU">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/0a676958d61c43741f8cc45f04d3ea1b.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/22dde3b5cb5f30c9939efc595c59c389.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/408d7bac009ae9ba743ed1bff5cb996c.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/4ecc8595baa8f4eb357a3fee595864d8.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/df4e237083510783efa110102bbde7b9.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/72c3d1a1f09fbe64faf3ce8af4acce9b.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/34b7f42f56e8d72a93139c6adf6717c5.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/c47170d5af9ce81d2dad4ae897b3145e.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/6e6481769c1a86d76c8d6df3e087fdb0.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/64b3b3bf7b3e12ed0f62f94fd001cffb.png">
+<meta property="og:updated_time" content="2018-07-30T15:09:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="树莓派NCNN环境搭建">
+<meta name="twitter:description" content="树莓派NCNN环境搭建前言镜像已经做好了，传到百度网盘中了（请大家及时保存，不定期删除！） 链接: https://pan.baidu.com/s/1fhiX86L8iL8tsLbsiVa6Wg 密码: e64s SD卡要求：至少16GB，板卡型号为树莓派3B+（其他型号未知） 板卡介绍本系列教程采用树莓派3B+开发板：板卡特点：  1.4GHz 64位4核 ARM Cortex-A53 CPU">
+<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/0a676958d61c43741f8cc45f04d3ea1b.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xywang93.github.io.git/2018/05/07/DeepLearning/嵌入式AI/玩转ncnn/02-树莓派ncnn环境搭建/"/>
+
+
+
+
+
+  <title>树莓派NCNN环境搭建 | 异构 AI</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">异构 AI</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xywang93.github.io.git/2018/05/07/DeepLearning/嵌入式AI/玩转ncnn/02-树莓派ncnn环境搭建/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王晓芸">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oz5oe1xth.bkt.clouddn.com/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="异构 AI">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">树莓派NCNN环境搭建</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-07T00:00:00+08:00">
+                2018-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Deep Learning</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learning/嵌入式AI/" itemprop="url" rel="index">
+                    <span itemprop="name">嵌入式AI</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learning/嵌入式AI/NCNN/" itemprop="url" rel="index">
+                    <span itemprop="name">NCNN</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/07/DeepLearning/嵌入式AI/玩转ncnn/02-树莓派ncnn环境搭建/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/05/07/DeepLearning/嵌入式AI/玩转ncnn/02-树莓派ncnn环境搭建/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,494
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="树莓派NCNN环境搭建"><a href="#树莓派NCNN环境搭建" class="headerlink" title="树莓派NCNN环境搭建"></a>树莓派NCNN环境搭建</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>镜像已经做好了，传到百度网盘中了（请大家及时保存，不定期删除！）</p>
+<p>链接: <a href="https://pan.baidu.com/s/1fhiX86L8iL8tsLbsiVa6Wg" target="_blank" rel="noopener">https://pan.baidu.com/s/1fhiX86L8iL8tsLbsiVa6Wg</a> 密码: e64s</p>
+<p><strong>SD卡要求：至少16GB，板卡型号为树莓派3B+（其他型号未知）</strong></p>
+<h3 id="板卡介绍"><a href="#板卡介绍" class="headerlink" title="板卡介绍"></a>板卡介绍</h3><p>本系列教程采用树莓派3B+开发板：<br><img src="http://oz3lw4cji.bkt.clouddn.com/0a676958d61c43741f8cc45f04d3ea1b.png" alt=""><br>板卡特点：</p>
+<ul>
+<li>1.4GHz 64位4核 ARM Cortex-A53 CPU</li>
+<li>双频 802.11ac 无线网卡和蓝牙 4.2</li>
+<li>更快的以太网（千兆以太网 over USB 2.0）</li>
+<li>1G LPDDR2</li>
+<li>PoE 支持（Power-over-Ethernet，with PoE HAT）</li>
+<li>改进 PXE 网络与 USB 大容量存储启动</li>
+</ul>
+<a id="more"></a>
+<h3 id="系统安装"><a href="#系统安装" class="headerlink" title="系统安装"></a>系统安装</h3><h4 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h4><ul>
+<li>SDFormatter(格式化SD卡)</li>
+<li>win32diskimager（为SD卡烧写程序）<br>-<h4 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h4></li>
+</ul>
+<p>首先用SDFormatter将插入的SD卡格式化。<br>然后用win32diskimager找到对应的镜像烧写到SD卡中（原始镜像采用2018-04-18-raspbian-stretch树莓派官方系统）</p>
+<h3 id="更换源"><a href="#更换源" class="headerlink" title="更换源"></a>更换源</h3><h4 id="一步操作"><a href="#一步操作" class="headerlink" title="一步操作"></a>一步操作</h4><p>直接执行以下两步，即可替换将官方默认软件源替换为<br>中科大镜像源<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo sed -i <span class="string">'s#://mirrordirector.raspbian.org#s://mirrors.ustc.edu.cn/raspbian#g'</span> /etc/apt/sources.list</span><br><span class="line">$ sudo sed -i <span class="string">'s#://archive.raspberrypi.org/debian#s://mirrors.ustc.edu.cn/archive.raspberrypi.org#g'</span> /etc/apt/sources.list.d/raspi.list</span><br></pre></td></tr></table></figure></p>
+<p>或换为清华镜像源<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo sed -i <span class="string">'s#://mirrordirector.raspbian.org#s://mirrors.tuna.tsinghua.edu.cn/raspbian#g'</span> /etc/apt/sources.list</span><br><span class="line">$ sudo sed -i <span class="string">'s#://archive.raspberrypi.org/debian#s://mirrors.tuna.tsinghua.edu.cn/raspberrypi#g'</span> /etc/apt/sources.list.d/raspi.list</span><br></pre></td></tr></table></figure></p>
+<h4 id="或手动修改源"><a href="#或手动修改源" class="headerlink" title="或手动修改源"></a>或手动修改源</h4><ul>
+<li>第一步：修改<code>sources.list</code><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vim /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>进入之后，屏蔽掉其他的源，输入以下源：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ deb http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ stretch main contrib non-free rpi</span><br><span class="line">$ deb-src http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ stretch main contrib non-free rpi</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>第二步：修改<code>raspi.list</code><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vim /etc/apt/sources.list.d/raspi.list</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>进入之后，屏蔽掉其他的源，输入以下源：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ deb http://mirror.tuna.tsinghua.edu.cn/raspberrypi/ stretch main ui</span><br><span class="line">$ deb-src http://mirror.tuna.tsinghua.edu.cn/raspberrypi/ stretch main ui</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>第三部修改完源后更新升级系统<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get upgrade</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="安装VScode"><a href="#安装VScode" class="headerlink" title="安装VScode"></a>安装VScode</h3><p>提供了VScode ARM安装包，直接安装！<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo dpkg -i code-oss_1.14.0-1497990172_armhf.deb</span><br></pre></td></tr></table></figure></p>
+<h3 id="安装cmake工具"><a href="#安装cmake工具" class="headerlink" title="安装cmake工具"></a>安装cmake工具</h3><h4 id="安装cmake"><a href="#安装cmake" class="headerlink" title="安装cmake"></a>安装cmake</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install cmake</span><br></pre></td></tr></table></figure>
+<h4 id="安装cmake-gui"><a href="#安装cmake-gui" class="headerlink" title="安装cmake-gui"></a>安装cmake-gui</h4><p>cmake-gui是可视化的cmake工具，便于配置。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install cmake-gui</span><br></pre></td></tr></table></figure></p>
+<h3 id="安装-protobuf"><a href="#安装-protobuf" class="headerlink" title="安装 protobuf"></a>安装 protobuf</h3><p>下载 protobuf-2.6.1.tar.gz<br>安装<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="comment">#解压文件</span></span><br><span class="line">$ tar zxvf protobuf-2.6.1.tar.gz</span><br><span class="line">$ <span class="comment">#进入文件</span></span><br><span class="line">$ <span class="built_in">cd</span> protobuf-2.6.1/</span><br><span class="line">$ <span class="comment"># 配置</span></span><br><span class="line">$ ./configure</span><br><span class="line">$ <span class="comment"># 编译（编译过程尽量只用一个核 不要加 j4,j3,j2）</span></span><br><span class="line">$ make</span><br><span class="line">$ <span class="comment"># 编译检查</span></span><br><span class="line">$ make check</span><br><span class="line">$ <span class="comment"># 安装</span></span><br><span class="line">$ sudo make install</span><br><span class="line">$ <span class="comment"># 添加库路径 在/etc/ld.so.conf.d/目录下创建文件bprotobuf.conf文件</span></span><br><span class="line">$ <span class="built_in">cd</span> /etc/ld.so.conf.d/</span><br><span class="line">$ sudo touch bprotobuf.conf</span><br><span class="line">$ <span class="comment"># vim打开bprotobuf.conf文件输入/usr/local/lib</span></span><br><span class="line">$ sudo ldconfig</span><br><span class="line">$ <span class="comment"># 查看版本</span></span><br><span class="line">$ protoc –-version</span><br></pre></td></tr></table></figure></p>
+<h3 id="安装opencv3-4"><a href="#安装opencv3-4" class="headerlink" title="安装opencv3.4"></a>安装opencv3.4</h3><h4 id="预装依赖库"><a href="#预装依赖库" class="headerlink" title="预装依赖库"></a>预装依赖库</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install build-essential git cmake pkg-config -y</span><br><span class="line">$ sudo apt-get install libjpeg8-dev -y</span><br><span class="line">$ sudo apt-get install libtiff5-dev -y</span><br><span class="line">$ sudo apt-get install libjasper-dev -y</span><br><span class="line">$ sudo apt-get install libpng12-dev -y</span><br><span class="line">$ sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev -y</span><br><span class="line">$ sudo apt-get install libgtk2.0-dev -y</span><br><span class="line">$ sudo apt-get install libatlas-base-dev gfortran -y</span><br><span class="line">$ sudo apt-get install qt5-default -y</span><br></pre></td></tr></table></figure>
+<p>安装numpy（命令行），第一次使用pip安装时可能会比较慢，耐心等待<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo pip3 install numpy</span><br></pre></td></tr></table></figure></p>
+<p>查看numpy的安装目录并记录（<strong>后面编译时需要PYTHON3_NUMPY_INCLUDE_DIRS路径，如果不带numpy编译可能会卡住</strong>）<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ python3</span><br><span class="line">&gt;&gt; <span class="keyword">import</span> numpy</span><br><span class="line">&gt;&gt; numpy.__path__</span><br><span class="line">&gt;&gt; quit()</span><br></pre></td></tr></table></figure></p>
+<h4 id="下载并解压OpenCV"><a href="#下载并解压OpenCV" class="headerlink" title="下载并解压OpenCV"></a>下载并解压OpenCV</h4><p>然后下载OpenCV库和Contrib库（强烈建议在其他环境下载然后拷贝过来），如果需要其他版本，就修改后面的版本号<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/Itseez/opencv/archive/3.4.0.zip</span><br><span class="line">https://github.com/Itseez/opencv_contrib/archive/3.4.0.zip</span><br></pre></td></tr></table></figure></p>
+<h4 id="cmake配置"><a href="#cmake配置" class="headerlink" title="cmake配置"></a>cmake配置</h4><p>解压后在opencv-3.4.0文件夹里创建build文件夹，然后在命令行里面cd到此文件夹，开始cmake，以下内容为一行<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/<span class="built_in">local</span> -D INSTALL_C_EXAMPLES=ON -D INSTALL_PYTHON_EXAMPLES=ON -D BUILD_EXAMPLES=ON -D WITH_LIBV4L=ON PYTHON3_EXECUTABLE=/usr/bin/python3.5 PYTHON_INCLUDE_DIR=/usr/include/python3.5 PYTHON_LIBRARY=/usr/lib/arm-linux-gnueabihf/libpython3.5m.so PYTHON3_NUMPY_INCLUDE_DIRS=/home/pi/.<span class="built_in">local</span>/lib/python3.5/site-packages/numpy/core/include ..</span><br><span class="line"></span><br><span class="line"><span class="comment">## 备选方案</span></span><br><span class="line">sudo aptitude search libgtk2.0-dev</span><br><span class="line"></span><br><span class="line">cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/<span class="built_in">local</span> -D WITH_TBB=ON -D BUILD_NEW_PYTHON_SUPPORT=ON -D WITH_V4L=ON -D INSTALL_C_EXAMPLES=ON -D INSTALL_PYTHON_EXAMPLES=ON -D BUILD_EXAMPLES=ON -D WITH_QT=ON -D WITH_GTK=ON -D WITH_OPENGL=ON ..</span><br></pre></td></tr></table></figure></p>
+<h4 id="编译安装"><a href="#编译安装" class="headerlink" title="编译安装"></a>编译安装</h4><p>执行如下操作：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编译（编译过程尽量只用一个核 不要加 j4,j3,j2）</span></span><br><span class="line">$ make</span><br><span class="line">$ sudo make install</span><br></pre></td></tr></table></figure></p>
+<h3 id="编译NCNN"><a href="#编译NCNN" class="headerlink" title="编译NCNN"></a>编译NCNN</h3><h4 id="下载NCNN"><a href="#下载NCNN" class="headerlink" title="下载NCNN"></a>下载NCNN</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/Tencent/ncnn.github</span><br></pre></td></tr></table></figure>
+<h4 id="需要安装的依赖库"><a href="#需要安装的依赖库" class="headerlink" title="需要安装的依赖库"></a>需要安装的依赖库</h4><ul>
+<li>protobuf</li>
+<li>opencv</li>
+</ul>
+<h4 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ncnn</span><br><span class="line">$ mkdir build</span><br><span class="line">$ <span class="built_in">cd</span> build</span><br><span class="line">$ cmake ..</span><br><span class="line">$ make</span><br></pre></td></tr></table></figure>
+<h3 id="NCNN测试"><a href="#NCNN测试" class="headerlink" title="NCNN测试"></a>NCNN测试</h3><p>修改项目根目录下的<code>CMakeLists.txt</code>文件，定位到最后几行<br><img src="http://oz3lw4cji.bkt.clouddn.com/22dde3b5cb5f30c9939efc595c59c389.png" alt=""></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> &lt;ncnn-root-dir&gt;</span><br><span class="line">$ <span class="built_in">cd</span> build</span><br><span class="line">$ cmake ..</span><br><span class="line">$ make</span><br><span class="line">$ cp examples/squeezenet_v1.1.param  build/examples</span><br><span class="line">$ cp examples/squeezenet_v1.1.bin    build/examples</span><br><span class="line">$ <span class="built_in">cd</span> build/examples</span><br><span class="line">$ ./squeezenet cat.jpg</span><br></pre></td></tr></table></figure>
+<p>结果：<br><img src="http://oz3lw4cji.bkt.clouddn.com/408d7bac009ae9ba743ed1bff5cb996c.png" alt=""></p>
+<h3 id="制作img系统镜像"><a href="#制作img系统镜像" class="headerlink" title="制作img系统镜像"></a>制作img系统镜像</h3><ul>
+<li><p>安装dcfldd工具</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install dcfldd</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将已经安装好软件的内存卡插到pc机上，在虚拟机中打开可移动设备。</p>
+</li>
+<li>查看备份设备<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /dev</span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>可以看到插入设备(整体)为sdb，其中有几个分区(sdb1、sdb2、sdb3.)<br><img src="http://oz3lw4cji.bkt.clouddn.com/4ecc8595baa8f4eb357a3fee595864d8.png" alt=""></p>
+<ul>
+<li>备份分区</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dcfldd <span class="keyword">if</span>=/dev/sdb of=/root/pi.img</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>由于我们是将整个内存卡的全部做成镜像(<strong>启动+系统</strong>)，所以输入文件为sdb，若只做系统部分的镜像，可以只选择sdb2.</li>
+<li>备份包括输入文件(if)以及被设置为/root目录下名为pi.img的输出文件(of)。</li>
+</ul>
+</blockquote>
+<h3 id="调整SD卡分区"><a href="#调整SD卡分区" class="headerlink" title="调整SD卡分区"></a>调整SD卡分区</h3><h4 id="使用工具："><a href="#使用工具：" class="headerlink" title="使用工具："></a>使用工具：</h4><p>Linux Ubuntu gparted分区工具</p>
+<h4 id="安装gparted"><a href="#安装gparted" class="headerlink" title="安装gparted"></a>安装gparted</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install gparted</span><br></pre></td></tr></table></figure>
+<h4 id="调整分区容量大小"><a href="#调整分区容量大小" class="headerlink" title="调整分区容量大小"></a>调整分区容量大小</h4><p><img src="http://oz3lw4cji.bkt.clouddn.com/df4e237083510783efa110102bbde7b9.png" alt=""></p>
+<p><img src="http://oz3lw4cji.bkt.clouddn.com/72c3d1a1f09fbe64faf3ce8af4acce9b.png" alt=""></p>
+<p><img src="http://oz3lw4cji.bkt.clouddn.com/34b7f42f56e8d72a93139c6adf6717c5.png" alt=""></p>
+<p><img src="http://oz3lw4cji.bkt.clouddn.com/c47170d5af9ce81d2dad4ae897b3145e.png" alt=""></p>
+<p><img src="http://oz3lw4cji.bkt.clouddn.com/6e6481769c1a86d76c8d6df3e087fdb0.png" alt=""></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://www.jianshu.com/p/67b9e6ebf8a0" target="_blank" rel="noopener">https://www.jianshu.com/p/67b9e6ebf8a0</a><br><a href="http://www.rabbit8.cn/609.html" target="_blank" rel="noopener">http://www.rabbit8.cn/609.html</a><br><a href="https://linux.cn/article-8477-1.html" target="_blank" rel="noopener">https://linux.cn/article-8477-1.html</a><br><a href="https://www.cnblogs.com/Pyrokine/p/8921285.html" target="_blank" rel="noopener">https://www.cnblogs.com/Pyrokine/p/8921285.html</a><br><a href="https://stackoverflow.com/questions/28776053/opencv-gtk2-x-error" target="_blank" rel="noopener">https://stackoverflow.com/questions/28776053/opencv-gtk2-x-error</a></p>
+<p>相关人工智能与异构计算的知识分享，欢迎关注我的公众号<strong>AI异构</strong><br><img src="http://oz3lw4cji.bkt.clouddn.com/64b3b3bf7b3e12ed0f62f94fd001cffb.png" alt="动动手指关注下吧！"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    王晓芸
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xywang93.github.io.git/2018/05/07/DeepLearning/嵌入式AI/玩转ncnn/02-树莓派ncnn环境搭建/" title="树莓派NCNN环境搭建">http://xywang93.github.io.git/2018/05/07/DeepLearning/嵌入式AI/玩转ncnn/02-树莓派ncnn环境搭建/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <div>
+      
+        <div>
+	
+		<div style="text-align:center;color: #ccc;font-size:14px;">
+			-------------本文结束
+			<i class="fa fa-paw"></i>
+			感谢您的阅读-------------
+		</div>
+	
+</div>
+
+      
+    </div>
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"><i class="fa fa-tag"></i> Deep Learning</a>
+          
+            <a href="/tags/嵌入式AI/" rel="tag"><i class="fa fa-tag"></i> 嵌入式AI</a>
+          
+            <a href="/tags/NCNN/" rel="tag"><i class="fa fa-tag"></i> NCNN</a>
+          
+            <a href="/tags/入门/" rel="tag"><i class="fa fa-tag"></i> 入门</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/05/DeepLearning/嵌入式AI/玩转ncnn/01-ncnn resnet部署/" rel="next" title="NCNN ResNet-50 部署">
+                <i class="fa fa-chevron-left"></i> NCNN ResNet-50 部署
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="hypercomments_widget"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://oz5oe1xth.bkt.clouddn.com/avatar.png"
+                alt="王晓芸" />
+            
+              <p class="site-author-name" itemprop="name">王晓芸</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xuke225.github.io/" title="AI 异构" target="_blank">AI 异构</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#树莓派NCNN环境搭建"><span class="nav-number">1.</span> <span class="nav-text">树莓派NCNN环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#板卡介绍"><span class="nav-number">1.2.</span> <span class="nav-text">板卡介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#系统安装"><span class="nav-number">1.3.</span> <span class="nav-text">系统安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#工具"><span class="nav-number">1.3.1.</span> <span class="nav-text">工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装步骤"><span class="nav-number">1.3.2.</span> <span class="nav-text">安装步骤</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更换源"><span class="nav-number">1.4.</span> <span class="nav-text">更换源</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一步操作"><span class="nav-number">1.4.1.</span> <span class="nav-text">一步操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#或手动修改源"><span class="nav-number">1.4.2.</span> <span class="nav-text">或手动修改源</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装VScode"><span class="nav-number">1.5.</span> <span class="nav-text">安装VScode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装cmake工具"><span class="nav-number">1.6.</span> <span class="nav-text">安装cmake工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装cmake"><span class="nav-number">1.6.1.</span> <span class="nav-text">安装cmake</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装cmake-gui"><span class="nav-number">1.6.2.</span> <span class="nav-text">安装cmake-gui</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-protobuf"><span class="nav-number">1.7.</span> <span class="nav-text">安装 protobuf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装opencv3-4"><span class="nav-number">1.8.</span> <span class="nav-text">安装opencv3.4</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#预装依赖库"><span class="nav-number">1.8.1.</span> <span class="nav-text">预装依赖库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#下载并解压OpenCV"><span class="nav-number">1.8.2.</span> <span class="nav-text">下载并解压OpenCV</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cmake配置"><span class="nav-number">1.8.3.</span> <span class="nav-text">cmake配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编译安装"><span class="nav-number">1.8.4.</span> <span class="nav-text">编译安装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译NCNN"><span class="nav-number">1.9.</span> <span class="nav-text">编译NCNN</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#下载NCNN"><span class="nav-number">1.9.1.</span> <span class="nav-text">下载NCNN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#需要安装的依赖库"><span class="nav-number">1.9.2.</span> <span class="nav-text">需要安装的依赖库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编译"><span class="nav-number">1.9.3.</span> <span class="nav-text">编译</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NCNN测试"><span class="nav-number">1.10.</span> <span class="nav-text">NCNN测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#制作img系统镜像"><span class="nav-number">1.11.</span> <span class="nav-text">制作img系统镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调整SD卡分区"><span class="nav-number">1.12.</span> <span class="nav-text">调整SD卡分区</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用工具："><span class="nav-number">1.12.1.</span> <span class="nav-text">使用工具：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装gparted"><span class="nav-number">1.12.2.</span> <span class="nav-text">安装gparted</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调整分区容量大小"><span class="nav-number">1.12.3.</span> <span class="nav-text">调整分区容量大小</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">1.13.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王晓芸</span>
+
+  
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 97885, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 97885, xid: "2018/05/07/DeepLearning/嵌入式AI/玩转ncnn/02-树莓派ncnn环境搭建/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/97885/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

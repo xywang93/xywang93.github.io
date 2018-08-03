@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Deep Learning,TensorFlow," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="异构 AI" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="前言首先，我们从一个直观的例子，讲解如何实现Tensorflow模型参数的保存以及保存后模型的读取。然后，我们在之前多层感知机的基础上进行模型的参数保存，以及参数的读取。该项技术可以用于Tensorflow分段训练模型以及对经典模型进行fine tuning（微调）">
+<meta name="keywords" content="Deep Learning,TensorFlow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tensorflow模型的保存与读取">
+<meta property="og:url" content="http://xywang93.github.io.git/2018/03/10/DeepLearning/TensorFlow/10Tensorflow模型的保存与读取/index.html">
+<meta property="og:site_name" content="异构 AI">
+<meta property="og:description" content="前言首先，我们从一个直观的例子，讲解如何实现Tensorflow模型参数的保存以及保存后模型的读取。然后，我们在之前多层感知机的基础上进行模型的参数保存，以及参数的读取。该项技术可以用于Tensorflow分段训练模型以及对经典模型进行fine tuning（微调）">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/db94d565e96ee5ba244853e52ca1b675.png">
+<meta property="og:updated_time" content="2018-07-30T14:51:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tensorflow模型的保存与读取">
+<meta name="twitter:description" content="前言首先，我们从一个直观的例子，讲解如何实现Tensorflow模型参数的保存以及保存后模型的读取。然后，我们在之前多层感知机的基础上进行模型的参数保存，以及参数的读取。该项技术可以用于Tensorflow分段训练模型以及对经典模型进行fine tuning（微调）">
+<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/db94d565e96ee5ba244853e52ca1b675.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xywang93.github.io.git/2018/03/10/DeepLearning/TensorFlow/10Tensorflow模型的保存与读取/"/>
+
+
+
+
+
+  <title>Tensorflow模型的保存与读取 | 异构 AI</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">异构 AI</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xywang93.github.io.git/2018/03/10/DeepLearning/TensorFlow/10Tensorflow模型的保存与读取/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王晓芸">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oz5oe1xth.bkt.clouddn.com/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="异构 AI">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Tensorflow模型的保存与读取</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-10T00:00:00+08:00">
+                2018-03-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Deep Learning</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learning/TensorFlow/" itemprop="url" rel="index">
+                    <span itemprop="name">TensorFlow</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/10/DeepLearning/TensorFlow/10Tensorflow模型的保存与读取/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/03/10/DeepLearning/TensorFlow/10Tensorflow模型的保存与读取/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,224
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>首先，我们从一个直观的例子，讲解如何实现Tensorflow模型参数的保存以及保存后模型的读取。<br>然后，我们在之前多层感知机的基础上进行模型的参数保存，以及参数的读取。该项技术可以用于Tensorflow分段训练模型以及对经典模型进行<code>fine tuning</code>（微调）</p>
+<a id="more"></a>
+<h3 id="Tensorflow-模型的保存与读取（直观）"><a href="#Tensorflow-模型的保存与读取（直观）" class="headerlink" title="Tensorflow 模型的保存与读取（直观）"></a>Tensorflow 模型的保存与读取（直观）</h3><h4 id="模型参数存储"><a href="#模型参数存储" class="headerlink" title="模型参数存储"></a>模型参数存储</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 随机生成v1与v2变量</span></span><br><span class="line">v1 = tf.Variable(tf.random_normal([<span class="number">1</span>,<span class="number">2</span>]), name=<span class="string">"v1"</span>)</span><br><span class="line">v2 = tf.Variable(tf.random_normal([<span class="number">2</span>,<span class="number">3</span>]), name=<span class="string">"v2"</span>)</span><br><span class="line"><span class="comment"># 全局初始化</span></span><br><span class="line">init_op = tf.global_variables_initializer()</span><br><span class="line"><span class="comment"># 调用Saver方法（重要）</span></span><br><span class="line">saver = tf.train.Saver()</span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    sess.run(init_op)</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"V1:"</span>,sess.run(v1))</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"V2:"</span>,sess.run(v2))</span><br><span class="line">    <span class="comment"># 存储Session工作空间</span></span><br><span class="line">    saver_path = saver.save(sess, <span class="string">"./save/model.ckpt"</span>)</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"Model saved in file: "</span>, saver_path)</span><br></pre></td></tr></table></figure>
+<pre><code>V1: [[1.2366687 0.4373563]]
+V2: [[-0.9465265  -0.7147392  -2.421146  ]
+ [-0.48401725  0.40536404  0.21300188]]
+Model saved in file:  ./save/model.ckpt
+</code></pre><p>模型存储的文件格式如下图所示：<br><img src="http://oz3lw4cji.bkt.clouddn.com/db94d565e96ee5ba244853e52ca1b675.png" alt="模型存储文件"></p>
+<h4 id="模型参数读取"><a href="#模型参数读取" class="headerlink" title="模型参数读取"></a>模型参数读取</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line">v1 = tf.Variable(tf.random_normal([<span class="number">1</span>,<span class="number">2</span>]), name=<span class="string">"v1"</span>)</span><br><span class="line">v2 = tf.Variable(tf.random_normal([<span class="number">2</span>,<span class="number">3</span>]), name=<span class="string">"v2"</span>)</span><br><span class="line">saver = tf.train.Saver()</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    saver.restore(sess, <span class="string">"./save/model.ckpt"</span>)</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"V1:"</span>,sess.run(v1))</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"V2:"</span>,sess.run(v2))</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"Model restored"</span>)</span><br></pre></td></tr></table></figure>
+<hr>
+<pre><code>INFO:tensorflow:Restoring parameters from ./save/model.ckpt
+V1: [[1.2366687 0.4373563]]
+V2: [[-0.9465265  -0.7147392  -2.421146  ]
+ [-0.48401725  0.40536404  0.21300188]]
+Model restored
+</code></pre><h3 id="Tensorflow-模型的保存与读取（多层感知机）"><a href="#Tensorflow-模型的保存与读取（多层感知机）" class="headerlink" title="Tensorflow 模型的保存与读取（多层感知机）"></a>Tensorflow 模型的保存与读取（多层感知机）</h3><h4 id="导入数据集"><a href="#导入数据集" class="headerlink" title="导入数据集"></a>导入数据集</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"></span><br><span class="line"><span class="comment"># Import MINST data</span></span><br><span class="line"><span class="keyword">from</span> tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</span><br><span class="line">mnist = input_data.read_data_sets(<span class="string">"./data/"</span>, one_hot=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br></pre></td></tr></table></figure>
+<hr>
+<pre><code>Extracting ./data/train-images-idx3-ubyte.gz
+Extracting ./data/train-labels-idx1-ubyte.gz
+Extracting ./data/t10k-images-idx3-ubyte.gz
+Extracting ./data/t10k-labels-idx1-ubyte.gz
+</code></pre><h4 id="创建多层感知机模型"><a href="#创建多层感知机模型" class="headerlink" title="创建多层感知机模型"></a>创建多层感知机模型</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 训练参数设置</span></span><br><span class="line">learning_rate = <span class="number">0.001</span></span><br><span class="line">batch_size = <span class="number">100</span></span><br><span class="line">display_step = <span class="number">1</span></span><br><span class="line">model_path = <span class="string">"./save/model.ckpt"</span> <span class="comment">#模型存储路径</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 网络参数设置</span></span><br><span class="line">n_hidden_1 = <span class="number">256</span> <span class="comment"># 1st layer number of features</span></span><br><span class="line">n_hidden_2 = <span class="number">256</span> <span class="comment"># 2nd layer number of features</span></span><br><span class="line">n_input = <span class="number">784</span> <span class="comment"># MNIST data input (img shape: 28*28)</span></span><br><span class="line">n_classes = <span class="number">10</span> <span class="comment"># MNIST total classes (0-9 digits)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># tf Graph input</span></span><br><span class="line">x = tf.placeholder(<span class="string">"float"</span>, [<span class="keyword">None</span>, n_input])</span><br><span class="line">y = tf.placeholder(<span class="string">"float"</span>, [<span class="keyword">None</span>, n_classes])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create model</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">multilayer_perceptron</span><span class="params">(x, weights, biases)</span>:</span></span><br><span class="line">    <span class="comment"># Hidden layer with RELU activation</span></span><br><span class="line">    layer_1 = tf.add(tf.matmul(x, weights[<span class="string">'h1'</span>]), biases[<span class="string">'b1'</span>])</span><br><span class="line">    layer_1 = tf.nn.relu(layer_1)</span><br><span class="line">    <span class="comment"># Hidden layer with RELU activation</span></span><br><span class="line">    layer_2 = tf.add(tf.matmul(layer_1, weights[<span class="string">'h2'</span>]), biases[<span class="string">'b2'</span>])</span><br><span class="line">    layer_2 = tf.nn.relu(layer_2)</span><br><span class="line">    <span class="comment"># Output layer with linear activation</span></span><br><span class="line">    out_layer = tf.matmul(layer_2, weights[<span class="string">'out'</span>]) + biases[<span class="string">'out'</span>]</span><br><span class="line">    <span class="keyword">return</span> out_layer</span><br><span class="line"></span><br><span class="line"><span class="comment"># Store layers weight &amp; bias</span></span><br><span class="line">weights = &#123;</span><br><span class="line">    <span class="string">'h1'</span>: tf.Variable(tf.random_normal([n_input, n_hidden_1])),</span><br><span class="line">    <span class="string">'h2'</span>: tf.Variable(tf.random_normal([n_hidden_1, n_hidden_2])),</span><br><span class="line">    <span class="string">'out'</span>: tf.Variable(tf.random_normal([n_hidden_2, n_classes]))</span><br><span class="line">&#125;</span><br><span class="line">biases = &#123;</span><br><span class="line">    <span class="string">'b1'</span>: tf.Variable(tf.random_normal([n_hidden_1])),</span><br><span class="line">    <span class="string">'b2'</span>: tf.Variable(tf.random_normal([n_hidden_2])),</span><br><span class="line">    <span class="string">'out'</span>: tf.Variable(tf.random_normal([n_classes]))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Construct model</span></span><br><span class="line">pred = multilayer_perceptron(x, weights, biases)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Define loss and optimizer</span></span><br><span class="line">cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits_v2(logits=pred, labels=y))</span><br><span class="line">optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Initializing the variables</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br></pre></td></tr></table></figure>
+<h4 id="调用Saver方法"><a href="#调用Saver方法" class="headerlink" title="调用Saver方法"></a>调用Saver方法</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 'Saver' 操作用于保存与读取所有的变量</span></span><br><span class="line">saver = tf.train.Saver()</span><br></pre></td></tr></table></figure>
+<h4 id="第一次训练（训练完成保存参数）"><a href="#第一次训练（训练完成保存参数）" class="headerlink" title="第一次训练（训练完成保存参数）"></a>第一次训练（训练完成保存参数）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Running first session</span></span><br><span class="line">print(<span class="string">"Starting 1st session..."</span>)</span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    <span class="comment"># Initialize variables</span></span><br><span class="line">    sess.run(init)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Training cycle（迭代三次）</span></span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">        avg_cost = <span class="number">0.</span></span><br><span class="line">        total_batch = int(mnist.train.num_examples/batch_size)</span><br><span class="line">        <span class="comment"># Loop over all batches</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(total_batch):</span><br><span class="line">            batch_x, batch_y = mnist.train.next_batch(batch_size)</span><br><span class="line">            <span class="comment"># Run optimization op (backprop) and cost op (to get loss value)</span></span><br><span class="line">            _, c = sess.run([optimizer, cost], feed_dict=&#123;x: batch_x,</span><br><span class="line">                                                          y: batch_y&#125;)</span><br><span class="line">            <span class="comment"># Compute average loss</span></span><br><span class="line">            avg_cost += c / total_batch</span><br><span class="line">        <span class="comment"># Display logs per epoch step</span></span><br><span class="line">        <span class="keyword">if</span> epoch % display_step == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">print</span> (<span class="string">"Epoch:"</span>, <span class="string">'%04d'</span> % (epoch+<span class="number">1</span>), <span class="string">"cost="</span>, \</span><br><span class="line">                <span class="string">"&#123;:.9f&#125;"</span>.format(avg_cost))</span><br><span class="line">    print(<span class="string">"First Optimization Finished!"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Test model</span></span><br><span class="line">    correct_prediction = tf.equal(tf.argmax(pred, <span class="number">1</span>), tf.argmax(y, <span class="number">1</span>))</span><br><span class="line">    <span class="comment"># Calculate accuracy</span></span><br><span class="line">    accuracy = tf.reduce_mean(tf.cast(correct_prediction, <span class="string">"float"</span>))</span><br><span class="line">    print(<span class="string">"Accuracy:"</span>, accuracy.eval(&#123;x: mnist.test.images, y: mnist.test.labels&#125;))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 保存模型参数到硬盘上</span></span><br><span class="line">    save_path = saver.save(sess, model_path)</span><br><span class="line">    print(<span class="string">"Model saved in file: %s"</span> % save_path)</span><br></pre></td></tr></table></figure>
+<hr>
+<pre><code>Starting 1st session...
+Epoch: 0001 cost= 172.468734065
+Epoch: 0002 cost= 43.036823805
+Epoch: 0003 cost= 26.978232009
+First Optimization Finished!
+Accuracy: 0.9084
+Model saved in file: ./save/model.ckpt
+</code></pre><h4 id="第二次训练（加载第一次参数）"><a href="#第二次训练（加载第一次参数）" class="headerlink" title="第二次训练（加载第一次参数）"></a>第二次训练（加载第一次参数）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Running a new session</span></span><br><span class="line">print(<span class="string">"Starting 2nd session..."</span>)</span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    <span class="comment"># Initialize variables</span></span><br><span class="line">    sess.run(init)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Restore model weights from previously saved model</span></span><br><span class="line">    load_path = saver.restore(sess, model_path)</span><br><span class="line">    print(<span class="string">"Model restored from file: %s"</span> % save_path)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Resume training</span></span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">7</span>):</span><br><span class="line">        avg_cost = <span class="number">0.</span></span><br><span class="line">        total_batch = int(mnist.train.num_examples / batch_size)</span><br><span class="line">        <span class="comment"># Loop over all batches</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(total_batch):</span><br><span class="line">            batch_x, batch_y = mnist.train.next_batch(batch_size)</span><br><span class="line">            <span class="comment"># Run optimization op (backprop) and cost op (to get loss value)</span></span><br><span class="line">            _, c = sess.run([optimizer, cost], feed_dict=&#123;x: batch_x,</span><br><span class="line">                                                          y: batch_y&#125;)</span><br><span class="line">            <span class="comment"># Compute average loss</span></span><br><span class="line">            avg_cost += c / total_batch</span><br><span class="line">        <span class="comment"># Display logs per epoch step</span></span><br><span class="line">        <span class="keyword">if</span> epoch % display_step == <span class="number">0</span>:</span><br><span class="line">            print(<span class="string">"Epoch:"</span>, <span class="string">'%04d'</span> % (epoch + <span class="number">1</span>), <span class="string">"cost="</span>, \</span><br><span class="line">                <span class="string">"&#123;:.9f&#125;"</span>.format(avg_cost))</span><br><span class="line">    print(<span class="string">"Second Optimization Finished!"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Test model</span></span><br><span class="line">    correct_prediction = tf.equal(tf.argmax(pred, <span class="number">1</span>), tf.argmax(y, <span class="number">1</span>))</span><br><span class="line">    <span class="comment"># Calculate accuracy</span></span><br><span class="line">    accuracy = tf.reduce_mean(tf.cast(correct_prediction, <span class="string">"float"</span>))</span><br><span class="line">    print(<span class="string">"Accuracy:"</span>, accuracy.eval(</span><br><span class="line">        &#123;x: mnist.test.images, y: mnist.test.labels&#125;))</span><br></pre></td></tr></table></figure>
+<hr>
+<pre><code>Starting 2nd session...
+INFO:tensorflow:Restoring parameters from ./save/model.ckpt
+Model restored from file: ./save/model.ckpt
+Epoch: 0001 cost= 18.712020244
+Epoch: 0002 cost= 13.624892972
+Epoch: 0003 cost= 10.156988694
+Epoch: 0004 cost= 7.652410518
+Epoch: 0005 cost= 5.658380691
+Epoch: 0006 cost= 4.276506317
+Epoch: 0007 cost= 3.249772967
+Second Optimization Finished!
+Accuracy: 0.9381
+</code></pre><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://github.com/aymericdamien/TensorFlow-Examples" target="_blank" rel="noopener">TensorFlow-Examples</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    王晓芸
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xywang93.github.io.git/2018/03/10/DeepLearning/TensorFlow/10Tensorflow模型的保存与读取/" title="Tensorflow模型的保存与读取">http://xywang93.github.io.git/2018/03/10/DeepLearning/TensorFlow/10Tensorflow模型的保存与读取/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <div>
+      
+        <div>
+	
+		<div style="text-align:center;color: #ccc;font-size:14px;">
+			-------------本文结束
+			<i class="fa fa-paw"></i>
+			感谢您的阅读-------------
+		</div>
+	
+</div>
+
+      
+    </div>
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"><i class="fa fa-tag"></i> Deep Learning</a>
+          
+            <a href="/tags/TensorFlow/" rel="tag"><i class="fa fa-tag"></i> TensorFlow</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/09/DeepLearning/TensorFlow/09Tensorflow神经网络之卷积神经网络/" rel="next" title="Tensorflow神经网络之卷积神经网络">
+                <i class="fa fa-chevron-left"></i> Tensorflow神经网络之卷积神经网络
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/11/DeepLearning/TensorFlow/11TensorBoard基础篇/" rel="prev" title="TensorBoard基础篇">
+                TensorBoard基础篇 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="hypercomments_widget"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://oz5oe1xth.bkt.clouddn.com/avatar.png"
+                alt="王晓芸" />
+            
+              <p class="site-author-name" itemprop="name">王晓芸</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xuke225.github.io/" title="AI 异构" target="_blank">AI 异构</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tensorflow-模型的保存与读取（直观）"><span class="nav-number">2.</span> <span class="nav-text">Tensorflow 模型的保存与读取（直观）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#模型参数存储"><span class="nav-number">2.1.</span> <span class="nav-text">模型参数存储</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模型参数读取"><span class="nav-number">2.2.</span> <span class="nav-text">模型参数读取</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tensorflow-模型的保存与读取（多层感知机）"><span class="nav-number">3.</span> <span class="nav-text">Tensorflow 模型的保存与读取（多层感知机）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#导入数据集"><span class="nav-number">3.1.</span> <span class="nav-text">导入数据集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建多层感知机模型"><span class="nav-number">3.2.</span> <span class="nav-text">创建多层感知机模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调用Saver方法"><span class="nav-number">3.3.</span> <span class="nav-text">调用Saver方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第一次训练（训练完成保存参数）"><span class="nav-number">3.4.</span> <span class="nav-text">第一次训练（训练完成保存参数）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二次训练（加载第一次参数）"><span class="nav-number">3.5.</span> <span class="nav-text">第二次训练（加载第一次参数）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王晓芸</span>
+
+  
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 97885, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 97885, xid: "2018/03/10/DeepLearning/TensorFlow/10Tensorflow模型的保存与读取/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/97885/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Deep Learning,TensorFlow," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="异构 AI" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Logistic 回归 简介Logistic模型">
+<meta name="keywords" content="Deep Learning,TensorFlow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tensorflow基本模型之Logistic回归">
+<meta property="og:url" content="http://xywang93.github.io.git/2018/03/03/DeepLearning/TensorFlow/03Tensorflow基本模型之Logistic回归/index.html">
+<meta property="og:site_name" content="异构 AI">
+<meta property="og:description" content="Logistic 回归 简介Logistic模型">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/1b2eecc284aec268c9f7cc1907376184.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/65de6987629cad90b435ca677a87b5a5.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/46bfcfb36ca46ba0b0c62d2ef98d9886.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/7aa15bacea22f7e5f58bf50ae9faf7cb.png">
+<meta property="og:image" content="http://oz5oe1xth.bkt.clouddn.com/0737761612df365b3afce08b9d619655.png">
+<meta property="og:image" content="http://oz5oe1xth.bkt.clouddn.com/4b8a342d4d19c2420e5458e1e1987900.png">
+<meta property="og:updated_time" content="2018-07-30T14:51:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tensorflow基本模型之Logistic回归">
+<meta name="twitter:description" content="Logistic 回归 简介Logistic模型">
+<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/1b2eecc284aec268c9f7cc1907376184.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xywang93.github.io.git/2018/03/03/DeepLearning/TensorFlow/03Tensorflow基本模型之Logistic回归/"/>
+
+
+
+
+
+  <title>Tensorflow基本模型之Logistic回归 | 异构 AI</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">异构 AI</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xywang93.github.io.git/2018/03/03/DeepLearning/TensorFlow/03Tensorflow基本模型之Logistic回归/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王晓芸">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oz5oe1xth.bkt.clouddn.com/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="异构 AI">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Tensorflow基本模型之Logistic回归</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-03T00:00:00+08:00">
+                2018-03-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Deep Learning</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learning/TensorFlow/" itemprop="url" rel="index">
+                    <span itemprop="name">TensorFlow</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/03/DeepLearning/TensorFlow/03Tensorflow基本模型之Logistic回归/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/03/03/DeepLearning/TensorFlow/03Tensorflow基本模型之Logistic回归/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,792
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Logistic-回归-简介"><a href="#Logistic-回归-简介" class="headerlink" title="Logistic 回归 简介"></a>Logistic 回归 简介</h3><h4 id="Logistic模型"><a href="#Logistic模型" class="headerlink" title="Logistic模型"></a>Logistic模型</h4><p><img src="http://oz3lw4cji.bkt.clouddn.com/1b2eecc284aec268c9f7cc1907376184.png" alt="Logistic模型"></p>
+<p><img src="http://oz3lw4cji.bkt.clouddn.com/65de6987629cad90b435ca677a87b5a5.png" alt="Logistic模型图解"></p>
+<a id="more"></a>
+<h4 id="损失函数（交叉熵损失）"><a href="#损失函数（交叉熵损失）" class="headerlink" title="损失函数（交叉熵损失）"></a>损失函数（交叉熵损失）</h4><p><img src="http://oz3lw4cji.bkt.clouddn.com/46bfcfb36ca46ba0b0c62d2ef98d9886.png" alt="交叉熵"></p>
+<h4 id="softmax多分类"><a href="#softmax多分类" class="headerlink" title="softmax多分类"></a>softmax多分类</h4><p><img src="http://oz3lw4cji.bkt.clouddn.com/7aa15bacea22f7e5f58bf50ae9faf7cb.png" alt="softmax"></p>
+<h3 id="Tensorflow-Logistic回归"><a href="#Tensorflow-Logistic回归" class="headerlink" title="Tensorflow Logistic回归"></a>Tensorflow Logistic回归</h3><h4 id="导入-mnist数据集"><a href="#导入-mnist数据集" class="headerlink" title="导入 mnist数据集"></a>导入 mnist数据集</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="comment"># Import MINST data</span></span><br><span class="line"><span class="keyword">from</span> tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</span><br><span class="line">mnist = input_data.read_data_sets(<span class="string">"./data/"</span>, one_hot=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>Extracting ./data/train-images-idx3-ubyte.gz
+Extracting ./data/train-labels-idx1-ubyte.gz
+Extracting ./data/t10k-images-idx3-ubyte.gz
+Extracting ./data/t10k-labels-idx1-ubyte.gz
+</code></pre><h4 id="设置参数"><a href="#设置参数" class="headerlink" title="设置参数"></a>设置参数</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Parameters</span></span><br><span class="line">learning_rate = <span class="number">0.01</span></span><br><span class="line">training_epochs = <span class="number">25</span></span><br><span class="line">batch_size = <span class="number">100</span></span><br><span class="line">display_step = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h4 id="构建模型"><a href="#构建模型" class="headerlink" title="构建模型"></a>构建模型</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tf Graph Input</span></span><br><span class="line">x = tf.placeholder(tf.float32, [<span class="keyword">None</span>, <span class="number">784</span>]) <span class="comment"># mnist data image of shape 28*28=784  # tf.placeholder(dtype, shape=None, name=None)</span></span><br><span class="line">y = tf.placeholder(tf.float32, [<span class="keyword">None</span>, <span class="number">10</span>]) <span class="comment"># 0-9 digits recognition =&gt; 10 classes</span></span><br><span class="line"><span class="comment"># Set model weights</span></span><br><span class="line">W = tf.Variable(tf.zeros([<span class="number">784</span>, <span class="number">10</span>]))</span><br><span class="line">b = tf.Variable(tf.zeros([<span class="number">10</span>]))</span><br><span class="line"><span class="comment"># Construct model</span></span><br><span class="line">pred = tf.nn.softmax(tf.matmul(x, W) + b) <span class="comment"># Softmax</span></span><br></pre></td></tr></table></figure>
+<h4 id="定义损失函数（交叉熵）"><a href="#定义损失函数（交叉熵）" class="headerlink" title="定义损失函数（交叉熵）"></a>定义损失函数（交叉熵）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Minimize error using cross entropy</span></span><br><span class="line">cost = tf.reduce_mean(-tf.reduce_sum(y*tf.log(pred), reduction_indices=<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong> 补充: reduction_indices参数[1]</strong></p>
+<p>在tensorflow的使用中，经常会使用tf.reduce_mean,tf.reduce_sum等函数，在函数中，有一个reduction_indices参数，表示函数的处理维度，直接上图，一目了然：<br><img src="http://oz5oe1xth.bkt.clouddn.com/0737761612df365b3afce08b9d619655.png" alt=""></p>
+<p>tf.reduce_sum(x)  ==&gt; 如果不指定第二个参数，那么就在所有的元素求和</p>
+<p>tf.reduce_sum(x, 0)  ==&gt; 指定第二个参数为0，则第一维的元素求和，即每一列求和</p>
+<p>tf.reduce_sum(x, 1) ==&gt; 指定第二个参数为1，则第二维的元素求和，即每一行求和</p>
+</blockquote>
+<h4 id="设置优化器（SGD）"><a href="#设置优化器（SGD）" class="headerlink" title="设置优化器（SGD）"></a>设置优化器（SGD）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Gradient Descent</span></span><br><span class="line">optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(cost)</span><br></pre></td></tr></table></figure>
+<h4 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Initialize the variables (i.e. assign their default value)</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line"><span class="comment"># Start training</span></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    sess.run(init)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Training cycle</span></span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> range(training_epochs):</span><br><span class="line">        avg_cost = <span class="number">0.</span></span><br><span class="line">        total_batch = int(mnist.train.num_examples/batch_size)</span><br><span class="line">        <span class="comment"># Loop over all batches</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(total_batch):</span><br><span class="line">            batch_xs, batch_ys = mnist.train.next_batch(batch_size)</span><br><span class="line">            <span class="comment"># Fit training using batch data</span></span><br><span class="line">            _, c = sess.run([optimizer, cost], feed_dict=&#123;x: batch_xs,</span><br><span class="line">                                                          y: batch_ys&#125;)</span><br><span class="line">            <span class="comment"># Compute average loss</span></span><br><span class="line">            avg_cost += c / total_batch</span><br><span class="line">        <span class="comment"># Display logs per epoch step</span></span><br><span class="line">        <span class="keyword">if</span> (epoch+<span class="number">1</span>) % display_step == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">print</span> (<span class="string">"Epoch:"</span>, <span class="string">'%04d'</span> % (epoch+<span class="number">1</span>), <span class="string">"cost="</span>, <span class="string">"&#123;:.9f&#125;"</span>.format(avg_cost))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"Optimization Finished!"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Test model</span></span><br><span class="line">    correct_prediction = tf.equal(tf.argmax(pred, <span class="number">1</span>), tf.argmax(y, <span class="number">1</span>))</span><br><span class="line">    <span class="comment"># Calculate accuracy for 3000 examples</span></span><br><span class="line">    accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32)) <span class="comment"># cast(x, dtype, name=None) 将x的数据格式转化成dtype.</span></span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"Accuracy:"</span>, accuracy.eval(&#123;x: mnist.test.images[:<span class="number">3000</span>], y: mnist.test.labels[:<span class="number">3000</span>]&#125;))</span><br></pre></td></tr></table></figure>
+<pre><code>Epoch: 0001 cost= 1.183862086
+Epoch: 0002 cost= 0.665185326
+Epoch: 0003 cost= 0.552937392
+Epoch: 0004 cost= 0.498404927
+Epoch: 0005 cost= 0.465865389
+Epoch: 0006 cost= 0.442440675
+Epoch: 0007 cost= 0.425578112
+Epoch: 0008 cost= 0.412035317
+Epoch: 0009 cost= 0.401478231
+Epoch: 0010 cost= 0.392347213
+Epoch: 0011 cost= 0.384493829
+Epoch: 0012 cost= 0.377989292
+Epoch: 0013 cost= 0.372704204
+Epoch: 0014 cost= 0.366971537
+Epoch: 0015 cost= 0.362937522
+Epoch: 0016 cost= 0.358783882
+Epoch: 0017 cost= 0.355023325
+Epoch: 0018 cost= 0.351152160
+Epoch: 0019 cost= 0.348280402
+Epoch: 0020 cost= 0.345466763
+Epoch: 0021 cost= 0.342640696
+Epoch: 0022 cost= 0.340194521
+Epoch: 0023 cost= 0.338306610
+Epoch: 0024 cost= 0.335532565
+Epoch: 0025 cost= 0.333705268
+Optimization Finished!
+Accuracy: 0.889
+</code></pre><blockquote>
+<p><strong>补充 tf.argmax:[2]</strong></p>
+<p>简单的说，tf.argmax就是返回最大的那个数值所在的下标。 </p>
+<p>tf.argmax(array, 1)和tf.argmax(array, 0)的区别看下面的例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">test = np.array([[1, 2, 3], [2, 3, 4], [5, 4, 3], [8, 7, 2]])</span><br><span class="line">np.argmax(test, 0)　　　＃输出：array([3, 3, 1]</span><br><span class="line">np.argmax(test, 1)　　　＃输出：array([2, 2, 0, 0]</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<ul>
+<li><p>axis = 0:<br>　　你就这么想，0是最大的范围，所有的数组都要进行比较，只是比较的是这些数组相同位置上的数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test[0] = array([1, 2, 3])</span><br><span class="line">test[1] = array([2, 3, 4])</span><br><span class="line">test[2] = array([5, 4, 3])</span><br><span class="line">test[3] = array([8, 7, 2])</span><br><span class="line"># output   :    [3, 3, 1]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>axis = 1:<br>　　等于1的时候，比较范围缩小了，只会比较每个数组内的数的大小，结果也会根据有几个数组，产生几个结果。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test[0] = array([1, 2, 3])  #2</span><br><span class="line">test[1] = array([2, 3, 4])  #2</span><br><span class="line">test[2] = array([5, 4, 3])  #0</span><br><span class="line">test[3] = array([8, 7, 2])  #0</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="Tensorflow-Eager-API-Logistic回归"><a href="#Tensorflow-Eager-API-Logistic回归" class="headerlink" title="Tensorflow Eager API Logistic回归"></a>Tensorflow Eager API Logistic回归</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> absolute_import, division, print_function</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> tensorflow.contrib.eager <span class="keyword">as</span> tfe</span><br></pre></td></tr></table></figure>
+<h4 id="设置-Eager-API"><a href="#设置-Eager-API" class="headerlink" title="设置 Eager API"></a>设置 Eager API</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Set Eager API</span></span><br><span class="line">tfe.enable_eager_execution()</span><br></pre></td></tr></table></figure>
+<h4 id="导入数据"><a href="#导入数据" class="headerlink" title="导入数据"></a>导入数据</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Import MNIST data</span></span><br><span class="line"><span class="keyword">from</span> tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</span><br><span class="line">mnist = input_data.read_data_sets(<span class="string">"./data/"</span>, one_hot=<span class="keyword">False</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>Extracting ./data/train-images-idx3-ubyte.gz
+Extracting ./data/train-labels-idx1-ubyte.gz
+Extracting ./data/t10k-images-idx3-ubyte.gz
+Extracting ./data/t10k-labels-idx1-ubyte.gz
+</code></pre><h4 id="设置变量"><a href="#设置变量" class="headerlink" title="设置变量"></a>设置变量</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Parameters</span></span><br><span class="line">learning_rate = <span class="number">0.1</span></span><br><span class="line">batch_size = <span class="number">128</span></span><br><span class="line">num_steps = <span class="number">1000</span></span><br><span class="line">display_step = <span class="number">100</span></span><br></pre></td></tr></table></figure>
+<h4 id="调用-Dataset-API-读取数据-3"><a href="#调用-Dataset-API-读取数据-3" class="headerlink" title="调用 Dataset API 读取数据[3]"></a>调用 Dataset API 读取数据[3]</h4><p>Dataset API是TensorFlow 1.3版本中引入的一个新的模块，主要服务于数据读取，构建输入数据的pipeline。</p>
+<p>如果想要用到Eager模式，就必须要使用Dataset API来读取数据。</p>
+<p>之前有用 placeholder 读取数据，tf.data.Dataset.from_tensor_slices 是另一种方式，其主要作用是切分传入 Tensor 的第一个维度，生成相应的 dataset。以下面的例子为例，是对 mnist.train.images 按batch_size 进行切分。</p>
+<p>在Eager模式中，创建Iterator的方式是通过 tfe.Iterator(dataset) 的形式直接创建Iterator并迭代。迭代时可以直接取出值，不需要使用sess.run()。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Iterator for the dataset</span></span><br><span class="line">dataset = tf.data.Dataset.from_tensor_slices(</span><br><span class="line">    (mnist.train.images, mnist.train.labels)).batch(batch_size)</span><br><span class="line">dataset_iter = tfe.Iterator(dataset)</span><br></pre></td></tr></table></figure>
+<h4 id="定义模型（公式-损失函数-准确率计算）"><a href="#定义模型（公式-损失函数-准确率计算）" class="headerlink" title="定义模型（公式+损失函数+准确率计算）"></a>定义模型（公式+损失函数+准确率计算）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Variables</span></span><br><span class="line">W = tfe.Variable(tf.zeros([<span class="number">784</span>, <span class="number">10</span>]), name=<span class="string">'weights'</span>)</span><br><span class="line">b = tfe.Variable(tf.zeros([<span class="number">10</span>]), name=<span class="string">'bias'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Logistic regression (Wx + b)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">logistic_regression</span><span class="params">(inputs)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> tf.matmul(inputs, W) + b</span><br><span class="line"></span><br><span class="line"><span class="comment"># Cross-Entropy loss function</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loss_fn</span><span class="params">(inference_fn, inputs, labels)</span>:</span></span><br><span class="line">    <span class="comment"># Using sparse_softmax cross entropy</span></span><br><span class="line">    <span class="keyword">return</span> tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(</span><br><span class="line">        logits=inference_fn(inputs), labels=labels))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Calculate accuracy</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">accuracy_fn</span><span class="params">(inference_fn, inputs, labels)</span>:</span></span><br><span class="line">    prediction = tf.nn.softmax(inference_fn(inputs))</span><br><span class="line">    correct_pred = tf.equal(tf.argmax(prediction, <span class="number">1</span>), labels)</span><br><span class="line">    <span class="keyword">return</span> tf.reduce_mean(tf.cast(correct_pred, tf.float32))</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>补充:  tf.nn.softmax_cross_entropy_with_logits(logits, labels, name=None):</strong>[4]</p>
+<ul>
+<li>第一个参数logits：就是神经网络最后一层的输出，如果有batch的话，它的大小就是[batchsize，num_classes]，单样本的话，大小就是num_classes</li>
+<li>第二个参数labels：实际的标签，大小同上</li>
+</ul>
+<p>执行下面两步操作：<br><img src="http://oz5oe1xth.bkt.clouddn.com/4b8a342d4d19c2420e5458e1e1987900.png" alt=""></p>
+<p>返回值是一个向量,对向量求 tf.reduce_mean，得到loss。</p>
+</blockquote>
+<h4 id="设置优化器（SGD）-1"><a href="#设置优化器（SGD）-1" class="headerlink" title="设置优化器（SGD）"></a>设置优化器（SGD）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SGD Optimizer</span></span><br><span class="line">optimizer = tf.train.GradientDescentOptimizer(learning_rate=learning_rate)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Compute gradients</span></span><br><span class="line">grad = tfe.implicit_gradients(loss_fn)</span><br></pre></td></tr></table></figure>
+<h4 id="训练-1"><a href="#训练-1" class="headerlink" title="训练"></a>训练</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Training</span></span><br><span class="line">average_loss = <span class="number">0.</span></span><br><span class="line">average_acc = <span class="number">0.</span></span><br><span class="line"><span class="keyword">for</span> step <span class="keyword">in</span> range(num_steps):</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Iterate through the dataset</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        d = dataset_iter.next()</span><br><span class="line">    <span class="keyword">except</span> StopIteration:  <span class="comment"># try...except，except用于处理异常</span></span><br><span class="line">        <span class="comment"># Refill queue</span></span><br><span class="line">        dataset_iter = tfe.Iterator(dataset)</span><br><span class="line">        d = dataset_iter.next()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Images</span></span><br><span class="line">    x_batch = d[<span class="number">0</span>]</span><br><span class="line">    <span class="comment"># Labels</span></span><br><span class="line">    y_batch = tf.cast(d[<span class="number">1</span>], dtype=tf.int64)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Compute the batch loss</span></span><br><span class="line">    batch_loss = loss_fn(logistic_regression, x_batch, y_batch)</span><br><span class="line">    average_loss += batch_loss</span><br><span class="line">    <span class="comment"># Compute the batch accuracy</span></span><br><span class="line">    batch_accuracy = accuracy_fn(logistic_regression, x_batch, y_batch)</span><br><span class="line">    average_acc += batch_accuracy</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> step == <span class="number">0</span>:</span><br><span class="line">        <span class="comment"># Display the initial cost, before optimizing</span></span><br><span class="line">        print(<span class="string">"Initial loss= &#123;:.9f&#125;"</span>.format(average_loss))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Update the variables following gradients info</span></span><br><span class="line">    optimizer.apply_gradients(grad(logistic_regression, x_batch, y_batch))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Display info</span></span><br><span class="line">    <span class="keyword">if</span> (step + <span class="number">1</span>) % display_step == <span class="number">0</span> <span class="keyword">or</span> step == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">if</span> step &gt; <span class="number">0</span>:</span><br><span class="line">            average_loss /= display_step</span><br><span class="line">            average_acc /= display_step</span><br><span class="line">        print(<span class="string">"Step:"</span>, <span class="string">'%04d'</span> % (step + <span class="number">1</span>), <span class="string">" loss="</span>,</span><br><span class="line">              <span class="string">"&#123;:.9f&#125;"</span>.format(average_loss), <span class="string">" accuracy="</span>,</span><br><span class="line">              <span class="string">"&#123;:.4f&#125;"</span>.format(average_acc))</span><br><span class="line">        average_loss = <span class="number">0.</span></span><br><span class="line">        average_acc = <span class="number">0.</span></span><br></pre></td></tr></table></figure>
+<pre><code>Initial loss= 2.302585363
+Step: 0001  loss= 2.302585363  accuracy= 0.1172
+Step: 0100  loss= 0.952338576  accuracy= 0.7955
+Step: 0200  loss= 0.535867393  accuracy= 0.8712
+Step: 0300  loss= 0.485415280  accuracy= 0.8757
+Step: 0400  loss= 0.433947176  accuracy= 0.8843
+Step: 0500  loss= 0.381990731  accuracy= 0.8971
+Step: 0600  loss= 0.394154936  accuracy= 0.8947
+Step: 0700  loss= 0.391497582  accuracy= 0.8905
+Step: 0800  loss= 0.386373132  accuracy= 0.8945
+Step: 0900  loss= 0.332039326  accuracy= 0.9096
+Step: 1000  loss= 0.358993709  accuracy= 0.9002
+</code></pre><h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Evaluate model on the test image set</span></span><br><span class="line">testX = mnist.test.images</span><br><span class="line">testY = mnist.test.labels</span><br><span class="line"></span><br><span class="line">test_acc = accuracy_fn(logistic_regression, testX, testY)</span><br><span class="line">print(<span class="string">"Testset Accuracy: &#123;:.4f&#125;"</span>.format(test_acc))</span><br></pre></td></tr></table></figure>
+<pre><code>Testset Accuracy: 0.9083
+</code></pre><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>[1] <a href="https://www.cnblogs.com/likethanlove/p/6547405.html" target="_blank" rel="noopener">tensorflow reduction_indices理解</a></p>
+<p>[2] <a href="https://blog.csdn.net/qq575379110/article/details/70538051" target="_blank" rel="noopener">tf.argmax()以及axis解析</a></p>
+<p>[3] <a href="https://blog.csdn.net/kwame211/article/details/78579035" target="_blank" rel="noopener">TensorFlow全新的数据读取方式：Dataset API入门教程</a></p>
+<p>[4] <a href="https://blog.csdn.net/mao_xiao_feng/article/details/53382790" target="_blank" rel="noopener">【TensorFlow】tf.nn.softmax_cross_entropy_with_logits的用法</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    王晓芸
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xywang93.github.io.git/2018/03/03/DeepLearning/TensorFlow/03Tensorflow基本模型之Logistic回归/" title="Tensorflow基本模型之Logistic回归">http://xywang93.github.io.git/2018/03/03/DeepLearning/TensorFlow/03Tensorflow基本模型之Logistic回归/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <div>
+      
+        <div>
+	
+		<div style="text-align:center;color: #ccc;font-size:14px;">
+			-------------本文结束
+			<i class="fa fa-paw"></i>
+			感谢您的阅读-------------
+		</div>
+	
+</div>
+
+      
+    </div>
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"><i class="fa fa-tag"></i> Deep Learning</a>
+          
+            <a href="/tags/TensorFlow/" rel="tag"><i class="fa fa-tag"></i> TensorFlow</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/02/DeepLearning/TensorFlow/02Tensorflow基本模型之线性回归/" rel="next" title="Tensorflow基本模型之线性回归">
+                <i class="fa fa-chevron-left"></i> Tensorflow基本模型之线性回归
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/04/DeepLearning/TensorFlow/04TensorFlow基本模型之最近邻/" rel="prev" title="TensorFlow基本模型之最近邻">
+                TensorFlow基本模型之最近邻 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="hypercomments_widget"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://oz5oe1xth.bkt.clouddn.com/avatar.png"
+                alt="王晓芸" />
+            
+              <p class="site-author-name" itemprop="name">王晓芸</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xuke225.github.io/" title="AI 异构" target="_blank">AI 异构</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Logistic-回归-简介"><span class="nav-number">1.</span> <span class="nav-text">Logistic 回归 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Logistic模型"><span class="nav-number">1.1.</span> <span class="nav-text">Logistic模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#损失函数（交叉熵损失）"><span class="nav-number">1.2.</span> <span class="nav-text">损失函数（交叉熵损失）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#softmax多分类"><span class="nav-number">1.3.</span> <span class="nav-text">softmax多分类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tensorflow-Logistic回归"><span class="nav-number">2.</span> <span class="nav-text">Tensorflow Logistic回归</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#导入-mnist数据集"><span class="nav-number">2.1.</span> <span class="nav-text">导入 mnist数据集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置参数"><span class="nav-number">2.2.</span> <span class="nav-text">设置参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构建模型"><span class="nav-number">2.3.</span> <span class="nav-text">构建模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定义损失函数（交叉熵）"><span class="nav-number">2.4.</span> <span class="nav-text">定义损失函数（交叉熵）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置优化器（SGD）"><span class="nav-number">2.5.</span> <span class="nav-text">设置优化器（SGD）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#训练"><span class="nav-number">2.6.</span> <span class="nav-text">训练</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tensorflow-Eager-API-Logistic回归"><span class="nav-number">3.</span> <span class="nav-text">Tensorflow Eager API Logistic回归</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置-Eager-API"><span class="nav-number">3.1.</span> <span class="nav-text">设置 Eager API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#导入数据"><span class="nav-number">3.2.</span> <span class="nav-text">导入数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置变量"><span class="nav-number">3.3.</span> <span class="nav-text">设置变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调用-Dataset-API-读取数据-3"><span class="nav-number">3.4.</span> <span class="nav-text">调用 Dataset API 读取数据[3]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定义模型（公式-损失函数-准确率计算）"><span class="nav-number">3.5.</span> <span class="nav-text">定义模型（公式+损失函数+准确率计算）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置优化器（SGD）-1"><span class="nav-number">3.6.</span> <span class="nav-text">设置优化器（SGD）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#训练-1"><span class="nav-number">3.7.</span> <span class="nav-text">训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试"><span class="nav-number">3.8.</span> <span class="nav-text">测试</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王晓芸</span>
+
+  
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 97885, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 97885, xid: "2018/03/03/DeepLearning/TensorFlow/03Tensorflow基本模型之Logistic回归/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/97885/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Deep Learning,TensorFlow," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="异构 AI" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="生成对抗网络简介生成对抗网络（GAN）启发自博弈论中的二人零和博弈（two-player game），类似于周伯通的绝学——“左右互搏”。GAN 模型中的两位博弈方分别由生成式模型（generative model）和判别式模型（discriminative model）充当。生成模型 G 捕捉样本数据的分布，用服从某">
+<meta name="keywords" content="Deep Learning,TensorFlow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tensorflow神经网络之GAN">
+<meta property="og:url" content="http://xywang93.github.io.git/2018/03/14/DeepLearning/TensorFlow/14Tensorflow神经网络之GAN/index.html">
+<meta property="og:site_name" content="异构 AI">
+<meta property="og:description" content="生成对抗网络简介生成对抗网络（GAN）启发自博弈论中的二人零和博弈（two-player game），类似于周伯通的绝学——“左右互搏”。GAN 模型中的两位博弈方分别由生成式模型（generative model）和判别式模型（discriminative model）充当。生成模型 G 捕捉样本数据的分布，用服从某一分布（均匀分布，高斯分布等）的噪声 z 生成一个类似真实训练数据的样本，追求效">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/bbafdb123a7be9bb43f06bdee819dd86.png">
+<meta property="og:image" content="http://oz5oe1xth.bkt.clouddn.com/e6d9383d4eb0fac2f7d1183a592deceb.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/0e39fd772bfa170145f493cacadab129.png">
+<meta property="og:image" content="http://oz5oe1xth.bkt.clouddn.com/853bf244485839cf44f495ab5afc1f91.png">
+<meta property="og:updated_time" content="2018-07-30T14:52:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tensorflow神经网络之GAN">
+<meta name="twitter:description" content="生成对抗网络简介生成对抗网络（GAN）启发自博弈论中的二人零和博弈（two-player game），类似于周伯通的绝学——“左右互搏”。GAN 模型中的两位博弈方分别由生成式模型（generative model）和判别式模型（discriminative model）充当。生成模型 G 捕捉样本数据的分布，用服从某一分布（均匀分布，高斯分布等）的噪声 z 生成一个类似真实训练数据的样本，追求效">
+<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/bbafdb123a7be9bb43f06bdee819dd86.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xywang93.github.io.git/2018/03/14/DeepLearning/TensorFlow/14Tensorflow神经网络之GAN/"/>
+
+
+
+
+
+  <title>Tensorflow神经网络之GAN | 异构 AI</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">异构 AI</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xywang93.github.io.git/2018/03/14/DeepLearning/TensorFlow/14Tensorflow神经网络之GAN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王晓芸">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oz5oe1xth.bkt.clouddn.com/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="异构 AI">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Tensorflow神经网络之GAN</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-14T00:00:00+08:00">
+                2018-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Deep Learning</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learning/TensorFlow/" itemprop="url" rel="index">
+                    <span itemprop="name">TensorFlow</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/14/DeepLearning/TensorFlow/14Tensorflow神经网络之GAN/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/03/14/DeepLearning/TensorFlow/14Tensorflow神经网络之GAN/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,099
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="生成对抗网络简介"><a href="#生成对抗网络简介" class="headerlink" title="生成对抗网络简介"></a>生成对抗网络简介</h3><p>生成对抗网络（<code>GAN</code>）启发自博弈论中的二人零和博弈（two-player game），<strong>类似于周伯通的绝学——“左右互搏”</strong>。<code>GAN</code> 模型中的两位博弈方分别由生成式模型（<code>generative model</code>）和判别式模型（<code>discriminative model</code>）充当。生成模型 <code>G</code> 捕捉样本数据的分布，用服从某一分布（均匀分布，高斯分布等）的噪声 <code>z</code> 生成一个类似真实训练数据的样本，追求效果是越像真实样本越好；判别模型 <code>D</code> 是一个二分类器，估计一个样本来自于训练数据（而非生成数据）的概率，如果样本来自于真实的训练数据，<code>D</code> 输出大概率，否则，<code>D</code> 输出小概率。可以做如下类比：生成网络 <code>G</code> 好比假币制造团伙，专门制造假币，判别网络 <code>D</code> 好比警察，专门检测使用的货币是真币还是假币，<code>G</code> 的目标是想方设法生成和真币一样的货币，使得 <code>D</code> 判别不出来，<code>D</code> 的目标是想方设法检测出来 <code>G</code> 生成的假币。随着训练时间的增加，判别模型与生成模型的能力都相应的提升！</p>
+<p>具体生成网络的示意图如下所示：<br><img src="http://oz3lw4cji.bkt.clouddn.com/bbafdb123a7be9bb43f06bdee819dd86.png" alt="生成对抗网络结构示意图"></p>
+<a id="more"></a>
+<h3 id="Tensorflow生成对抗网络实现"><a href="#Tensorflow生成对抗网络实现" class="headerlink" title="Tensorflow生成对抗网络实现"></a>Tensorflow生成对抗网络实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> division, print_function, absolute_import</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br></pre></td></tr></table></figure>
+<h4 id="导入数据集"><a href="#导入数据集" class="headerlink" title="导入数据集"></a>导入数据集</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导入mnist数据集</span></span><br><span class="line"><span class="keyword">from</span> tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</span><br><span class="line">mnist = input_data.read_data_sets(<span class="string">"./data/"</span>, one_hot=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<hr>
+<pre><code>Extracting ./data/train-images-idx3-ubyte.gz
+Extracting ./data/train-labels-idx1-ubyte.gz
+Extracting ./data/t10k-images-idx3-ubyte.gz
+Extracting ./data/t10k-labels-idx1-ubyte.gz
+</code></pre><h4 id="参数设置"><a href="#参数设置" class="headerlink" title="参数设置"></a>参数设置</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Training Params</span></span><br><span class="line">num_steps = <span class="number">70000</span> <span class="comment">#总迭代次数</span></span><br><span class="line">batch_size = <span class="number">128</span>  <span class="comment"># 批量大小</span></span><br><span class="line">learning_rate = <span class="number">0.0002</span> <span class="comment">#学习率</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Network Params</span></span><br><span class="line">image_dim = <span class="number">784</span> <span class="comment"># 28*28 pixels，生成器的输出层节点数，也是判别器的输入</span></span><br><span class="line">gen_hidden_dim = <span class="number">256</span> <span class="comment"># 生成器隐藏层节点数</span></span><br><span class="line">disc_hidden_dim = <span class="number">256</span> <span class="comment"># 判别器隐藏层节点数</span></span><br><span class="line">noise_dim = <span class="number">100</span> <span class="comment"># Noise data points 生成器输入节点数</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Xavier 初始化方式（更适合有ReLU的网络训练）</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">glorot_init</span><span class="params">(shape)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> tf.random_normal(shape=shape, stddev=<span class="number">1.</span> / tf.sqrt(shape[<span class="number">0</span>] / <span class="number">2.</span>))</span><br></pre></td></tr></table></figure>
+<p>Xavier 初始化方式方差：</p>
+<p><img src="http://oz5oe1xth.bkt.clouddn.com/e6d9383d4eb0fac2f7d1183a592deceb.png" alt=""></p>
+<p>这里的参数是标准差。</p>
+<h4 id="设置每一层的权重与偏置"><a href="#设置每一层的权重与偏置" class="headerlink" title="设置每一层的权重与偏置"></a>设置每一层的权重与偏置</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置每一层的权重（Xavier初始化）与偏置（初始化为零）</span></span><br><span class="line">weights = &#123;</span><br><span class="line">    <span class="string">'gen_hidden1'</span>: tf.Variable(glorot_init([noise_dim, gen_hidden_dim])),<span class="comment">#（100 - 256）</span></span><br><span class="line">    <span class="string">'gen_out'</span>: tf.Variable(glorot_init([gen_hidden_dim, image_dim])), <span class="comment">#（256 - 784）</span></span><br><span class="line">    <span class="string">'disc_hidden1'</span>: tf.Variable(glorot_init([image_dim, disc_hidden_dim])),<span class="comment">#（784 - 256）</span></span><br><span class="line">    <span class="string">'disc_out'</span>: tf.Variable(glorot_init([disc_hidden_dim, <span class="number">1</span>])),<span class="comment">#（256 - 1）</span></span><br><span class="line">&#125;</span><br><span class="line">biases = &#123;</span><br><span class="line">    <span class="string">'gen_hidden1'</span>: tf.Variable(tf.zeros([gen_hidden_dim])),</span><br><span class="line">    <span class="string">'gen_out'</span>: tf.Variable(tf.zeros([image_dim])),</span><br><span class="line">    <span class="string">'disc_hidden1'</span>: tf.Variable(tf.zeros([disc_hidden_dim])),</span><br><span class="line">    <span class="string">'disc_out'</span>: tf.Variable(tf.zeros([<span class="number">1</span>])),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="定义生成对抗网络"><a href="#定义生成对抗网络" class="headerlink" title="定义生成对抗网络"></a>定义生成对抗网络</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义生成器函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generator</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="comment"># 输入x是1x100的矩阵，weights['gen_hidden1']是100x256的矩阵，矩阵相乘结果是1x256的矩阵，生成器隐藏层含256个节点</span></span><br><span class="line">    hidden_layer = tf.matmul(x, weights[<span class="string">'gen_hidden1'</span>])</span><br><span class="line">    <span class="comment"># biases['gen_hidden1']是1x256的矩阵，生成器隐藏层含256个节点</span></span><br><span class="line">    hidden_layer = tf.add(hidden_layer, biases[<span class="string">'gen_hidden1'</span>])</span><br><span class="line">    <span class="comment"># 激活函数 relu</span></span><br><span class="line">    hidden_layer = tf.nn.relu(hidden_layer)</span><br><span class="line">    <span class="comment"># hidden_layer是1x256的矩阵，weights['gen_out']是256x784的矩阵，矩阵相乘结果是1x784的矩阵，生成器输出层含784个节点</span></span><br><span class="line">    out_layer = tf.matmul(hidden_layer, weights[<span class="string">'gen_out'</span>])</span><br><span class="line">    <span class="comment"># biases['gen_out']是1x784的矩阵，生成器输出层含784个节点</span></span><br><span class="line">    out_layer = tf.add(out_layer, biases[<span class="string">'gen_out'</span>])</span><br><span class="line">    <span class="comment"># 激活函数 sigmoid</span></span><br><span class="line">    out_layer = tf.nn.sigmoid(out_layer)</span><br><span class="line">    <span class="keyword">return</span> out_layer</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义判别器函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">discriminator</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="comment"># 输入x是生成器生成的1x784的矩阵（生成的图片），weights['disc_hidden1']是784x256的矩阵，矩阵相乘结果是1x256的矩阵，判别器隐藏层含256个节点</span></span><br><span class="line">    hidden_layer = tf.matmul(x, weights[<span class="string">'disc_hidden1'</span>])</span><br><span class="line">    <span class="comment"># biases['disc_hidden1']是1x256的矩阵，生成器隐藏层含256个节点</span></span><br><span class="line">    hidden_layer = tf.add(hidden_layer, biases[<span class="string">'disc_hidden1'</span>])</span><br><span class="line">    <span class="comment"># 激活函数 relu</span></span><br><span class="line">    hidden_layer = tf.nn.relu(hidden_layer)</span><br><span class="line">    <span class="comment"># hidden_layer是1x256的矩阵，weights['disc_out']是256x1的矩阵，矩阵相乘结果是一个数，判别器输出层含1个节点</span></span><br><span class="line">    out_layer = tf.matmul(hidden_layer, weights[<span class="string">'disc_out'</span>])</span><br><span class="line">    <span class="comment"># biases['disc_out']是一个数，判别器输出层含1个节点</span></span><br><span class="line">    out_layer = tf.add(out_layer, biases[<span class="string">'disc_out'</span>])</span><br><span class="line">    <span class="comment"># 激活函数 sigmoid</span></span><br><span class="line">    out_layer = tf.nn.sigmoid(out_layer)</span><br><span class="line">    <span class="keyword">return</span> out_layer</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建网络</span></span><br><span class="line"><span class="comment"># 网络输入</span></span><br><span class="line">gen_input = tf.placeholder(tf.float32, shape=[<span class="keyword">None</span>, noise_dim], name=<span class="string">'input_noise'</span>) <span class="comment"># 生成器 输入噪点 batch*100，none是一个空值，后面赋值batch_size</span></span><br><span class="line">disc_input = tf.placeholder(tf.float32, shape=[<span class="keyword">None</span>, image_dim], name=<span class="string">'disc_input'</span>) <span class="comment"># 判别器 输入真实图像 batch*784</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建生成器（generator）</span></span><br><span class="line">gen_sample = generator(gen_input)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建两个判别器（一个是真实图像输入，一个是生成图像）</span></span><br><span class="line">disc_real = discriminator(disc_input) <span class="comment"># 真实图像</span></span><br><span class="line">disc_fake = discriminator(gen_sample) <span class="comment"># 通过生成器生成的图像</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建损失函数</span></span><br><span class="line"><span class="comment"># 关于GAN的理论推导，可参见 [^1]</span></span><br><span class="line">gen_loss = -tf.reduce_mean(tf.log(disc_fake)) <span class="comment"># 生成器损失函数</span></span><br><span class="line">disc_loss = -tf.reduce_mean(tf.log(disc_real) + tf.log(<span class="number">1.</span> - disc_fake)) <span class="comment"># 判别器损失函数</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建优化器（采用Adam方法），可参见 [^2]</span></span><br><span class="line">optimizer_gen = tf.train.AdamOptimizer(learning_rate=learning_rate)</span><br><span class="line">optimizer_disc = tf.train.AdamOptimizer(learning_rate=learning_rate)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Training Variables for each optimizer</span></span><br><span class="line"><span class="comment"># By default in TensorFlow, all variables are updated by each optimizer, so we</span></span><br><span class="line"><span class="comment"># need to precise for each one of them the specific variables to update.</span></span><br><span class="line"><span class="comment"># 生成网络的变量</span></span><br><span class="line">gen_vars = [weights[<span class="string">'gen_hidden1'</span>], weights[<span class="string">'gen_out'</span>],</span><br><span class="line">            biases[<span class="string">'gen_hidden1'</span>], biases[<span class="string">'gen_out'</span>]]</span><br><span class="line"><span class="comment"># 判别网络的变量</span></span><br><span class="line">disc_vars = [weights[<span class="string">'disc_hidden1'</span>], weights[<span class="string">'disc_out'</span>],</span><br><span class="line">            biases[<span class="string">'disc_hidden1'</span>], biases[<span class="string">'disc_out'</span>]]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建训练操作</span></span><br><span class="line">train_gen = optimizer_gen.minimize(gen_loss, var_list=gen_vars)</span><br><span class="line">train_disc = optimizer_disc.minimize(disc_loss, var_list=disc_vars)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 变量全局初始化</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br></pre></td></tr></table></figure>
+<p>GAN的网络结构类似于多层感知机：</p>
+<p><img src="http://oz3lw4cji.bkt.clouddn.com/0e39fd772bfa170145f493cacadab129.png" alt=""></p>
+<h4 id="训练生成对抗网络"><a href="#训练生成对抗网络" class="headerlink" title="训练生成对抗网络"></a>训练生成对抗网络</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开始训练</span></span><br><span class="line"><span class="comment"># 创建一个会话</span></span><br><span class="line">sess = tf.Session()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化</span></span><br><span class="line">sess.run(init)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, num_steps+<span class="number">1</span>):</span><br><span class="line">    <span class="comment"># 准备数据</span></span><br><span class="line">    <span class="comment"># 拿到下一批次的 MNIST 数据 (仅需要图像, 不需要标签)</span></span><br><span class="line">    batch_x, _ = mnist.train.next_batch(batch_size) <span class="comment"># 判别器输入 真实图像，batch_*784</span></span><br><span class="line">    <span class="comment"># 给生成器生成噪点数据</span></span><br><span class="line">    z = np.random.uniform(<span class="number">-1.</span>, <span class="number">1.</span>, size=[batch_size, noise_dim]) <span class="comment"># 生成器输入 噪声，batch*100</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 训练</span></span><br><span class="line">    feed_dict = &#123;disc_input: batch_x, gen_input: z&#125; <span class="comment">#给placeholder填入值</span></span><br><span class="line">    _, _, gl, dl = sess.run([train_gen, train_disc, gen_loss, disc_loss],</span><br><span class="line">                            feed_dict=feed_dict)</span><br><span class="line">    <span class="keyword">if</span> i % <span class="number">2000</span> == <span class="number">0</span> <span class="keyword">or</span> i == <span class="number">1</span>:</span><br><span class="line">        print(<span class="string">'Step %i: Generator Loss: %f, Discriminator Loss: %f'</span> % (i, gl, dl))</span><br></pre></td></tr></table></figure>
+<hr>
+<pre><code>Step 1: Generator Loss: 0.223592, Discriminator Loss: 2.090910
+Step 2000: Generator Loss: 4.678916, Discriminator Loss: 0.041115
+Step 4000: Generator Loss: 3.605874, Discriminator Loss: 0.068698
+Step 6000: Generator Loss: 3.845584, Discriminator Loss: 0.190420
+Step 8000: Generator Loss: 4.470613, Discriminator Loss: 0.117488
+Step 10000: Generator Loss: 3.813103, Discriminator Loss: 0.146255
+Step 12000: Generator Loss: 2.991248, Discriminator Loss: 0.392258
+Step 14000: Generator Loss: 3.769275, Discriminator Loss: 0.153639
+Step 16000: Generator Loss: 4.366917, Discriminator Loss: 0.206618
+Step 18000: Generator Loss: 4.052875, Discriminator Loss: 0.225112
+Step 20000: Generator Loss: 3.574747, Discriminator Loss: 0.362798
+Step 22000: Generator Loss: 3.760236, Discriminator Loss: 0.188211
+Step 24000: Generator Loss: 3.055995, Discriminator Loss: 0.354645
+Step 26000: Generator Loss: 3.619049, Discriminator Loss: 0.211489
+Step 28000: Generator Loss: 3.523777, Discriminator Loss: 0.273607
+Step 30000: Generator Loss: 3.889854, Discriminator Loss: 0.286803
+Step 32000: Generator Loss: 3.106094, Discriminator Loss: 0.298111
+Step 34000: Generator Loss: 3.548391, Discriminator Loss: 0.343262
+Step 36000: Generator Loss: 3.081174, Discriminator Loss: 0.332788
+Step 38000: Generator Loss: 2.946176, Discriminator Loss: 0.335102
+Step 40000: Generator Loss: 3.078653, Discriminator Loss: 0.465524
+Step 42000: Generator Loss: 2.601799, Discriminator Loss: 0.409574
+Step 44000: Generator Loss: 3.168177, Discriminator Loss: 0.325075
+Step 46000: Generator Loss: 2.601811, Discriminator Loss: 0.428143
+Step 48000: Generator Loss: 2.853810, Discriminator Loss: 0.403768
+Step 50000: Generator Loss: 2.690175, Discriminator Loss: 0.483180
+Step 52000: Generator Loss: 3.278867, Discriminator Loss: 0.375016
+Step 54000: Generator Loss: 2.869437, Discriminator Loss: 0.477840
+Step 56000: Generator Loss: 2.561056, Discriminator Loss: 0.449300
+Step 58000: Generator Loss: 2.814199, Discriminator Loss: 0.484522
+Step 60000: Generator Loss: 2.469474, Discriminator Loss: 0.428359
+Step 62000: Generator Loss: 2.721684, Discriminator Loss: 0.494090
+Step 64000: Generator Loss: 2.491284, Discriminator Loss: 0.654795
+Step 66000: Generator Loss: 2.725388, Discriminator Loss: 0.423149
+Step 68000: Generator Loss: 2.758215, Discriminator Loss: 0.513224
+Step 70000: Generator Loss: 3.072056, Discriminator Loss: 0.481437
+</code></pre><h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 测试</span></span><br><span class="line"><span class="comment"># 通过训练出的生成网络输入噪点，生成图像</span></span><br><span class="line">n = <span class="number">6</span></span><br><span class="line">canvas = np.empty((<span class="number">28</span> * n, <span class="number">28</span> * n))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    <span class="comment"># 噪点输入</span></span><br><span class="line">    z = np.random.uniform(<span class="number">-1.</span>, <span class="number">1.</span>, size=[n, noise_dim])</span><br><span class="line">    <span class="comment"># 生成图像</span></span><br><span class="line">    g = sess.run(gen_sample, feed_dict=&#123;gen_input: z&#125;)</span><br><span class="line">    <span class="comment"># 颜色反转便于显示</span></span><br><span class="line">    g = <span class="number">-1</span> * (g - <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(n):</span><br><span class="line">        <span class="comment"># 绘制生成的手写体数字</span></span><br><span class="line">        canvas[i * <span class="number">28</span>:(i + <span class="number">1</span>) * <span class="number">28</span>, j * <span class="number">28</span>:(j + <span class="number">1</span>) * <span class="number">28</span>] = g[j].reshape([<span class="number">28</span>, <span class="number">28</span>])</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(n, n))</span><br><span class="line">plt.imshow(canvas, origin=<span class="string">"upper"</span>, cmap=<span class="string">"gray"</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="http://oz5oe1xth.bkt.clouddn.com/853bf244485839cf44f495ab5afc1f91.png" alt=""></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>[1] <a href="https://www.jiqizhixin.com/articles/2017-10-1-1" target="_blank" rel="noopener">机器之心GitHub项目：GAN完整理论推导与实现，Perfect！</a></p>
+<p>[2] <a href="https://zhuanlan.zhihu.com/p/22252270" target="_blank" rel="noopener">深度学习最全优化方法总结比较（SGD，Adagrad，Adadelta，Adam，Adamax，Nadam）</a></p>
+<p>[3] <a href="https://www.cnblogs.com/Charles-Wan/p/6238033.html" target="_blank" rel="noopener">不要怂，就是GAN (生成式对抗网络) （一）： GAN 简介</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    王晓芸
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xywang93.github.io.git/2018/03/14/DeepLearning/TensorFlow/14Tensorflow神经网络之GAN/" title="Tensorflow神经网络之GAN">http://xywang93.github.io.git/2018/03/14/DeepLearning/TensorFlow/14Tensorflow神经网络之GAN/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <div>
+      
+        <div>
+	
+		<div style="text-align:center;color: #ccc;font-size:14px;">
+			-------------本文结束
+			<i class="fa fa-paw"></i>
+			感谢您的阅读-------------
+		</div>
+	
+</div>
+
+      
+    </div>
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"><i class="fa fa-tag"></i> Deep Learning</a>
+          
+            <a href="/tags/TensorFlow/" rel="tag"><i class="fa fa-tag"></i> TensorFlow</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/13/DeepLearning/TensorFlow/13Tensorflow神经网络之LSTM/" rel="next" title="Tensorflow神经网络之LSTM">
+                <i class="fa fa-chevron-left"></i> Tensorflow神经网络之LSTM
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/15/DeepLearning/TensorFlow/15Tensorflow神经网络之DCGAN/" rel="prev" title="Tensorflow神经网络之DCGAN">
+                Tensorflow神经网络之DCGAN <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="hypercomments_widget"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://oz5oe1xth.bkt.clouddn.com/avatar.png"
+                alt="王晓芸" />
+            
+              <p class="site-author-name" itemprop="name">王晓芸</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xuke225.github.io/" title="AI 异构" target="_blank">AI 异构</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#生成对抗网络简介"><span class="nav-number">1.</span> <span class="nav-text">生成对抗网络简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tensorflow生成对抗网络实现"><span class="nav-number">2.</span> <span class="nav-text">Tensorflow生成对抗网络实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#导入数据集"><span class="nav-number">2.1.</span> <span class="nav-text">导入数据集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参数设置"><span class="nav-number">2.2.</span> <span class="nav-text">参数设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置每一层的权重与偏置"><span class="nav-number">2.3.</span> <span class="nav-text">设置每一层的权重与偏置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定义生成对抗网络"><span class="nav-number">2.4.</span> <span class="nav-text">定义生成对抗网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#训练生成对抗网络"><span class="nav-number">2.5.</span> <span class="nav-text">训练生成对抗网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试"><span class="nav-number">2.6.</span> <span class="nav-text">测试</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王晓芸</span>
+
+  
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 97885, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 97885, xid: "2018/03/14/DeepLearning/TensorFlow/14Tensorflow神经网络之GAN/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/97885/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

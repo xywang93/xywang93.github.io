@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Deep Learning,嵌入式AI,NCNN,入门," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="异构 AI" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="CMake 入门实践什么是 CMake你或许听过好几种 Make 工具，例如 GNU Make ，QT 的 qmake ，微软的 MS nmake，BSD Make（pmake），Makepp，等等。这些 Make 工具遵循着不同的规范和标准，所执行的 Makefile 格式也千差万别。这样就带来了一个严峻的问题：如果">
+<meta name="keywords" content="Deep Learning,嵌入式AI,NCNN,入门">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CMake 入门">
+<meta property="og:url" content="http://xywang93.github.io.git/2018/05/02/DeepLearning/嵌入式AI/玩转ncnn/03-CMake入门/index.html">
+<meta property="og:site_name" content="异构 AI">
+<meta property="og:description" content="CMake 入门实践什么是 CMake你或许听过好几种 Make 工具，例如 GNU Make ，QT 的 qmake ，微软的 MS nmake，BSD Make（pmake），Makepp，等等。这些 Make 工具遵循着不同的规范和标准，所执行的 Makefile 格式也千差万别。这样就带来了一个严峻的问题：如果软件想跨平台，必须要保证能够在不同平台编译。而如果使用上面的 Make 工具，就">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/3e5f44d3eaa3c1480e7937f8e2bef4ba.png">
+<meta property="og:updated_time" content="2018-07-30T15:08:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CMake 入门">
+<meta name="twitter:description" content="CMake 入门实践什么是 CMake你或许听过好几种 Make 工具，例如 GNU Make ，QT 的 qmake ，微软的 MS nmake，BSD Make（pmake），Makepp，等等。这些 Make 工具遵循着不同的规范和标准，所执行的 Makefile 格式也千差万别。这样就带来了一个严峻的问题：如果软件想跨平台，必须要保证能够在不同平台编译。而如果使用上面的 Make 工具，就">
+<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/3e5f44d3eaa3c1480e7937f8e2bef4ba.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xywang93.github.io.git/2018/05/02/DeepLearning/嵌入式AI/玩转ncnn/03-CMake入门/"/>
+
+
+
+
+
+  <title>CMake 入门 | 异构 AI</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">异构 AI</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xywang93.github.io.git/2018/05/02/DeepLearning/嵌入式AI/玩转ncnn/03-CMake入门/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王晓芸">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oz5oe1xth.bkt.clouddn.com/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="异构 AI">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">CMake 入门</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-02T00:00:00+08:00">
+                2018-05-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Deep Learning</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learning/嵌入式AI/" itemprop="url" rel="index">
+                    <span itemprop="name">嵌入式AI</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learning/嵌入式AI/NCNN/" itemprop="url" rel="index">
+                    <span itemprop="name">NCNN</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/02/DeepLearning/嵌入式AI/玩转ncnn/03-CMake入门/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/05/02/DeepLearning/嵌入式AI/玩转ncnn/03-CMake入门/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  6,169
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="CMake-入门实践"><a href="#CMake-入门实践" class="headerlink" title="CMake 入门实践"></a>CMake 入门实践</h2><h3 id="什么是-CMake"><a href="#什么是-CMake" class="headerlink" title="什么是 CMake"></a>什么是 CMake</h3><p>你或许听过好几种 <code>Make</code> 工具，例如 <code>GNU Make</code> ，QT 的 <code>qmake</code> ，微软的 MS <code>nmake</code>，BSD Make（<code>pmake</code>），<code>Makepp</code>，等等。这些 <code>Make</code> 工具遵循着不同的规范和标准，所执行的 <code>Makefile</code> 格式也千差万别。这样就带来了一个严峻的问题：如果软件想跨平台，必须要保证能够在不同平台编译。而如果使用上面的 <code>Make</code> 工具，就得为每一种标准写一次 <code>Makefile</code> ，这将是一件让人抓狂的工作。<br><code>CMake</code>就是针对上面问题所设计的工具：它首先允许开发者编写一种平台无关的 <code>CMakeList.txt</code> 文件来定制整个编译流程，然后再根据目标用户的平台进一步生成所需的本地化 <code>Makefile</code> 和工程文件，如 Unix 的 Makefile 或 Windows 的 Visual Studio 工程。从而做到“<strong>Write once, run everywhere</strong>”。显然，<code>CMake</code> 是一个比上述几种 <code>make</code> 更高级的编译配置工具。一些使用 <code>CMake</code> 作为项目架构系统的知名开源项目有 VTK、ITK、KDE、OpenCV、OSG 等。<br>在 linux 平台下使用 CMake 生成 Makefile 并编译的流程如下：</p>
+<ul>
+<li>编写 <code>CMake</code> 配置文件 <code>CMakeLists.txt</code> 。</li>
+<li>执行命令 <code>cmake PATH</code> 或者 <code>ccmake PATH</code> 生成 <code>Makefile</code>。其中， <code>PATH</code> 是 <code>CMakeLists.txt</code> 所在的目录。</li>
+<li>使用 make 命令进行编译。</li>
+</ul>
+<a id="more"></a>
+<h3 id="入门案例：单个源文件"><a href="#入门案例：单个源文件" class="headerlink" title="入门案例：单个源文件"></a>入门案例：单个源文件</h3><p>对于简单的项目，只需要写几行代码就可以了。例如，假设现在我们的项目中只有一个源文件 <code>main.cc</code> ，该程序的用途是计算一个数的指数幂。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">power</span><span class="params">(<span class="keyword">double</span> base, <span class="keyword">int</span> exponent)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> result = base;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (exponent == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">1</span>; i &lt; exponent; ++i)&#123;</span><br><span class="line">        result = result * base;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (argc &lt; <span class="number">3</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Usage: %s base exponent \n"</span>, argv[<span class="number">0</span>]);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">double</span> base = atof(argv[<span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">int</span> exponent = atoi(argv[<span class="number">2</span>]);</span><br><span class="line">    <span class="keyword">double</span> result = power(base, exponent);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%g ^ %d is %g\n"</span>, base, exponent, result);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="编写-CMakeLists-txt"><a href="#编写-CMakeLists-txt" class="headerlink" title="编写 CMakeLists.txt"></a>编写 CMakeLists.txt</h4><p>首先编写 <code>CMakeLists.txt</code> 文件，并保存在与 <code>main.cc</code> 源文件同个目录下：<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CMake 最低版本号要求</span></span><br><span class="line">cmake_minimum_required (VERSION 2.8)</span><br><span class="line"><span class="comment"># 项目信息</span></span><br><span class="line">project (Demo1)</span><br><span class="line"><span class="comment"># 指定生成目标</span></span><br><span class="line">add_executable(Demo main.cc)</span><br></pre></td></tr></table></figure></p>
+<p><code>CMakeLists.txt</code> 的语法比较简单，由命令、注释和空格组成，其中<strong>命令是不区分大小写的</strong>。符号 # 后面的内容被认为是注释。命令由命令名称、小括号和参数组成，参数之间使用空格进行间隔。<br>对于上面的 <code>CMakeLists.txt</code> 文件，依次出现了几个命令：</p>
+<ul>
+<li><code>cmake_minimum_required</code>：指定运行此配置文件所需的 <code>CMake</code> 的最低版本；</li>
+<li><code>project</code>：参数值是 <code>Demo1</code>，该命令表示项目的名称是 <code>Demo1</code> 。</li>
+<li><code>add_executable</code>： 将名为 <code>main.cc</code> 的源文件编译成一个名称为 <code>Demo</code> 的可执行文件。</li>
+</ul>
+<h4 id="编译项目"><a href="#编译项目" class="headerlink" title="编译项目"></a>编译项目</h4><p>之后，在当前目录执行 <code>cmake .</code> ，得到 <code>Makefile</code> 后再使用 <code>make</code> 命令编译得到 <code>Demo1</code> 可执行文件。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo1$ cmake .</span><br><span class="line">-- The C compiler identification is GNU 5.4.0</span><br><span class="line">-- The CXX compiler identification is GNU 5.4.0</span><br><span class="line">-- Check <span class="keyword">for</span> working C compiler: /usr/bin/cc</span><br><span class="line">-- Check <span class="keyword">for</span> working C compiler: /usr/bin/cc -- works</span><br><span class="line">-- Detecting C compiler ABI info</span><br><span class="line">-- Detecting C compiler ABI info - <span class="keyword">done</span></span><br><span class="line">-- Detecting C compile features</span><br><span class="line">-- Detecting C compile features - <span class="keyword">done</span></span><br><span class="line">-- Check <span class="keyword">for</span> working CXX compiler: /usr/bin/c++</span><br><span class="line">-- Check <span class="keyword">for</span> working CXX compiler: /usr/bin/c++ -- works</span><br><span class="line">-- Detecting CXX compiler ABI info</span><br><span class="line">-- Detecting CXX compiler ABI info - <span class="keyword">done</span></span><br><span class="line">-- Detecting CXX compile features</span><br><span class="line">-- Detecting CXX compile features - <span class="keyword">done</span></span><br><span class="line">-- Configuring <span class="keyword">done</span></span><br><span class="line">-- Generating <span class="keyword">done</span></span><br><span class="line">-- Build files have been written to: /home/xuke/work/cmake-demo/Demo1</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo1$ ls</span><br><span class="line">CMakeCache.txt  cmake_install.cmake  main.cc</span><br><span class="line">CMakeFiles      CMakeLists.txt       Makefile</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo1$ make</span><br><span class="line">Scanning dependencies of target Demo</span><br><span class="line">[ 50%] Building CXX object CMakeFiles/Demo.dir/main.cc.o</span><br><span class="line">[100%] Linking CXX executable Demo</span><br><span class="line">[100%] Built target Demo</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo1$ ls</span><br><span class="line">CMakeCache.txt  cmake_install.cmake  Demo     Makefile</span><br><span class="line">CMakeFiles      CMakeLists.txt       main.cc</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo1$ ./Demo 3 2</span><br><span class="line">3 ^ 2 is 9</span><br></pre></td></tr></table></figure></p>
+<h3 id="多个源文件"><a href="#多个源文件" class="headerlink" title="多个源文件"></a>多个源文件</h3><h4 id="同一目录，多个源文件"><a href="#同一目录，多个源文件" class="headerlink" title="同一目录，多个源文件"></a>同一目录，多个源文件</h4><p>上面的例子只有单个源文件。现在假如把 <code>power</code> 函数单独写进一个名为 <code>MathFunctions.c</code> 的源文件里，使得这个工程变成如下的形式：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">./Demo2</span><br><span class="line">    |</span><br><span class="line">    +--- main.cc</span><br><span class="line">    |</span><br><span class="line">    +--- MathFunctions.cc</span><br><span class="line">    |</span><br><span class="line">    +--- MathFunctions.h</span><br></pre></td></tr></table></figure></p>
+<p>这个时候，CMakeLists.txt 可以改成如下的形式：<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CMake 最低版本号要求</span></span><br><span class="line">cmake_minimum_required (VERSION 2.8)</span><br><span class="line"><span class="comment"># 项目信息</span></span><br><span class="line">project (Demo2)</span><br><span class="line"><span class="comment"># 指定生成目标</span></span><br><span class="line">add_executable(Demo main.cc MathFunctions.cc)</span><br></pre></td></tr></table></figure></p>
+<p>唯一的改动只是在 <code>add_executable</code> 命令中增加了一个 <code>MathFunctions.cc</code> 源文件。这样写当然没什么问题，但是如果源文件很多，把所有源文件的名字都加进去将是一件烦人的工作。更省事的方法是使用 <code>aux_source_directory</code> 命令，该命令会查找指定目录下的所有源文件，然后将结果存进指定变量名。其语法如下：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aux_source_directory(&lt;dir&gt; &lt;variable&gt;)</span><br></pre></td></tr></table></figure></p>
+<p>因此，可以修改 CMakeLists.txt 如下：<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CMake 最低版本号要求</span></span><br><span class="line">cmake_minimum_required (VERSION 2.8)</span><br><span class="line"><span class="comment"># 项目信息</span></span><br><span class="line">project (Demo2)</span><br><span class="line"><span class="comment"># 查找当前目录下的所有源文件</span></span><br><span class="line"><span class="comment"># 并将名称保存到 DIR_SRCS 变量</span></span><br><span class="line">aux_source_directory(. DIR_SRCS)</span><br><span class="line"><span class="comment"># 指定生成目标</span></span><br><span class="line">add_executable(Demo $&#123;DIR_SRCS&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>这样，CMake 会将当前目录所有源文件的文件名赋值给变量 <code>DIR_SRCS</code> ，再指示变量 <code>DIR_SRCS</code> 中的源文件需要编译成一个名称为 <code>Demo</code> 的可执行文件。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo2$ ls</span><br><span class="line">CMakeLists.txt  main.cc  MathFunctions.cc  MathFunctions.h</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo2$ cmake .</span><br><span class="line">-- The C compiler identification is GNU 5.4.0</span><br><span class="line">-- The CXX compiler identification is GNU 5.4.0</span><br><span class="line">-- Check <span class="keyword">for</span> working C compiler: /usr/bin/cc</span><br><span class="line">-- Check <span class="keyword">for</span> working C compiler: /usr/bin/cc -- works</span><br><span class="line">-- Detecting C compiler ABI info</span><br><span class="line">-- Detecting C compiler ABI info - <span class="keyword">done</span></span><br><span class="line">-- Detecting C compile features</span><br><span class="line">-- Detecting C compile features - <span class="keyword">done</span></span><br><span class="line">-- Check <span class="keyword">for</span> working CXX compiler: /usr/bin/c++</span><br><span class="line">-- Check <span class="keyword">for</span> working CXX compiler: /usr/bin/c++ -- works</span><br><span class="line">-- Detecting CXX compiler ABI info</span><br><span class="line">-- Detecting CXX compiler ABI info - <span class="keyword">done</span></span><br><span class="line">-- Detecting CXX compile features</span><br><span class="line">-- Detecting CXX compile features - <span class="keyword">done</span></span><br><span class="line">-- Configuring <span class="keyword">done</span></span><br><span class="line">-- Generating <span class="keyword">done</span></span><br><span class="line">-- Build files have been written to: /home/xuke/work/cmake-demo/Demo2</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo2$ ls</span><br><span class="line">CMakeCache.txt  cmake_install.cmake  main.cc   MathFunctions.cc</span><br><span class="line">CMakeFiles      CMakeLists.txt       Makefile  MathFunctions.h</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo2$ make</span><br><span class="line">Scanning dependencies of target Demo</span><br><span class="line">[ 33%] Building CXX object CMakeFiles/Demo.dir/main.cc.o</span><br><span class="line">[ 66%] Building CXX object CMakeFiles/Demo.dir/MathFunctions.cc.o</span><br><span class="line">[100%] Linking CXX executable Demo</span><br><span class="line">[100%] Built target Demo</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo2$ ./Demo 3 2</span><br><span class="line">3 ^ 2 is 9</span><br></pre></td></tr></table></figure></p>
+<h4 id="多个目录，多个源文件"><a href="#多个目录，多个源文件" class="headerlink" title="多个目录，多个源文件"></a>多个目录，多个源文件</h4><p>现在进一步将 <code>MathFunctions.h</code> 和 <code>MathFunctions.cc</code> 文件移动到 <code>math</code> 目录下。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">./Demo3</span><br><span class="line">    |</span><br><span class="line">    +--- main.cc</span><br><span class="line">    |</span><br><span class="line">    +--- math/</span><br><span class="line">          |</span><br><span class="line">          +--- MathFunctions.cc</span><br><span class="line">          |</span><br><span class="line">          +--- MathFunctions.h</span><br></pre></td></tr></table></figure></p>
+<p>对于这种情况，需要分别在项目根目录 <code>Demo3</code> 和 <code>math</code> 目录里各编写一个 <code>CMakeLists.txt</code> 文件。为了方便，我们可以先将 <code>math</code> 目录里的文件编译成静态库再由 <code>main</code> 函数调用。</p>
+<h5 id="根目录中的-CMakeLists-txt-："><a href="#根目录中的-CMakeLists-txt-：" class="headerlink" title="根目录中的 CMakeLists.txt ："></a>根目录中的 CMakeLists.txt ：</h5><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CMake 最低版本号要求</span></span><br><span class="line">cmake_minimum_required (VERSION 2.8)</span><br><span class="line"><span class="comment"># 项目信息</span></span><br><span class="line">project (Demo3)</span><br><span class="line"><span class="comment"># 查找当前目录下的所有源文件</span></span><br><span class="line"><span class="comment"># 并将名称保存到 DIR_SRCS 变量</span></span><br><span class="line">aux_source_directory(. DIR_SRCS)</span><br><span class="line"><span class="comment"># 添加 math 子目录</span></span><br><span class="line">add_subdirectory(math)</span><br><span class="line"><span class="comment"># 指定生成目标</span></span><br><span class="line">add_executable(Demo main.cc)</span><br><span class="line"><span class="comment"># 添加链接库</span></span><br><span class="line">target_link_libraries(Demo MathFunctions)</span><br></pre></td></tr></table></figure>
+<p>该文件添加了下面的内容: 使用命令 <code>add_subdirectory</code> 指明本项目包含一个子目录 <code>math</code>，这样 <code>math</code> 目录下的 <code>CMakeLists.txt</code> 文件和源代码也会被处理 。使用命令 <code>target_link_libraries</code> 指明可执行文件 <code>main</code> 需要连接一个名为 <code>MathFunctions</code> 的链接库 。</p>
+<h5 id="子目录中的-CMakeLists-txt："><a href="#子目录中的-CMakeLists-txt：" class="headerlink" title="子目录中的 CMakeLists.txt："></a>子目录中的 CMakeLists.txt：</h5><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查找当前目录下的所有源文件</span></span><br><span class="line"><span class="comment"># 并将名称保存到 DIR_LIB_SRCS 变量</span></span><br><span class="line">aux_source_directory(. DIR_LIB_SRCS)</span><br><span class="line"><span class="comment"># 生成链接库</span></span><br><span class="line">add_library (MathFunctions $&#123;DIR_LIB_SRCS&#125;)</span><br></pre></td></tr></table></figure>
+<p>在该文件中使用命令 <code>add_library</code> 将 <code>math</code> 目录中的源文件编译为静态链接库。</p>
+<h5 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo3$ ls</span><br><span class="line">CMakeLists.txt  main.cc  math</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo3$ cmake .</span><br><span class="line">-- The C compiler identification is GNU 5.4.0</span><br><span class="line">-- The CXX compiler identification is GNU 5.4.0</span><br><span class="line">-- Check <span class="keyword">for</span> working C compiler: /usr/bin/cc</span><br><span class="line">-- Check <span class="keyword">for</span> working C compiler: /usr/bin/cc -- works</span><br><span class="line">-- Detecting C compiler ABI info</span><br><span class="line">-- Detecting C compiler ABI info - <span class="keyword">done</span></span><br><span class="line">-- Detecting C compile features</span><br><span class="line">-- Detecting C compile features - <span class="keyword">done</span></span><br><span class="line">-- Check <span class="keyword">for</span> working CXX compiler: /usr/bin/c++</span><br><span class="line">-- Check <span class="keyword">for</span> working CXX compiler: /usr/bin/c++ -- works</span><br><span class="line">-- Detecting CXX compiler ABI info</span><br><span class="line">-- Detecting CXX compiler ABI info - <span class="keyword">done</span></span><br><span class="line">-- Detecting CXX compile features</span><br><span class="line">-- Detecting CXX compile features - <span class="keyword">done</span></span><br><span class="line">-- Configuring <span class="keyword">done</span></span><br><span class="line">-- Generating <span class="keyword">done</span></span><br><span class="line">-- Build files have been written to: /home/xuke/work/cmake-demo/Demo3</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo3$ ls</span><br><span class="line">CMakeCache.txt  cmake_install.cmake  main.cc   math</span><br><span class="line">CMakeFiles      CMakeLists.txt       Makefile</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo3$ <span class="built_in">cd</span> math/</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo3/math$ ls</span><br><span class="line">CMakeFiles           CMakeLists.txt  MathFunctions.cc</span><br><span class="line">cmake_install.cmake  Makefile        MathFunctions.h</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo3/math$ <span class="built_in">cd</span> ..</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo3$ ls</span><br><span class="line">CMakeCache.txt  cmake_install.cmake  main.cc   math</span><br><span class="line">CMakeFiles      CMakeLists.txt       Makefile</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo3$ make</span><br><span class="line">Scanning dependencies of target MathFunctions</span><br><span class="line">[ 25%] Building CXX object math/CMakeFiles/MathFunctions.dir/MathFunctions.cc.o</span><br><span class="line">[ 50%] Linking CXX static library libMathFunctions.a</span><br><span class="line">[ 50%] Built target MathFunctions</span><br><span class="line">Scanning dependencies of target Demo</span><br><span class="line">[ 75%] Building CXX object CMakeFiles/Demo.dir/main.cc.o</span><br><span class="line">[100%] Linking CXX executable Demo</span><br><span class="line">[100%] Built target Demo</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo3$ ./Demo 3 2</span><br><span class="line">3 ^ 2 is 9</span><br></pre></td></tr></table></figure>
+<h3 id="自定义编译选项"><a href="#自定义编译选项" class="headerlink" title="自定义编译选项"></a>自定义编译选项</h3><p>CMake 允许为项目增加编译选项，从而可以根据用户的环境和需求选择最合适的编译方案。</p>
+<p>例如，可以将 <code>MathFunctions</code> 库设为一个可选的库，如果该选项为 <code>ON</code> ，就使用该库定义的数学函数来进行运算。否则就调用标准库中的数学函数库。</p>
+<h4 id="修改-CMakeLists-文件"><a href="#修改-CMakeLists-文件" class="headerlink" title="修改 CMakeLists 文件"></a>修改 CMakeLists 文件</h4><p>我们要做的第一步是在根目录的 <code>CMakeLists.txt</code> 文件中添加该选项：<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CMake 最低版本号要求</span></span><br><span class="line">cmake_minimum_required (VERSION 2.8)</span><br><span class="line"><span class="comment"># 项目信息</span></span><br><span class="line">project (Demo4)</span><br><span class="line"><span class="comment"># 是否使用自己的 MathFunctions 库</span></span><br><span class="line">option (USE_MYMATH</span><br><span class="line">       <span class="string">"Use provided math implementation"</span> ON)</span><br><span class="line"><span class="comment"># 加入一个配置头文件，用于处理 CMake 对源码的设置</span></span><br><span class="line">configure_file (</span><br><span class="line">  <span class="string">"$&#123;PROJECT_SOURCE_DIR&#125;/config.h.in"</span></span><br><span class="line">  <span class="string">"$&#123;PROJECT_BINARY_DIR&#125;/config.h"</span></span><br><span class="line">  )</span><br><span class="line"><span class="comment"># 是否加入 MathFunctions 库</span></span><br><span class="line">if (USE_MYMATH)</span><br><span class="line">  include_directories (<span class="string">"$&#123;PROJECT_SOURCE_DIR&#125;/math"</span>)</span><br><span class="line">  add_subdirectory (math)</span><br><span class="line">  set (EXTRA_LIBS $&#123;EXTRA_LIBS&#125; MathFunctions)</span><br><span class="line"><span class="keyword">endif</span> (USE_MYMATH)</span><br><span class="line"><span class="comment"># 查找当前目录下的所有源文件</span></span><br><span class="line"><span class="comment"># 并将名称保存到 DIR_SRCS 变量</span></span><br><span class="line">aux_source_directory(. DIR_SRCS)</span><br><span class="line"><span class="comment"># 指定生成目标</span></span><br><span class="line">add_executable(Demo $&#123;DIR_SRCS&#125;)</span><br><span class="line">target_link_libraries (Demo  $&#123;EXTRA_LIBS&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>其中：</p>
+<ul>
+<li>第6行的 <code>option</code> 命令添加了一个 <code>USE_MYMATH</code> 选项，并且默认值为 <code>ON</code> 。</li>
+<li>第9行的 <code>configure_file</code> 命令用于加入一个配置头文件 <code>config.h</code> ，这个文件由 <code>CMake</code> 从 <code>config.h.in</code> 生成，通过这样的机制，将可以通过预定义一些参数和变量来控制代码的生成。</li>
+<li>第14行根据 <code>USE_MYMATH</code> 变量的值来决定是否使用我们自己编写的 <code>MathFunctions</code> 库。</li>
+</ul>
+<h4 id="修改-main-cc-文件"><a href="#修改-main-cc-文件" class="headerlink" title="修改 main.cc 文件"></a>修改 main.cc 文件</h4><p>之后修改 main.cc 文件，让其根据 <code>USE_MYMATH</code> 的预定义值来决定是否调用标准库还是 <code>MathFunctions</code> 库：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;config.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> USE_MYMATH</span></span><br><span class="line">  <span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;MathFunctions.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">  <span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (argc &lt; <span class="number">3</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Usage: %s base exponent \n"</span>, argv[<span class="number">0</span>]);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">double</span> base = atof(argv[<span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">int</span> exponent = atoi(argv[<span class="number">2</span>]);</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> USE_MYMATH</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Now we use our own Math library. \n"</span>);</span><br><span class="line">    <span class="keyword">double</span> result = power(base, exponent);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Now we use the standard library. \n"</span>);</span><br><span class="line">    <span class="keyword">double</span> result = <span class="built_in">pow</span>(base, exponent);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%g ^ %d is %g\n"</span>, base, exponent, result);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="编写-config-h-in-文件"><a href="#编写-config-h-in-文件" class="headerlink" title="编写 config.h.in 文件"></a>编写 config.h.in 文件</h4><p>上面的程序值得注意的是第2行，这里引用了一个 <code>config.h</code> 文件，这个文件预定义了 <code>USE_MYMATH</code> 的值。但我们并不直接编写这个文件，为了方便从 <code>CMakeLists.txt</code> 中导入配置，我们编写一个 <code>config.h.in</code> 文件，内容如下：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#cmakedefine USE_MYMATH</span></span><br></pre></td></tr></table></figure></p>
+<p>这样 CMake 会自动根据 CMakeLists 配置文件中的设置自动生成 config.h 文件。</p>
+<h4 id="编译项目-1"><a href="#编译项目-1" class="headerlink" title="编译项目"></a>编译项目</h4><p>现在编译一下这个项目，为了便于交互式的选择该变量的值，可以使用 <code>ccmake .</code> 命令<br><img src="http://oz3lw4cji.bkt.clouddn.com/3e5f44d3eaa3c1480e7937f8e2bef4ba.png" alt=""><br>从中可以找到刚刚定义的 <code>USE_MYMATH</code> 选项，按键盘的方向键可以在不同的选项窗口间跳转，按下 <code>enter</code> 键可以修改该选项。修改完成后可以按下 <code>c</code> 选项完成配置，之后再按 <code>g</code> 键确认生成 <code>Makefile</code> 。<code>ccmake</code> 的其他操作可以参考窗口下方给出的指令提示。<br>我们可以试试分别将 USE_MYMATH 设为 ON 和 OFF 得到的结果：</p>
+<h5 id="USE-MYMATH-为-ON"><a href="#USE-MYMATH-为-ON" class="headerlink" title="USE_MYMATH 为 ON"></a>USE_MYMATH 为 ON</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo4$ cmake .</span><br><span class="line">-- Configuring <span class="keyword">done</span></span><br><span class="line">-- Generating <span class="keyword">done</span></span><br><span class="line">-- Build files have been written to: /home/xuke/work/cmake-demo/Demo4</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo4$ make</span><br><span class="line">[ 50%] Built target MathFunctions</span><br><span class="line">[100%] Built target Demo</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo4$ ./Demo 3 2</span><br><span class="line">Now we use our own Math library.</span><br><span class="line">3 ^ 2 is 9</span><br></pre></td></tr></table></figure>
+<h5 id="USE-MYMATH-为-OFF"><a href="#USE-MYMATH-为-OFF" class="headerlink" title="USE_MYMATH 为 OFF"></a>USE_MYMATH 为 OFF</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo4$ cmake .</span><br><span class="line">-- Configuring <span class="keyword">done</span></span><br><span class="line">-- Generating <span class="keyword">done</span></span><br><span class="line">-- Build files have been written to: /home/xuke/work/cmake-demo/Demo4</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo4$ make</span><br><span class="line">Scanning dependencies of target Demo</span><br><span class="line">[ 50%] Building CXX object CMakeFiles/Demo.dir/main.cc.o</span><br><span class="line">[100%] Linking CXX executable Demo</span><br><span class="line">[100%] Built target Demo</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo4$ ./Demo 3 2</span><br><span class="line">Now we use the standard library.</span><br><span class="line">3 ^ 2 is 9</span><br></pre></td></tr></table></figure>
+<h3 id="安装和测试"><a href="#安装和测试" class="headerlink" title="安装和测试"></a>安装和测试</h3><p><code>CMake</code> 也可以指定安装规则，以及添加测试。这两个功能分别可以通过在产生 <code>Makefile</code> 后使用 <code>make install</code> 和 <code>make test</code> 来执行。在以前的 <code>GNU Makefile</code> 里，你可能需要为此编写 <code>install</code> 和 <code>test</code> 两个伪目标和相应的规则，但在 <code>CMake</code> 里，这样的工作同样只需要简单的调用几条命令。</p>
+<h4 id="定制安装规则"><a href="#定制安装规则" class="headerlink" title="定制安装规则"></a>定制安装规则</h4><p>首先先在 math/CMakeLists.txt 文件里添加下面两行：<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定 MathFunctions 库的安装路径</span></span><br><span class="line">install (TARGETS MathFunctions DESTINATION bin)</span><br><span class="line">install (FILES MathFunctions.h DESTINATION <span class="keyword">include</span>)</span><br></pre></td></tr></table></figure></p>
+<p>指明 MathFunctions 库的安装路径。<br>之后同样修改根目录的 CMakeLists 文件，在末尾添加下面几行：<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定安装路径</span></span><br><span class="line">install (TARGETS Demo DESTINATION bin)</span><br><span class="line">install (FILES <span class="string">"$&#123;PROJECT_BINARY_DIR&#125;/config.h"</span></span><br><span class="line">         DESTINATION <span class="keyword">include</span>)</span><br></pre></td></tr></table></figure></p>
+<p>通过上面的定制，生成的 Demo 文件和 MathFunctions 函数库 libMathFunctions.o 文件将会被复制到 /usr/local/bin 中，而 MathFunctions.h 和生成的 config.h 文件则会被复制到 /usr/local/include 中。</p>
+<blockquote>
+<p>顺带一提的是，这里的 /usr/local/ 是默认安装到的根目录，可以通过修改 CMAKE_INSTALL_PREFIX 变量的值来指定这些文件应该拷贝到哪个根目录。</p>
+</blockquote>
+<p>我们可以验证一下：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">xuke@ubuntu: sudo make install</span><br><span class="line">[ 50%] Built target MathFunctions</span><br><span class="line">[100%] Built target Demo</span><br><span class="line">Install the project...</span><br><span class="line">-- Install configuration: <span class="string">""</span></span><br><span class="line">-- Installing: /usr/<span class="built_in">local</span>/bin/Demo</span><br><span class="line">-- Installing: /usr/<span class="built_in">local</span>/include/config.h</span><br><span class="line">-- Installing: /usr/<span class="built_in">local</span>/bin/libMathFunctions.a</span><br><span class="line">-- Up-to-date: /usr/<span class="built_in">local</span>/include/MathFunctions.h</span><br><span class="line">xuke@ubuntu: ls /usr/<span class="built_in">local</span>/bin</span><br><span class="line">Demo  libMathFunctions.a</span><br><span class="line">xuke@ubuntu: ls /usr/<span class="built_in">local</span>/include</span><br><span class="line">config.h  MathFunctions.h</span><br></pre></td></tr></table></figure></p>
+<h4 id="为工程添加测试"><a href="#为工程添加测试" class="headerlink" title="为工程添加测试"></a>为工程添加测试</h4><p>添加测试同样很简单。<code>CMake</code> 提供了一个称为 <code>CTest</code> 的测试工具。我们要做的只是在项目根目录的 <code>CMakeLists</code> 文件中调用一系列的 <code>add_test</code> 命令。<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启用测试</span></span><br><span class="line">enable_testing()</span><br><span class="line"><span class="comment"># 测试程序是否成功运行</span></span><br><span class="line">add_test (test_run Demo 5 2)</span><br><span class="line"><span class="comment"># 测试帮助信息是否可以正常提示</span></span><br><span class="line">add_test (test_usage Demo)</span><br><span class="line">set_tests_properties (test_usage</span><br><span class="line">  PROPERTIES PASS_REGULAR_EXPRESSION <span class="string">"Usage: .* base exponent"</span>)</span><br><span class="line"><span class="comment"># 测试 5 的平方</span></span><br><span class="line">add_test (test_5_2 Demo 5 2)</span><br><span class="line">set_tests_properties (test_5_2</span><br><span class="line"> PROPERTIES PASS_REGULAR_EXPRESSION <span class="string">"is 25"</span>)</span><br><span class="line"><span class="comment"># 测试 10 的 5 次方</span></span><br><span class="line">add_test (test_10_5 Demo 10 5)</span><br><span class="line">set_tests_properties (test_10_5</span><br><span class="line"> PROPERTIES PASS_REGULAR_EXPRESSION <span class="string">"is 100000"</span>)</span><br><span class="line"><span class="comment"># 测试 2 的 10 次方</span></span><br><span class="line">add_test (test_2_10 Demo 2 10)</span><br><span class="line">set_tests_properties (test_2_10</span><br><span class="line"> PROPERTIES PASS_REGULAR_EXPRESSION <span class="string">"is 1024"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码包含了四个测试。第一个测试 <code>test_run</code> 用来测试程序是否成功运行并返回 0 值。剩下的三个测试分别用来测试 5 的 平方、10 的 5 次方、2 的 10 次方是否都能得到正确的结果。其中 <code>PASS_REGULAR_EXPRESSION</code> 用来测试输出是否包含后面跟着的字符串。</p>
+<p>让我们看看测试的结果：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo5$ make <span class="built_in">test</span></span><br><span class="line">Running tests...</span><br><span class="line">Test project /home/xuke/work/cmake-demo/Demo5</span><br><span class="line">    Start 1: test_run</span><br><span class="line">1/5 Test <span class="comment">#1: test_run .........................   Passed    0.00 sec</span></span><br><span class="line">    Start 2: test_usage</span><br><span class="line">2/5 Test <span class="comment">#2: test_usage .......................   Passed    0.00 sec</span></span><br><span class="line">    Start 3: test_5_2</span><br><span class="line">3/5 Test <span class="comment">#3: test_5_2 .........................   Passed    0.00 sec</span></span><br><span class="line">    Start 4: test_10_5</span><br><span class="line">4/5 Test <span class="comment">#4: test_10_5 ........................   Passed    0.00 sec</span></span><br><span class="line">    Start 5: test_2_10</span><br><span class="line">5/5 Test <span class="comment">#5: test_2_10 ........................   Passed    0.00 sec</span></span><br><span class="line"></span><br><span class="line">100% tests passed, 0 tests failed out of 5</span><br><span class="line"></span><br><span class="line">Total Test time (real) =   0.01 sec</span><br></pre></td></tr></table></figure></p>
+<p>如果要测试更多的输入数据，像上面那样一个个写测试用例未免太繁琐。这时可以通过编写<strong>宏</strong>来实现：<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义一个宏，用来简化测试工作</span></span><br><span class="line">macro (do_test arg1 arg2 result)</span><br><span class="line">  add_test (test_$&#123;arg1&#125;_$&#123;arg2&#125; Demo $&#123;arg1&#125; $&#123;arg2&#125;)</span><br><span class="line">  set_tests_properties (test_$&#123;arg1&#125;_$&#123;arg2&#125;</span><br><span class="line">    PROPERTIES PASS_REGULAR_EXPRESSION $&#123;result&#125;)</span><br><span class="line">endmacro (do_test)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用该宏进行一系列的数据测试</span></span><br><span class="line">do_test (5 2 <span class="string">"is 25"</span>)</span><br><span class="line">do_test (10 5 <span class="string">"is 100000"</span>)</span><br><span class="line">do_test (2 10 <span class="string">"is 1024"</span>)</span><br></pre></td></tr></table></figure></p>
+<h3 id="支持-gdb"><a href="#支持-gdb" class="headerlink" title="支持 gdb"></a>支持 gdb</h3><p>让 CMake 支持 <code>gdb</code> 的设置也很容易，只需要指定 <code>Debug</code> 模式下开启 <code>-g</code> 选项：<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">set(CMAKE_BUILD_TYPE <span class="string">"Debug"</span>)</span><br><span class="line">set(CMAKE_CXX_FLAGS_DEBUG <span class="string">"$ENV&#123;CXXFLAGS&#125; -O0 -Wall -g -ggdb"</span>)</span><br><span class="line">set(CMAKE_CXX_FLAGS_RELEASE <span class="string">"$ENV&#123;CXXFLAGS&#125; -O3 -Wall"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>之后可以直接对生成的程序使用 <code>gdb</code> 来调试。</p>
+<h3 id="添加环境检查"><a href="#添加环境检查" class="headerlink" title="添加环境检查"></a>添加环境检查</h3><p>有时候可能要对系统环境做点检查，例如要使用一个平台相关的特性的时候。在这个例子中，我们检查系统是否自带 <code>pow</code> 函数。如果带有 <code>pow</code> 函数，就使用它；否则使用我们定义的 <code>power</code> 函数。</p>
+<h4 id="添加-CheckFunctionExists-宏"><a href="#添加-CheckFunctionExists-宏" class="headerlink" title="添加 CheckFunctionExists 宏"></a>添加 CheckFunctionExists 宏</h4><p>首先在顶层 <code>CMakeLists</code> 文件中添加 <code>CheckFunctionExists.cmake</code> 宏，并调用 <code>check_function_exists</code> 命令测试链接器是否能够在链接阶段找到 <code>pow</code> 函数。<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查系统是否支持 pow 函数</span></span><br><span class="line"><span class="keyword">include</span> ($&#123;CMAKE_ROOT&#125;/Modules/CheckFunctionExists.cmake)</span><br><span class="line">check_function_exists (pow HAVE_POW)</span><br></pre></td></tr></table></figure></p>
+<p>将上面这段代码放在 <code>configure_file</code> 命令前。</p>
+<h4 id="预定义相关宏变量"><a href="#预定义相关宏变量" class="headerlink" title="预定义相关宏变量"></a>预定义相关宏变量</h4><p>接下来修改 <code>config.h.in</code> 文件，预定义相关的宏变量。<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// does the platform provide pow function?</span><br><span class="line"><span class="comment">#cmakedefine HAVE_POW</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="在代码中使用宏和函数"><a href="#在代码中使用宏和函数" class="headerlink" title="在代码中使用宏和函数"></a>在代码中使用宏和函数</h4><p>最后一步是修改 main.cc ，在代码中使用宏和函数：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> HAVE_POW</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Now we use the standard library. \n"</span>);</span><br><span class="line">    <span class="keyword">double</span> result = <span class="built_in">pow</span>(base, exponent);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Now we use our own Math library. \n"</span>);</span><br><span class="line">    <span class="keyword">double</span> result = power(base, exponent);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure></p>
+<h3 id="添加版本号"><a href="#添加版本号" class="headerlink" title="添加版本号"></a>添加版本号</h3><p>给项目添加和维护版本号是一个好习惯，这样有利于用户了解每个版本的维护情况，并及时了解当前所用的版本是否过时，或是否可能出现不兼容的情况。</p>
+<p>首先修改顶层 <code>CMakeLists</code> 文件，在 <code>project</code> 命令之后加入如下两行：<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set (Demo_VERSION_MAJOR 1)</span><br><span class="line">set (Demo_VERSION_MINOR 0)</span><br></pre></td></tr></table></figure></p>
+<p>分别指定当前的项目的主版本号和副版本号。<br>之后，为了在代码中获取版本信息，我们可以修改 config.h.in 文件，添加两个预定义变量：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// the configured options and settings for Tutorial</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Demo_VERSION_MAJOR @Demo_VERSION_MAJOR@</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Demo_VERSION_MINOR @Demo_VERSION_MINOR@</span></span><br></pre></td></tr></table></figure></p>
+<p>这样就可以直接在代码中打印版本信息了：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"config.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"math/MathFunctions.h"</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (argc &lt; <span class="number">3</span>)&#123;</span><br><span class="line">        <span class="comment">// print version info</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%s Version %d.%d\n"</span>,</span><br><span class="line">            argv[<span class="number">0</span>],</span><br><span class="line">            Demo_VERSION_MAJOR,</span><br><span class="line">            Demo_VERSION_MINOR);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Usage: %s base exponent \n"</span>, argv[<span class="number">0</span>]);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">double</span> base = atof(argv[<span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">int</span> exponent = atoi(argv[<span class="number">2</span>]);</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> defined (HAVE_POW)</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Now we use the standard library. \n"</span>);</span><br><span class="line">    <span class="keyword">double</span> result = <span class="built_in">pow</span>(base, exponent);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Now we use our own Math library. \n"</span>);</span><br><span class="line">    <span class="keyword">double</span> result = power(base, exponent);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%g ^ %d is %g\n"</span>, base, exponent, result);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>测试的结果：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo7$ ls</span><br><span class="line">CMakeLists.txt  config.h.in  main.cc  math</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo7$ cmake .</span><br><span class="line">-- The C compiler identification is GNU 5.4.0</span><br><span class="line">-- The CXX compiler identification is GNU 5.4.0</span><br><span class="line">-- Check <span class="keyword">for</span> working C compiler: /usr/bin/cc</span><br><span class="line">-- Check <span class="keyword">for</span> working C compiler: /usr/bin/cc -- works</span><br><span class="line">-- Detecting C compiler ABI info</span><br><span class="line">-- Detecting C compiler ABI info - <span class="keyword">done</span></span><br><span class="line">-- Detecting C compile features</span><br><span class="line">-- Detecting C compile features - <span class="keyword">done</span></span><br><span class="line">-- Check <span class="keyword">for</span> working CXX compiler: /usr/bin/c++</span><br><span class="line">-- Check <span class="keyword">for</span> working CXX compiler: /usr/bin/c++ -- works</span><br><span class="line">-- Detecting CXX compiler ABI info</span><br><span class="line">-- Detecting CXX compiler ABI info - <span class="keyword">done</span></span><br><span class="line">-- Detecting CXX compile features</span><br><span class="line">-- Detecting CXX compile features - <span class="keyword">done</span></span><br><span class="line">-- Looking <span class="keyword">for</span> pow</span><br><span class="line">-- Looking <span class="keyword">for</span> pow - not found</span><br><span class="line">-- Configuring <span class="keyword">done</span></span><br><span class="line">-- Generating <span class="keyword">done</span></span><br><span class="line">-- Build files have been written to: /home/xuke/work/cmake-demo/Demo7</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo7$ make</span><br><span class="line">Scanning dependencies of target MathFunctions</span><br><span class="line">[ 25%] Building CXX object math/CMakeFiles/MathFunctions.dir/MathFunctions.cc.o</span><br><span class="line">[ 50%] Linking CXX static library libMathFunctions.a</span><br><span class="line">[ 50%] Built target MathFunctions</span><br><span class="line">Scanning dependencies of target Demo</span><br><span class="line">[ 75%] Building CXX object CMakeFiles/Demo.dir/main.cc.o</span><br><span class="line">[100%] Linking CXX executable Demo</span><br><span class="line">[100%] Built target Demo</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo7$ ./Demo 3 2</span><br><span class="line">Now we use our own Math library.</span><br><span class="line">3 ^ 2 is 9</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo7$ ./Demo 3</span><br><span class="line">./Demo Version 1.0</span><br><span class="line">Usage: ./Demo base exponent</span><br></pre></td></tr></table></figure></p>
+<h3 id="生成安装包"><a href="#生成安装包" class="headerlink" title="生成安装包"></a>生成安装包</h3><p>本节将学习如何配置生成各种平台上的安装包，包括二进制安装包和源码安装包。为了完成这个任务，我们需要用到 <code>CPack</code> ，它同样也是由 <code>CMake</code> 提供的一个工具，专门用于打包。<br>首先在顶层的 <code>CMakeLists.txt</code> 文件尾部添加下面几行：<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构建一个 CPack 安装包</span></span><br><span class="line"><span class="keyword">include</span> (InstallRequiredSystemLibraries)</span><br><span class="line">set (CPACK_RESOURCE_FILE_LICENSE</span><br><span class="line">  <span class="string">"$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;/License.txt"</span>)</span><br><span class="line">set (CPACK_PACKAGE_VERSION_MAJOR <span class="string">"$&#123;Demo_VERSION_MAJOR&#125;"</span>)</span><br><span class="line">set (CPACK_PACKAGE_VERSION_MINOR <span class="string">"$&#123;Demo_VERSION_MINOR&#125;"</span>)</span><br><span class="line"><span class="keyword">include</span> (CPack)</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码做了以下几个工作：</p>
+<ul>
+<li>导入 <code>InstallRequiredSystemLibraries</code> 模块，以便之后导入 <code>CPack</code> 模块；</li>
+<li>设置一些 <code>CPack</code> 相关变量，包括版权信息和版本信息，其中版本信息用了上一节定义的版本号；</li>
+<li>导入 <code>CPack</code> 模块。</li>
+</ul>
+<p>接下来的工作是像往常一样构建工程，并执行 <code>cpack</code> 命令。</p>
+<ul>
+<li><p>生成二进制安装包：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cpack -C CPackConfig.cmake</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>生成源码安装包</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cpack -C CPackSourceConfig.cmake</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>我们可以试一下。在生成项目后，执行 cpack -C CPackConfig.cmake 命令：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo8$ ls</span><br><span class="line">CMakeLists.txt  config.h.in  License.txt  main.cc  math</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo8$ cmake .</span><br><span class="line">-- The C compiler identification is GNU 5.4.0</span><br><span class="line">-- The CXX compiler identification is GNU 5.4.0</span><br><span class="line">-- Check <span class="keyword">for</span> working C compiler: /usr/bin/cc</span><br><span class="line">-- Check <span class="keyword">for</span> working C compiler: /usr/bin/cc -- works</span><br><span class="line">-- Detecting C compiler ABI info</span><br><span class="line">-- Detecting C compiler ABI info - <span class="keyword">done</span></span><br><span class="line">-- Detecting C compile features</span><br><span class="line">-- Detecting C compile features - <span class="keyword">done</span></span><br><span class="line">-- Check <span class="keyword">for</span> working CXX compiler: /usr/bin/c++</span><br><span class="line">-- Check <span class="keyword">for</span> working CXX compiler: /usr/bin/c++ -- works</span><br><span class="line">-- Detecting CXX compiler ABI info</span><br><span class="line">-- Detecting CXX compiler ABI info - <span class="keyword">done</span></span><br><span class="line">-- Detecting CXX compile features</span><br><span class="line">-- Detecting CXX compile features - <span class="keyword">done</span></span><br><span class="line">-- Looking <span class="keyword">for</span> pow</span><br><span class="line">-- Looking <span class="keyword">for</span> pow - not found</span><br><span class="line">-- Configuring <span class="keyword">done</span></span><br><span class="line">-- Generating <span class="keyword">done</span></span><br><span class="line">-- Build files have been written to: /home/xuke/work/cmake-demo/Demo8</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo8$ cpack -C CPackSourceConfig.cmake</span><br><span class="line">CPack: Create package using STGZ</span><br><span class="line">CPack: Install projects</span><br><span class="line">CPack: - Run preinstall target <span class="keyword">for</span>: Demo8</span><br><span class="line">CPack: - Install project: Demo8</span><br><span class="line">CPack: Create package</span><br><span class="line">CPack: - package: /home/xuke/work/cmake-demo/Demo8/Demo8-1.0.1-Linux.sh generated.</span><br><span class="line">CPack: Create package using TGZ</span><br><span class="line">CPack: Install projects</span><br><span class="line">CPack: - Run preinstall target <span class="keyword">for</span>: Demo8</span><br><span class="line">CPack: - Install project: Demo8</span><br><span class="line">CPack: Create package</span><br><span class="line">CPack: - package: /home/xuke/work/cmake-demo/Demo8/Demo8-1.0.1-Linux.tar.gz generated.</span><br><span class="line">CPack: Create package using TZ</span><br><span class="line">CPack: Install projects</span><br><span class="line">CPack: - Run preinstall target <span class="keyword">for</span>: Demo8</span><br><span class="line">CPack: - Install project: Demo8</span><br><span class="line">CPack: Create package</span><br><span class="line">CPack: - package: /home/xuke/work/cmake-demo/Demo8/Demo8-1.0.1-Linux.tar.Z generated.</span><br></pre></td></tr></table></figure></p>
+<p>此时会在该目录下创建 3 个不同格式的二进制包文件：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo8$ ls</span><br><span class="line">CMakeCache.txt       _CPack_Packages           install_manifest.txt</span><br><span class="line">CMakeFiles           CPackSourceConfig.cmake   License.txt</span><br><span class="line">cmake_install.cmake  CTestTestfile.cmake       main.cc</span><br><span class="line">CMakeLists.txt       Demo                      Makefile</span><br><span class="line">config.h             Demo8-1.0.1-Linux.sh      math</span><br><span class="line">config.h.in          Demo8-1.0.1-Linux.tar.gz</span><br><span class="line">CPackConfig.cmake    Demo8-1.0.1-Linux.tar.Z</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo8$ ls Demo8-*</span><br><span class="line">Demo8-1.0.1-Linux.sh  Demo8-1.0.1-Linux.tar.gz  Demo8-1.0.1-Linux.tar.Z</span><br></pre></td></tr></table></figure></p>
+<p>这 3 个二进制包文件所包含的内容是完全相同的。我们可以执行其中一个。此时会出现一个由 CPack 自动生成的交互式安装界面：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo8$ sh Demo8-1.0.1-Linux.sh</span><br><span class="line">Demo8 Installer Version: 1.0.1, Copyright (c) Humanity</span><br><span class="line">This is a self-extracting archive.</span><br><span class="line">The archive will be extracted to: /home/xuke/work/cmake-demo/Demo8</span><br><span class="line"></span><br><span class="line">If you want to stop extracting, please press &lt;ctrl-C&gt;.</span><br><span class="line">The MIT License (MIT)</span><br><span class="line"></span><br><span class="line">Copyright (c) 2013 Joseph Pan(http://hahack.com)</span><br><span class="line"></span><br><span class="line">Permission is hereby granted, free of charge, to any person obtaining a copy of</span><br><span class="line">this software and associated documentation files (the <span class="string">"Software"</span>), to deal <span class="keyword">in</span></span><br><span class="line">the Software without restriction, including without limitation the rights to</span><br><span class="line">use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of</span><br><span class="line">the Software, and to permit persons to whom the Software is furnished to <span class="keyword">do</span> so,</span><br><span class="line">subject to the following conditions:</span><br><span class="line"></span><br><span class="line">The above copyright notice and this permission notice shall be included <span class="keyword">in</span> all</span><br><span class="line">copies or substantial portions of the Software.</span><br><span class="line"></span><br><span class="line">THE SOFTWARE IS PROVIDED <span class="string">"AS IS"</span>, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span><br><span class="line">IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS</span><br><span class="line">FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR</span><br><span class="line">COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER</span><br><span class="line">IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN</span><br><span class="line">CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Do you accept the license? [yN]:</span><br><span class="line">y</span><br><span class="line">By default the Demo8 will be installed <span class="keyword">in</span>:</span><br><span class="line">  <span class="string">"/home/xuke/work/cmake-demo/Demo8/Demo8-1.0.1-Linux"</span></span><br><span class="line">Do you want to include the subdirectory Demo8-1.0.1-Linux?</span><br><span class="line">Saying no will install <span class="keyword">in</span>: <span class="string">"/home/xuke/work/cmake-demo/Demo8"</span> [Yn]:</span><br><span class="line">y</span><br><span class="line"></span><br><span class="line">Using target directory: /home/xuke/work/cmake-demo/Demo8/Demo8-1.0.1-Linux</span><br><span class="line">Extracting, please <span class="built_in">wait</span>...</span><br><span class="line"></span><br><span class="line">Unpacking finished successfully</span><br></pre></td></tr></table></figure></p>
+<p>完成后提示安装到了 Demo8-1.0.1-Linux 子目录中，我们可以进去执行该程序：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo8/Demo8-1.0.1-Linux$ tree</span><br><span class="line">.</span><br><span class="line">├── bin</span><br><span class="line">│   └── Demo</span><br><span class="line">├── include</span><br><span class="line">│   ├── config.h</span><br><span class="line">│   └── MathFunctions.h</span><br><span class="line">└── lib</span><br><span class="line">    └── libMathFunctions.a</span><br><span class="line"></span><br><span class="line">3 directories, 4 files</span><br><span class="line">xuke@ubuntu:~/work/cmake-demo/Demo8/Demo8-1.0.1-Linux$ ./bin/Demo 3 2</span><br><span class="line">Now we use our own Math library.</span><br><span class="line">3 ^ 2 is 9</span><br></pre></td></tr></table></figure></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://www.hahack.com/codes/cmake/" target="_blank" rel="noopener">CMake 入门实战</a><br><a href="https://github.com/wzpan/cmake-demo" target="_blank" rel="noopener">代码参考</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    王晓芸
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xywang93.github.io.git/2018/05/02/DeepLearning/嵌入式AI/玩转ncnn/03-CMake入门/" title="CMake 入门">http://xywang93.github.io.git/2018/05/02/DeepLearning/嵌入式AI/玩转ncnn/03-CMake入门/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <div>
+      
+        <div>
+	
+		<div style="text-align:center;color: #ccc;font-size:14px;">
+			-------------本文结束
+			<i class="fa fa-paw"></i>
+			感谢您的阅读-------------
+		</div>
+	
+</div>
+
+      
+    </div>
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"><i class="fa fa-tag"></i> Deep Learning</a>
+          
+            <a href="/tags/嵌入式AI/" rel="tag"><i class="fa fa-tag"></i> 嵌入式AI</a>
+          
+            <a href="/tags/NCNN/" rel="tag"><i class="fa fa-tag"></i> NCNN</a>
+          
+            <a href="/tags/入门/" rel="tag"><i class="fa fa-tag"></i> 入门</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/01/DeepLearning/PyTorch/PyTorch+60分钟入门/" rel="next" title="PyTorch 60分钟入门">
+                <i class="fa fa-chevron-left"></i> PyTorch 60分钟入门
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/04/DeepLearning/嵌入式AI/玩转ncnn/00-ncnn入门/" rel="prev" title="NCNN入门">
+                NCNN入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="hypercomments_widget"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://oz5oe1xth.bkt.clouddn.com/avatar.png"
+                alt="王晓芸" />
+            
+              <p class="site-author-name" itemprop="name">王晓芸</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xuke225.github.io/" title="AI 异构" target="_blank">AI 异构</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CMake-入门实践"><span class="nav-number">1.</span> <span class="nav-text">CMake 入门实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是-CMake"><span class="nav-number">1.1.</span> <span class="nav-text">什么是 CMake</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#入门案例：单个源文件"><span class="nav-number">1.2.</span> <span class="nav-text">入门案例：单个源文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#编写-CMakeLists-txt"><span class="nav-number">1.2.1.</span> <span class="nav-text">编写 CMakeLists.txt</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编译项目"><span class="nav-number">1.2.2.</span> <span class="nav-text">编译项目</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多个源文件"><span class="nav-number">1.3.</span> <span class="nav-text">多个源文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#同一目录，多个源文件"><span class="nav-number">1.3.1.</span> <span class="nav-text">同一目录，多个源文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多个目录，多个源文件"><span class="nav-number">1.3.2.</span> <span class="nav-text">多个目录，多个源文件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#根目录中的-CMakeLists-txt-："><span class="nav-number">1.3.2.1.</span> <span class="nav-text">根目录中的 CMakeLists.txt ：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#子目录中的-CMakeLists-txt："><span class="nav-number">1.3.2.2.</span> <span class="nav-text">子目录中的 CMakeLists.txt：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#结果"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">结果</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义编译选项"><span class="nav-number">1.4.</span> <span class="nav-text">自定义编译选项</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#修改-CMakeLists-文件"><span class="nav-number">1.4.1.</span> <span class="nav-text">修改 CMakeLists 文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改-main-cc-文件"><span class="nav-number">1.4.2.</span> <span class="nav-text">修改 main.cc 文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编写-config-h-in-文件"><span class="nav-number">1.4.3.</span> <span class="nav-text">编写 config.h.in 文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编译项目-1"><span class="nav-number">1.4.4.</span> <span class="nav-text">编译项目</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#USE-MYMATH-为-ON"><span class="nav-number">1.4.4.1.</span> <span class="nav-text">USE_MYMATH 为 ON</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#USE-MYMATH-为-OFF"><span class="nav-number">1.4.4.2.</span> <span class="nav-text">USE_MYMATH 为 OFF</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装和测试"><span class="nav-number">1.5.</span> <span class="nav-text">安装和测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定制安装规则"><span class="nav-number">1.5.1.</span> <span class="nav-text">定制安装规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为工程添加测试"><span class="nav-number">1.5.2.</span> <span class="nav-text">为工程添加测试</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#支持-gdb"><span class="nav-number">1.6.</span> <span class="nav-text">支持 gdb</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加环境检查"><span class="nav-number">1.7.</span> <span class="nav-text">添加环境检查</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#添加-CheckFunctionExists-宏"><span class="nav-number">1.7.1.</span> <span class="nav-text">添加 CheckFunctionExists 宏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#预定义相关宏变量"><span class="nav-number">1.7.2.</span> <span class="nav-text">预定义相关宏变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在代码中使用宏和函数"><span class="nav-number">1.7.3.</span> <span class="nav-text">在代码中使用宏和函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加版本号"><span class="nav-number">1.8.</span> <span class="nav-text">添加版本号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成安装包"><span class="nav-number">1.9.</span> <span class="nav-text">生成安装包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">1.10.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王晓芸</span>
+
+  
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 97885, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 97885, xid: "2018/05/02/DeepLearning/嵌入式AI/玩转ncnn/03-CMake入门/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/97885/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

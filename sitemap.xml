@@ -2,6 +2,328 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xywang93.github.io.git/2018/02/06/DeepLearning/caffe/solver/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/</loc>
+    
+    <lastmod>2018-07-30T15:29:32.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/02/05/DeepLearning/caffe/solver/%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/</loc>
+    
+    <lastmod>2018-07-30T15:29:24.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/03/02/DeepLearning/TensorFlow/02Tensorflow%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%9E%8B%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/</loc>
+    
+    <lastmod>2018-07-30T15:21:28.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/01/01/Python/00-Python%E5%9F%BA%E7%A1%80/</loc>
+    
+    <lastmod>2018-07-30T15:19:24.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/01/03/Python/01-numpy/</loc>
+    
+    <lastmod>2018-07-30T15:19:14.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/01/09/Python/04-seaborn/</loc>
+    
+    <lastmod>2018-07-30T15:18:50.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/01/07/Python/03-Pandas/</loc>
+    
+    <lastmod>2018-07-30T15:17:06.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/01/04/Python/02-matplotlib/</loc>
+    
+    <lastmod>2018-07-30T15:17:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/05/04/DeepLearning/%E5%B5%8C%E5%85%A5%E5%BC%8FAI/%E7%8E%A9%E8%BD%ACncnn/00-ncnn%E5%85%A5%E9%97%A8/</loc>
+    
+    <lastmod>2018-07-30T15:09:28.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/05/07/DeepLearning/%E5%B5%8C%E5%85%A5%E5%BC%8FAI/%E7%8E%A9%E8%BD%ACncnn/02-%E6%A0%91%E8%8E%93%E6%B4%BEncnn%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</loc>
+    
+    <lastmod>2018-07-30T15:09:16.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/05/02/DeepLearning/%E5%B5%8C%E5%85%A5%E5%BC%8FAI/%E7%8E%A9%E8%BD%ACncnn/03-CMake%E5%85%A5%E9%97%A8/</loc>
+    
+    <lastmod>2018-07-30T15:08:04.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/05/05/DeepLearning/%E5%B5%8C%E5%85%A5%E5%BC%8FAI/%E7%8E%A9%E8%BD%ACncnn/01-ncnn%20resnet%E9%83%A8%E7%BD%B2/</loc>
+    
+    <lastmod>2018-07-30T15:07:42.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/04/01/DeepLearning/Tensorpack/Tensorpack%E7%AE%80%E4%BB%8B/</loc>
+    
+    <lastmod>2018-07-30T15:02:12.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/05/01/DeepLearning/PyTorch/PyTorch+60%E5%88%86%E9%92%9F%E5%85%A5%E9%97%A8/</loc>
+    
+    <lastmod>2018-07-30T15:02:02.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/03/15/DeepLearning/TensorFlow/15Tensorflow%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B9%8BDCGAN/</loc>
+    
+    <lastmod>2018-07-30T14:52:32.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/03/14/DeepLearning/TensorFlow/14Tensorflow%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B9%8BGAN/</loc>
+    
+    <lastmod>2018-07-30T14:52:24.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/03/13/DeepLearning/TensorFlow/13Tensorflow%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B9%8BLSTM/</loc>
+    
+    <lastmod>2018-07-30T14:52:20.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/03/12/DeepLearning/TensorFlow/12TensorBoard%E9%AB%98%E7%BA%A7%E7%AF%87/</loc>
+    
+    <lastmod>2018-07-30T14:52:08.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/03/11/DeepLearning/TensorFlow/11TensorBoard%E5%9F%BA%E7%A1%80%E7%AF%87/</loc>
+    
+    <lastmod>2018-07-30T14:52:02.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/03/10/DeepLearning/TensorFlow/10Tensorflow%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%BF%9D%E5%AD%98%E4%B8%8E%E8%AF%BB%E5%8F%96/</loc>
+    
+    <lastmod>2018-07-30T14:51:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/03/09/DeepLearning/TensorFlow/09Tensorflow%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B9%8B%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/</loc>
+    
+    <lastmod>2018-07-30T14:51:46.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/03/08/DeepLearning/TensorFlow/08Tensorflow%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B9%8B%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E6%9C%BAEager%20API/</loc>
+    
+    <lastmod>2018-07-30T14:51:38.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/03/07/DeepLearning/TensorFlow/07Tensorflow%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E4%B9%8B%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E6%9C%BA/</loc>
+    
+    <lastmod>2018-07-30T14:51:28.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/03/06/DeepLearning/TensorFlow/06Tensorflow%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%9E%8B%E4%B9%8BK-means/</loc>
+    
+    <lastmod>2018-07-30T14:51:18.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/03/05/DeepLearning/TensorFlow/05Tensorflow%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%9E%8B%E4%B9%8B%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/</loc>
+    
+    <lastmod>2018-07-30T14:51:12.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/03/04/DeepLearning/TensorFlow/04TensorFlow%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%9E%8B%E4%B9%8B%E6%9C%80%E8%BF%91%E9%82%BB/</loc>
+    
+    <lastmod>2018-07-30T14:51:06.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/03/03/DeepLearning/TensorFlow/03Tensorflow%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%9E%8B%E4%B9%8BLogistic%E5%9B%9E%E5%BD%92/</loc>
+    
+    <lastmod>2018-07-30T14:51:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/03/01/DeepLearning/TensorFlow/01Tensorflow%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/</loc>
+    
+    <lastmod>2018-07-30T14:50:50.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/02/03/DeepLearning/caffe/solver/caffe%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93/</loc>
+    
+    <lastmod>2018-02-06T02:08:34.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/01/22/DeepLearning/caffe/layer/%E5%8D%B7%E7%A7%AF%E5%B1%82/</loc>
+    
+    <lastmod>2018-02-06T02:04:58.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/02/02/DeepLearning/caffe/layer/Softmax/</loc>
+    
+    <lastmod>2018-02-06T02:04:14.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/02/04/DeepLearning/caffe/solver/solver/</loc>
+    
+    <lastmod>2018-02-06T01:59:58.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/01/20/DeepLearning/caffe/layer/%E6%95%B0%E6%8D%AE%E5%B1%82/</loc>
+    
+    <lastmod>2018-02-06T01:39:12.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/01/24/DeepLearning/caffe/layer/%E6%B1%A0%E5%8C%96%E5%B1%82/</loc>
+    
+    <lastmod>2018-02-06T01:37:04.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/01/23/DeepLearning/caffe/layer/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/</loc>
+    
+    <lastmod>2018-02-06T01:36:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/01/26/DeepLearning/caffe/layer/%E5%85%A8%E8%BF%9E%E6%8E%A5%E5%B1%82/</loc>
+    
+    <lastmod>2018-02-06T01:36:48.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/01/28/DeepLearning/caffe/layer/%E5%BD%92%E4%B8%80%E5%8C%96/</loc>
+    
+    <lastmod>2018-02-06T01:36:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/01/30/DeepLearning/caffe/layer/Dropout/</loc>
+    
+    <lastmod>2018-02-06T01:36:18.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2017/11/22/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%961/</loc>
+    
+    <lastmod>2018-01-21T13:24:48.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2017/11/23/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%962/</loc>
+    
+    <lastmod>2018-01-21T13:24:38.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2017/11/25/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%964/</loc>
+    
+    <lastmod>2018-01-21T13:24:32.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2017/11/24/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%963/</loc>
+    
+    <lastmod>2018-01-21T13:24:30.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/01/18/SDAccel/%E4%BC%98%E5%8C%96/kernel_opt/Loop_Perfect/</loc>
+    
+    <lastmod>2018-01-18T11:19:14.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/01/18/SDAccel/%E4%BC%98%E5%8C%96/kernel_opt/Loop_Fusion/</loc>
+    
+    <lastmod>2018-01-18T11:16:58.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/01/12/SDAccel/%E4%BC%98%E5%8C%96/kernel_opt/systolic_array/</loc>
+    
+    <lastmod>2018-01-18T09:30:20.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xywang93.github.io.git/2018/01/12/SDAccel/%E4%BC%98%E5%8C%96/kernel_opt/shift_register/</loc>
+    
+    <lastmod>2018-01-18T09:30:08.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xywang93.github.io.git/2017/11/26/SDAccel/%E4%BC%98%E5%8C%96/dataflow/OpenCL_dataflow_function/</loc>
     
     <lastmod>2018-01-03T10:13:54.000Z</lastmod>
@@ -40,34 +362,6 @@
     <loc>http://xywang93.github.io.git/2017/11/07/hello-world/</loc>
     
     <lastmod>2017-12-27T02:02:02.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xywang93.github.io.git/2017/11/25/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%964/</loc>
-    
-    <lastmod>2017-11-29T07:51:10.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xywang93.github.io.git/2017/11/24/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%963/</loc>
-    
-    <lastmod>2017-11-29T07:51:04.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xywang93.github.io.git/2017/11/23/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%962/</loc>
-    
-    <lastmod>2017-11-29T07:50:58.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xywang93.github.io.git/2017/11/22/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%961/</loc>
-    
-    <lastmod>2017-11-29T07:50:48.000Z</lastmod>
     
   </url>
   

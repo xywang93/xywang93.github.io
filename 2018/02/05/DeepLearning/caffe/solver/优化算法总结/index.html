@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Deep Learning,caffe," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="异构 AI" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="常见优化算法总结前面我们介绍了卷积神经网络中主流的数据层，卷积层，全连接层，池化层，激活函数层，归一化层，dropout层,softmax层。分析每一层的配置及意义的目的主要是为了便于设计出适合自己的网络。然后根据自己的任务需要定义合适的损失函数。当搭建出自己的网络并确定网络的损失函数后，下一个关键问题便是训练网络，训">
+<meta name="keywords" content="Deep Learning,caffe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="caffe详解之优化算法总结">
+<meta property="og:url" content="http://xywang93.github.io.git/2018/02/05/DeepLearning/caffe/solver/优化算法总结/index.html">
+<meta property="og:site_name" content="异构 AI">
+<meta property="og:description" content="常见优化算法总结前面我们介绍了卷积神经网络中主流的数据层，卷积层，全连接层，池化层，激活函数层，归一化层，dropout层,softmax层。分析每一层的配置及意义的目的主要是为了便于设计出适合自己的网络。然后根据自己的任务需要定义合适的损失函数。当搭建出自己的网络并确定网络的损失函数后，下一个关键问题便是训练网络，训练网络的前提需要确定优化算法。下面我们针对常见的深度学习优化算法进行梳理：">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/65dbdfa085340dcde0ba02da9d0f87f7.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/55d610dbc50ad72a7b827c86d5aa4354.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/5a78d56e946d762fd68e70c441c6988f.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/e3f0732575947860357302c62eecc57f.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/876f975c956ab16ba142fc51c9fc3607.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/4b9ce4b4518b7372d8a563d265fa471d.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/95640be7b1e4e7e475a3d7a8667c05fb.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/f5009b2981de20beb31a1bb1ffbfbfa2.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/26b6e957c5f418b7cadfea4cc4e5bfdb.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/3cf30634a129d656760cf7e1f8b5febf.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/3eee01c093511742569249b171db46e6.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/8bbc777e93a7ddb577dc6c9c77913f7e.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/b4a213eb1cc51b3376a2066bb7fb0dfc.png">
+<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/e2279fbf1b9e6bd53dc5093c156179b4.png">
+<meta property="og:updated_time" content="2018-07-30T15:29:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="caffe详解之优化算法总结">
+<meta name="twitter:description" content="常见优化算法总结前面我们介绍了卷积神经网络中主流的数据层，卷积层，全连接层，池化层，激活函数层，归一化层，dropout层,softmax层。分析每一层的配置及意义的目的主要是为了便于设计出适合自己的网络。然后根据自己的任务需要定义合适的损失函数。当搭建出自己的网络并确定网络的损失函数后，下一个关键问题便是训练网络，训练网络的前提需要确定优化算法。下面我们针对常见的深度学习优化算法进行梳理：">
+<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/65dbdfa085340dcde0ba02da9d0f87f7.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xywang93.github.io.git/2018/02/05/DeepLearning/caffe/solver/优化算法总结/"/>
+
+
+
+
+
+  <title>caffe详解之优化算法总结 | 异构 AI</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">异构 AI</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xywang93.github.io.git/2018/02/05/DeepLearning/caffe/solver/优化算法总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王晓芸">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oz5oe1xth.bkt.clouddn.com/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="异构 AI">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">caffe详解之优化算法总结</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-05T00:00:00+08:00">
+                2018-02-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Deep Learning</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learning/caffe/" itemprop="url" rel="index">
+                    <span itemprop="name">caffe</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learning/caffe/Solver/" itemprop="url" rel="index">
+                    <span itemprop="name">Solver</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            <!--noindex-->
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/02/05/DeepLearning/caffe/solver/优化算法总结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count hc-comment-count" data-xid="2018/02/05/DeepLearning/caffe/solver/优化算法总结/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+              <!--/noindex-->
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,662
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="常见优化算法总结"><a href="#常见优化算法总结" class="headerlink" title="常见优化算法总结"></a>常见优化算法总结</h3><p>前面我们介绍了卷积神经网络中主流的数据层，卷积层，全连接层，池化层，激活函数层，归一化层，dropout层,softmax层。分析每一层的配置及意义的目的主要是为了便于<strong>设计出适合自己的网络</strong>。然后<strong>根据自己的任务需要定义合适的损失函数</strong>。当搭建出自己的网络并确定网络的损失函数后，下一个关键问题便是<strong>训练网络</strong>，训练网络的前提需要<strong>确定优化算法</strong>。下面我们针对常见的深度学习优化算法进行梳理：</p>
+<a id="more"></a>
+<h4 id="SGD算法"><a href="#SGD算法" class="headerlink" title="SGD算法"></a>SGD算法</h4><p>介绍SGD算法之前，我们先通过一维与多维梯度下降理解其思想，然后介绍随机梯度下降，最后我们介绍工程中最常用的小批量随机梯度下降并给出对应的代码。</p>
+<h5 id="一维梯度下降"><a href="#一维梯度下降" class="headerlink" title="一维梯度下降"></a>一维梯度下降</h5><p><img src="http://oz3lw4cji.bkt.clouddn.com/65dbdfa085340dcde0ba02da9d0f87f7.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/55d610dbc50ad72a7b827c86d5aa4354.png" alt=""></p>
+<h5 id="学习率"><a href="#学习率" class="headerlink" title="学习率"></a>学习率</h5><p>上述梯度下降算法中的η（取正数）叫做学习率或步长。需要注意的是，学习率过大可能会造成x迈过（<code>overshoot</code>）最优解，甚至不断发散而无法收敛，如下图所示。<br><img src="http://oz3lw4cji.bkt.clouddn.com/5a78d56e946d762fd68e70c441c6988f.png" alt=""></p>
+<p>TODO<br>学习率的另一种理解方式：</p>
+<h5 id="多维梯度下降"><a href="#多维梯度下降" class="headerlink" title="多维梯度下降"></a>多维梯度下降</h5><p><img src="http://oz3lw4cji.bkt.clouddn.com/e3f0732575947860357302c62eecc57f.png" alt=""></p>
+<h5 id="随机梯度下降"><a href="#随机梯度下降" class="headerlink" title="随机梯度下降"></a>随机梯度下降</h5><p><img src="http://oz3lw4cji.bkt.clouddn.com/876f975c956ab16ba142fc51c9fc3607.png" alt=""></p>
+<h5 id="小批量随机梯度下降"><a href="#小批量随机梯度下降" class="headerlink" title="小批量随机梯度下降"></a>小批量随机梯度下降</h5><p><img src="http://oz3lw4cji.bkt.clouddn.com/4b9ce4b4518b7372d8a563d265fa471d.png" alt=""></p>
+<h5 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 小批量随机梯度下降。</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sgd</span><span class="params">(params, lr, batch_size)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> param <span class="keyword">in</span> params:</span><br><span class="line">        param[:] = param - lr * param.grad / batch_size</span><br></pre></td></tr></table></figure>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>简而言之，<strong>批量梯度下降针对的是整个数据集，随机梯度下降针对的是当前样本点，而小批量随机梯度下降针对的是一个<code>batch</code>样本数据</strong>。梯度下降<strong>计算量大</strong>，因为受到过多数据的牵制，<strong>收敛曲线对数据不敏感，不容易跳出陷入的局部极小点</strong>。随机梯度下降<strong>计算量小</strong>，但是只是针对当前一个样本数据，目光狭隘，<strong>受数据影响过大导致收敛曲线震荡过于严重</strong>。小批量梯度下降则是前面两者的中庸。<strong>计算量取决于<code>batch</code>的大小</strong>，对<strong>批量的数据有一定的敏感性</strong>，收敛具有一定的<strong>震荡性</strong>，使得算法在搜索的过程中具有<strong>跳出当前局部极小点的潜力</strong>。这样，对于搜索到更好的局部极小点有帮助。</p>
+<h4 id="动量法"><a href="#动量法" class="headerlink" title="动量法"></a>动量法</h4><h5 id="梯度下降的问题"><a href="#梯度下降的问题" class="headerlink" title="梯度下降的问题"></a>梯度下降的问题</h5><p><img src="http://oz3lw4cji.bkt.clouddn.com/95640be7b1e4e7e475a3d7a8667c05fb.png" alt=""><br>上图中，红色三角形代表参数x的初始值。带箭头的线段表示每次迭代时参数的更新。由于目标函数在竖直方向（x2轴方向）上比在水平方向（x1轴方向）弯曲得更厉害，梯度下降迭代参数时会使参数在竖直方向比在水平方向移动更猛烈。因此，我们需要一个较小的学习率从而避免参数在竖直方向上<code>overshoot</code>。这就造成了上图中<strong>参数向最优解移动速度的缓慢</strong>。</p>
+<h5 id="动量法思想"><a href="#动量法思想" class="headerlink" title="动量法思想"></a>动量法思想</h5><p><img src="http://oz3lw4cji.bkt.clouddn.com/f5009b2981de20beb31a1bb1ffbfbfa2.png" alt=""><br>动量法的核心思想是：<strong>每次参数的迭代更新都吸收一部分上次更新的余势</strong>。使得迭代的速度可以明显的加快，如下图所示：<br><img src="http://oz3lw4cji.bkt.clouddn.com/26b6e957c5f418b7cadfea4cc4e5bfdb.png" alt=""></p>
+<h5 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 动量法。</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sgd_momentum</span><span class="params">(params, vs, lr, mom, batch_size)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> param, v <span class="keyword">in</span> zip(params, vs):</span><br><span class="line">        v[:] = mom * v + lr * param.grad / batch_size</span><br><span class="line">        param[:] -= v</span><br></pre></td></tr></table></figure>
+<h4 id="Adagrad"><a href="#Adagrad" class="headerlink" title="Adagrad"></a>Adagrad</h4><h5 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h5><p><img src="http://oz3lw4cji.bkt.clouddn.com/3cf30634a129d656760cf7e1f8b5febf.png" alt=""></p>
+<h5 id="思想"><a href="#思想" class="headerlink" title="思想"></a>思想</h5><p>自动调整学习率，调整的思路是：在学习率的基础上除以一个<code>S</code>开方,而<code>S</code>取决于计算的小批量梯度<code>g</code>,按元素平方后累加。这种自动更新学习率的方式，<strong>对低频出现的参数进行大的更新，而对高频出现的参数进行小的更新</strong>。因此，该方法适用于<strong>稀疏</strong>的数据。</p>
+<h5 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Adagrad算法</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">adagrad</span><span class="params">(params, sqrs, lr, batch_size)</span>:</span></span><br><span class="line">    eps_stable = <span class="number">1e-7</span></span><br><span class="line">    <span class="keyword">for</span> param, sqr <span class="keyword">in</span> zip(params, sqrs):</span><br><span class="line">        g = param.grad / batch_size</span><br><span class="line">        sqr[:] += nd.square(g)</span><br><span class="line">        div = lr * g / nd.sqrt(sqr + eps_stable)</span><br><span class="line">        param[:] -= div</span><br></pre></td></tr></table></figure>
+<h4 id="RMSProp"><a href="#RMSProp" class="headerlink" title="RMSProp"></a>RMSProp</h4><h5 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h5><p><img src="http://oz3lw4cji.bkt.clouddn.com/3eee01c093511742569249b171db46e6.png" alt=""></p>
+<h5 id="思想-1"><a href="#思想-1" class="headerlink" title="思想"></a>思想</h5><p><code>RMSProp</code>为了解决<strong>Adagrad学习率不断单调下降的问题</strong><br>实现的方式非常简单，<code>RMSProp</code>只在<code>Adagrad</code>的基础上修改了变量<code>S</code>的更新方法：<strong>把累加改成了指数加权移动平均</strong>。因此，<strong>每个元素的学习率在迭代过程中既可能降低又可能升高</strong>。</p>
+<h5 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># RMSProp</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rmsprop</span><span class="params">(params, sqrs, lr, gamma, batch_size)</span>:</span></span><br><span class="line">    eps_stable = <span class="number">1e-8</span></span><br><span class="line">    <span class="keyword">for</span> param, sqr <span class="keyword">in</span> zip(params, sqrs):</span><br><span class="line">        g = param.grad / batch_size</span><br><span class="line">        sqr[:] = gamma * sqr + (<span class="number">1.</span> - gamma) * nd.square(g)</span><br><span class="line">        div = lr * g / nd.sqrt(sqr + eps_stable)</span><br><span class="line">        param[:] -= div</span><br></pre></td></tr></table></figure>
+<h4 id="AdaDelta"><a href="#AdaDelta" class="headerlink" title="AdaDelta"></a>AdaDelta</h4><h5 id="介绍-2"><a href="#介绍-2" class="headerlink" title="介绍"></a>介绍</h5><p><img src="http://oz3lw4cji.bkt.clouddn.com/8bbc777e93a7ddb577dc6c9c77913f7e.png" alt=""></p>
+<h5 id="思想-2"><a href="#思想-2" class="headerlink" title="思想"></a>思想</h5><p><strong>为解决Adagrad学习率不断单调下降的问题</strong>与<code>RMSProp</code>相同采用指数加权移动平均代替累加。在此基础上，<code>AdaDelta</code><strong>舍弃了学习率参数，完全由输入数据进行决定</strong>！</p>
+<h5 id="代码-4"><a href="#代码-4" class="headerlink" title="代码"></a>代码</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># Adadalta</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">adadelta</span><span class="params">(params, sqrs, deltas, rho, batch_size)</span>:</span></span><br><span class="line">    eps_stable = <span class="number">1e-5</span></span><br><span class="line">    <span class="keyword">for</span> param, sqr, delta <span class="keyword">in</span> zip(params, sqrs, deltas):</span><br><span class="line">        g = param.grad / batch_size</span><br><span class="line">        sqr[:] = rho * sqr + (<span class="number">1.</span> - rho) * nd.square(g)</span><br><span class="line">        cur_delta = nd.sqrt(delta + eps_stable) / nd.sqrt(sqr + eps_stable) * g</span><br><span class="line">        delta[:] = rho * delta + (<span class="number">1.</span> - rho) * cur_delta * cur_delta</span><br><span class="line">        param[:] -= cur_delta</span><br></pre></td></tr></table></figure>
+<h4 id="Adam"><a href="#Adam" class="headerlink" title="Adam"></a>Adam</h4><h5 id="介绍-3"><a href="#介绍-3" class="headerlink" title="介绍"></a>介绍</h5><p><img src="http://oz3lw4cji.bkt.clouddn.com/b4a213eb1cc51b3376a2066bb7fb0dfc.png" alt=""></p>
+<h5 id="思想-3"><a href="#思想-3" class="headerlink" title="思想"></a>思想</h5><p>结合了<code>RMSProp</code>与<code>动量法</code>的思想。<strong>同时利用了更新梯度的一阶矩和二阶矩</strong>，并紧接着做了<strong>偏差修正</strong>使得<code>估计无偏</code>。</p>
+<h5 id="代码-5"><a href="#代码-5" class="headerlink" title="代码"></a>代码</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Adam</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">adam</span><span class="params">(params, vs, sqrs, lr, batch_size, t)</span>:</span></span><br><span class="line">    beta1 = <span class="number">0.9</span></span><br><span class="line">    beta2 = <span class="number">0.999</span></span><br><span class="line">    eps_stable = <span class="number">1e-8</span></span><br><span class="line">    <span class="keyword">for</span> param, v, sqr <span class="keyword">in</span> zip(params, vs, sqrs):</span><br><span class="line">        g = param.grad / batch_size</span><br><span class="line">        v[:] = beta1 * v + (<span class="number">1.</span> - beta1) * g</span><br><span class="line">        sqr[:] = beta2 * sqr + (<span class="number">1.</span> - beta2) * nd.square(g)</span><br><span class="line">        v_bias_corr = v / (<span class="number">1.</span> - beta1 ** t)</span><br><span class="line">        sqr_bias_corr = sqr / (<span class="number">1.</span> - beta2 ** t)</span><br><span class="line">        div = lr * v_bias_corr / (nd.sqrt(sqr_bias_corr) + eps_stable)</span><br><span class="line">        param[:] = param - div</span><br></pre></td></tr></table></figure>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p><img src="http://oz3lw4cji.bkt.clouddn.com/e2279fbf1b9e6bd53dc5093c156179b4.png" alt=""><br>需要注意的是：我们梳理优化算法的过程中发现，除了SGD外，还有很多高级的优化算法，他们可以自学习学习率，对我们调整参数来说提供了一定的便利性。但是为什么深度学习调参的过程中还是大量使用SGD算法呢？我总结的原因是SGD算法虽然简单但是灵活可以调整的超参数较多，除了算法本身，我们还有一些手动调整学习率的方法。因此<strong>针对不同的问题，采用手调的SGD往往结果要比一些高级的优化算法效果还要好</strong>，原因是SGD通过手调参数可以做到不同问题，不同分析应对，因此，我们还是要将SGD算法做深入的了解，并在实战中学习调整参数的方法与经验！</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>An overview of gradient descent optimization algorithms<br><a href="https://blog.slinuxer.com/2016/09/sgd-comparison" target="_blank" rel="noopener">SGD算法比较</a><br><a href="http://zh.gluon.ai/chapter_optimization/index.html" target="_blank" rel="noopener">动手学习深度学习——优化算法</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    王晓芸
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xywang93.github.io.git/2018/02/05/DeepLearning/caffe/solver/优化算法总结/" title="caffe详解之优化算法总结">http://xywang93.github.io.git/2018/02/05/DeepLearning/caffe/solver/优化算法总结/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <div>
+      
+        <div>
+	
+		<div style="text-align:center;color: #ccc;font-size:14px;">
+			-------------本文结束
+			<i class="fa fa-paw"></i>
+			感谢您的阅读-------------
+		</div>
+	
+</div>
+
+      
+    </div>
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"><i class="fa fa-tag"></i> Deep Learning</a>
+          
+            <a href="/tags/caffe/" rel="tag"><i class="fa fa-tag"></i> caffe</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/04/DeepLearning/caffe/solver/solver/" rel="next" title="caffe详解之Solver文件配置">
+                <i class="fa fa-chevron-left"></i> caffe详解之Solver文件配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/06/DeepLearning/caffe/solver/反向传播算法/" rel="prev" title="caffe详解之反向传播算法">
+                caffe详解之反向传播算法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="hypercomments_widget"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://oz5oe1xth.bkt.clouddn.com/avatar.png"
+                alt="王晓芸" />
+            
+              <p class="site-author-name" itemprop="name">王晓芸</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xuke225.github.io/" title="AI 异构" target="_blank">AI 异构</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#常见优化算法总结"><span class="nav-number">1.</span> <span class="nav-text">常见优化算法总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SGD算法"><span class="nav-number">1.1.</span> <span class="nav-text">SGD算法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#一维梯度下降"><span class="nav-number">1.1.1.</span> <span class="nav-text">一维梯度下降</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#学习率"><span class="nav-number">1.1.2.</span> <span class="nav-text">学习率</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#多维梯度下降"><span class="nav-number">1.1.3.</span> <span class="nav-text">多维梯度下降</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#随机梯度下降"><span class="nav-number">1.1.4.</span> <span class="nav-text">随机梯度下降</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#小批量随机梯度下降"><span class="nav-number">1.1.5.</span> <span class="nav-text">小批量随机梯度下降</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#代码"><span class="nav-number">1.1.6.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#总结"><span class="nav-number">1.1.7.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动量法"><span class="nav-number">1.2.</span> <span class="nav-text">动量法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#梯度下降的问题"><span class="nav-number">1.2.1.</span> <span class="nav-text">梯度下降的问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#动量法思想"><span class="nav-number">1.2.2.</span> <span class="nav-text">动量法思想</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#代码-1"><span class="nav-number">1.2.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Adagrad"><span class="nav-number">1.3.</span> <span class="nav-text">Adagrad</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#介绍"><span class="nav-number">1.3.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#思想"><span class="nav-number">1.3.2.</span> <span class="nav-text">思想</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#代码-2"><span class="nav-number">1.3.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RMSProp"><span class="nav-number">1.4.</span> <span class="nav-text">RMSProp</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#介绍-1"><span class="nav-number">1.4.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#思想-1"><span class="nav-number">1.4.2.</span> <span class="nav-text">思想</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#代码-3"><span class="nav-number">1.4.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AdaDelta"><span class="nav-number">1.5.</span> <span class="nav-text">AdaDelta</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#介绍-2"><span class="nav-number">1.5.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#思想-2"><span class="nav-number">1.5.2.</span> <span class="nav-text">思想</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#代码-4"><span class="nav-number">1.5.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Adam"><span class="nav-number">1.6.</span> <span class="nav-text">Adam</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#介绍-3"><span class="nav-number">1.6.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#思想-3"><span class="nav-number">1.6.2.</span> <span class="nav-text">思想</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#代码-5"><span class="nav-number">1.6.3.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-1"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王晓芸</span>
+
+  
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+		<script type="text/javascript">
+		_hcwp = window._hcwp || [];
+
+		_hcwp.push({widget:"Bloggerstream", widget_id: 97885, selector:".hc-comment-count", label: "{\%COUNT%\}" });
+
+		
+		_hcwp.push({widget:"Stream", widget_id: 97885, xid: "2018/02/05/DeepLearning/caffe/solver/优化算法总结/"});
+		
+
+		(function() {
+		if("HC_LOAD_INIT" in window)return;
+		HC_LOAD_INIT = true;
+		var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+		var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+		hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/97885/"+lang+"/widget.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hcc, s.nextSibling);
+		})();
+		</script>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
