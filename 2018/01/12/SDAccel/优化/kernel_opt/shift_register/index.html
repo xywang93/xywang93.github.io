@@ -93,13 +93,13 @@
 <meta property="og:site_name" content="异构 AI">
 <meta property="og:description" content="fir滤波器与移位寄存器的结构匹配度100%">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/b5c947aad718d144ae96fb19c78f8211.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/%E7%A7%BB%E4%BD%8D%E5%AF%84%E5%AD%98%E5%99%A8.gif">
-<meta property="og:updated_time" content="2018-01-18T09:30:08.000Z">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/b5c947aad718d144ae96fb19c78f8211.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/%E7%A7%BB%E4%BD%8D%E5%AF%84%E5%AD%98%E5%99%A8.gif">
+<meta property="og:updated_time" content="2019-01-18T08:02:24.583Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="经典设计结构之移位寄存器OpenCL实现">
 <meta name="twitter:description" content="fir滤波器与移位寄存器的结构匹配度100%">
-<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/b5c947aad718d144ae96fb19c78f8211.png">
+<meta name="twitter:image" content="http://xukeqiniu.xukeai.cn/b5c947aad718d144ae96fb19c78f8211.png">
 
 
 
@@ -311,7 +311,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="王晓芸">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oz5oe1xth.bkt.clouddn.com/avatar.png">
+      <meta itemprop="image" content="http://xukeqiniu.xukeai.cn/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -453,10 +453,10 @@
       
 
       
-        <blockquote class="blockquote-center"><br><br><img src="http://oz3lw4cji.bkt.clouddn.com/b5c947aad718d144ae96fb19c78f8211.png" alt=""><br><br>fir滤波器与移位寄存器的结构匹配度100%<br><br></blockquote>
+        <blockquote class="blockquote-center"><br><br><img src="http://xukeqiniu.xukeai.cn/b5c947aad718d144ae96fb19c78f8211.png" alt=""><br><br>fir滤波器与移位寄存器的结构匹配度100%<br><br></blockquote>
 
 <a id="more"></a>
-<h3 id="fir滤波器原理"><a href="#fir滤波器原理" class="headerlink" title="fir滤波器原理"></a>fir滤波器原理</h3><p>FIR(Finite Impulse Response)滤波器：有限长单位冲激响应滤波器，又称为非递归型滤波器，是数字信号处理系统中最基本的元件，它可以在保证任意幅频特性的同时具有严格的线性相频特性，同时其单位抽样响应是有限长的，因而滤波器是稳定的系统。因此，FIR滤波器在通信、图像处理、模式识别等领域都有着广泛的应用。<br>在这里我们不具体谈FIR过多的原理知识，而是面向计算的优化，我们预先确定一组参数，来实现一个11阶的FIR滤波器。<br>计算流程如下：<br><img src="http://oz3lw4cji.bkt.clouddn.com/%E7%A7%BB%E4%BD%8D%E5%AF%84%E5%AD%98%E5%99%A8.gif" alt=""></p>
+<h3 id="fir滤波器原理"><a href="#fir滤波器原理" class="headerlink" title="fir滤波器原理"></a>fir滤波器原理</h3><p>FIR(Finite Impulse Response)滤波器：有限长单位冲激响应滤波器，又称为非递归型滤波器，是数字信号处理系统中最基本的元件，它可以在保证任意幅频特性的同时具有严格的线性相频特性，同时其单位抽样响应是有限长的，因而滤波器是稳定的系统。因此，FIR滤波器在通信、图像处理、模式识别等领域都有着广泛的应用。<br>在这里我们不具体谈FIR过多的原理知识，而是面向计算的优化，我们预先确定一组参数，来实现一个11阶的FIR滤波器。<br>计算流程如下：<br><img src="http://xukeqiniu.xukeai.cn/%E7%A7%BB%E4%BD%8D%E5%AF%84%E5%AD%98%E5%99%A8.gif" alt=""></p>
 <h3 id="fir简单实现方式"><a href="#fir简单实现方式" class="headerlink" title="fir简单实现方式"></a>fir简单实现方式</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N_COEFF 11</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// A naive implementation of the Finite Impulse Response filter.</span></span><br><span class="line">__kernel __attribute__ ((reqd_work_group_size(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>)))</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fir_naive</span><span class="params">(__global <span class="keyword">int</span>* <span class="keyword">restrict</span> output,</span></span></span><br><span class="line"><span class="function"><span class="params">               __global <span class="keyword">int</span>* <span class="keyword">restrict</span> signal,</span></span></span><br><span class="line"><span class="function"><span class="params">               __global <span class="keyword">int</span>* <span class="keyword">restrict</span> coeff,</span></span></span><br><span class="line"><span class="function"><span class="params">               <span class="keyword">long</span> signal_length)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> coeff_reg[N_COEFF];</span><br><span class="line">    read_coef: <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; N_COEFF ; i++) coeff_reg[i] = coeff[i];</span><br><span class="line"></span><br><span class="line">    outer_loop:</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; signal_length; j++) &#123;</span><br><span class="line">        <span class="keyword">int</span> acc = <span class="number">0</span>;</span><br><span class="line">        shift_loop:</span><br><span class="line">        __attribute__((xcl_pipeline_loop))</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = min(j,N_COEFF<span class="number">-1</span>); i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            acc += signal[j-i] * coeff_reg[i];</span><br><span class="line">        &#125;</span><br><span class="line">        output[j] = acc;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="fir移位寄存器实现方式"><a href="#fir移位寄存器实现方式" class="headerlink" title="fir移位寄存器实现方式"></a>fir移位寄存器实现方式</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// FIR using shift register</span></span><br><span class="line">__kernel __attribute__ ((reqd_work_group_size(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>)))</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fir_shift_register</span><span class="params">(__global <span class="keyword">int</span>* <span class="keyword">restrict</span> output,</span></span></span><br><span class="line"><span class="function"><span class="params">                        __global <span class="keyword">int</span>* <span class="keyword">restrict</span> signal,</span></span></span><br><span class="line"><span class="function"><span class="params">                        __global <span class="keyword">int</span>* <span class="keyword">restrict</span> coeff,</span></span></span><br><span class="line"><span class="function"><span class="params">                        <span class="keyword">long</span> signal_length)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> coeff_reg[N_COEFF];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Partitioning of this array is required because the shift register</span></span><br><span class="line">    <span class="comment">// operation will need access to each of the values of the array in</span></span><br><span class="line">    <span class="comment">// the same clock. Without partitioning the operation will need to</span></span><br><span class="line">    <span class="comment">// be performed over multiple cycles because of the limited memory</span></span><br><span class="line">    <span class="comment">// ports available to the array.</span></span><br><span class="line">    <span class="keyword">int</span> shift_reg[N_COEFF] __attribute__((xcl_array_partition(complete, <span class="number">0</span>)));</span><br><span class="line"></span><br><span class="line">    init_loop:</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N_COEFF; i++) &#123;</span><br><span class="line">        shift_reg[i] = <span class="number">0</span>;</span><br><span class="line">        coeff_reg[i] = coeff[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    outer_loop:</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; signal_length; j++) &#123;</span><br><span class="line">        <span class="keyword">int</span> acc = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> x = signal[j];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// This is the shift register operation. The N_COEFF variable is defined</span></span><br><span class="line">        <span class="comment">// at compile time so the compiler knows the number of operations</span></span><br><span class="line">        <span class="comment">// performed by the loop. This loop does not require the unroll</span></span><br><span class="line">        <span class="comment">// attribute because the outer loop will be automatically pipelined so</span></span><br><span class="line">        <span class="comment">// the compiler will unroll this loop in the process.</span></span><br><span class="line">        shift_loop:</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = N_COEFF<span class="number">-1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i == <span class="number">0</span>) &#123;</span><br><span class="line">                acc += x * coeff_reg[<span class="number">0</span>];</span><br><span class="line">                shift_reg[<span class="number">0</span>] = x;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                shift_reg[i] = shift_reg[i<span class="number">-1</span>];</span><br><span class="line">                acc += shift_reg[i] * coeff_reg[i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        output[j] = acc;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="移位寄存器应用总结"><a href="#移位寄存器应用总结" class="headerlink" title="移位寄存器应用总结"></a>移位寄存器应用总结</h3><p>在该例程中，巧妙的利用了移位寄存器的方法，对处理过的数据进行存储且移位，大幅度的减少了与global memory接口的频繁交互。移位寄存器在实现的过程中，需要注意的是因为牵扯到数组间的移位，因此一定要将数组切割成寄存器的形式，否则会产生carry dependency使得循环的II值变大。</p>
@@ -530,8 +530,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/09/Python/04-seaborn/" rel="next" title="Seaborn学习笔记">
-                <i class="fa fa-chevron-left"></i> Seaborn学习笔记
+              <a href="/2018/01/12/SDAccel/优化/kernel_opt/systolic_array/" rel="next" title="经典设计结构之脉动阵列OpenCL实现">
+                <i class="fa fa-chevron-left"></i> 经典设计结构之脉动阵列OpenCL实现
               </a>
             
           </div>
@@ -540,8 +540,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/01/12/SDAccel/优化/kernel_opt/systolic_array/" rel="prev" title="经典设计结构之脉动阵列OpenCL实现">
-                经典设计结构之脉动阵列OpenCL实现 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/01/18/SDAccel/优化/kernel_opt/Loop_Fusion/" rel="prev" title="循环优化之融合篇（Fusion Loop）">
+                循环优化之融合篇（Fusion Loop） <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -614,7 +614,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://oz5oe1xth.bkt.clouddn.com/avatar.png"
+                src="http://xukeqiniu.xukeai.cn/avatar.png"
                 alt="王晓芸" />
             
               <p class="site-author-name" itemprop="name">王晓芸</p>
@@ -726,7 +726,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

@@ -93,16 +93,16 @@
 <meta property="og:site_name" content="异构 AI">
 <meta property="og:description" content="从零开始，一步一步学习caffe的使用，期间贯穿深度学习和调参的相关知识！">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/2490fe237f606073b367b7b03551461b.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/25c819785a0b06023dba5752b986f68c.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/e8d48e19c743740cfcc977331653e196.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/b826af98fc1a45a8eaa6c4be4f0957f9.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/6017aaf5ca0f104f796ffa6b018419e4.png">
-<meta property="og:updated_time" content="2018-02-06T02:04:14.000Z">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/2490fe237f606073b367b7b03551461b.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/25c819785a0b06023dba5752b986f68c.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/e8d48e19c743740cfcc977331653e196.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/b826af98fc1a45a8eaa6c4be4f0957f9.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/6017aaf5ca0f104f796ffa6b018419e4.png">
+<meta property="og:updated_time" content="2019-01-18T08:02:24.320Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="caffe详解之Softmax层">
 <meta name="twitter:description" content="从零开始，一步一步学习caffe的使用，期间贯穿深度学习和调参的相关知识！">
-<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/2490fe237f606073b367b7b03551461b.png">
+<meta name="twitter:image" content="http://xukeqiniu.xukeai.cn/2490fe237f606073b367b7b03551461b.png">
 
 
 
@@ -314,7 +314,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="王晓芸">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oz5oe1xth.bkt.clouddn.com/avatar.png">
+      <meta itemprop="image" content="http://xukeqiniu.xukeai.cn/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -457,14 +457,14 @@
 
       
         <blockquote>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/2490fe237f606073b367b7b03551461b.png" alt=""><br>从零开始，一步一步学习caffe的使用，期间贯穿深度学习和调参的相关知识！<br><a id="more"></a></p>
+<p><img src="http://xukeqiniu.xukeai.cn/2490fe237f606073b367b7b03551461b.png" alt=""><br>从零开始，一步一步学习caffe的使用，期间贯穿深度学习和调参的相关知识！<br><a id="more"></a></p>
 <h3 id="softmax-layer"><a href="#softmax-layer" class="headerlink" title="softmax layer"></a>softmax layer</h3></blockquote>
 <h4 id="softmax-layer-输出似然值"><a href="#softmax-layer-输出似然值" class="headerlink" title="softmax layer: 输出似然值"></a>softmax layer: 输出似然值</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">layers &#123;</span><br><span class="line">  bottom: <span class="string">"cls3_fc"</span></span><br><span class="line">  top: <span class="string">"prob"</span></span><br><span class="line">  name: <span class="string">"prob"</span></span><br><span class="line">  type: <span class="string">"softmax"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>公式如下所示：</p>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/25c819785a0b06023dba5752b986f68c.png" alt=""></p>
+<p><img src="http://xukeqiniu.xukeai.cn/25c819785a0b06023dba5752b986f68c.png" alt=""></p>
 <h4 id="softmax-loss-layer：输出loss值"><a href="#softmax-loss-layer：输出loss值" class="headerlink" title="softmax-loss layer：输出loss值"></a>softmax-loss layer：输出loss值</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">layer &#123;</span><br><span class="line">  name: <span class="string">"loss"</span></span><br><span class="line">  type: <span class="string">"SoftmaxWithLoss"</span></span><br><span class="line">  bottom: <span class="string">"ip1"</span></span><br><span class="line">  bottom: <span class="string">"label"</span></span><br><span class="line">  top: <span class="string">"loss"</span></span><br><span class="line">  loss_param&#123;</span><br><span class="line">    ignore_label：<span class="number">0</span></span><br><span class="line">    normalize: <span class="number">1</span></span><br><span class="line">    normalization: FULL</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>公式如下所示：</p>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/e8d48e19c743740cfcc977331653e196.png" alt=""></p>
+<p><img src="http://xukeqiniu.xukeai.cn/e8d48e19c743740cfcc977331653e196.png" alt=""></p>
 <p>loss_param 说明：</p>
 <ul>
 <li>ignore_label<br>int型变量，默认为空。<br>如果指定值，则label等于ignore_label的样本将不参与Loss计算，并且反向传播时梯度直接置0.</li>
@@ -480,7 +480,7 @@
 <li>对于[1000,1000,1000]，我们会得到inf（<strong>上溢</strong>）；</li>
 <li>对于[-1000,-999,-1000]，我们会得到-inf（<strong>下溢</strong>）。</li>
 </ul>
-<h4 id="softmax解决上溢与下溢的办法"><a href="#softmax解决上溢与下溢的办法" class="headerlink" title="softmax解决上溢与下溢的办法"></a>softmax解决上溢与下溢的办法</h4><p><img src="http://oz3lw4cji.bkt.clouddn.com/b826af98fc1a45a8eaa6c4be4f0957f9.png" alt=""><br>对任意a都成立，这意味着我们可以自由地调节指数函数的指数部分，一个典型的做法是取输入向量中的最大值：a=max{x1,x2…..xn}<br><strong>这可以保证指数最大不会超过0，于是避免了上溢。即便剩余的部分下溢出了，加了a之后，也能得到一个合理的值。</strong><br>并且<code>softmax</code>不受输入的常数偏移影响，即softmax(x)=softmax(x+c)证明如下：<br><img src="http://oz3lw4cji.bkt.clouddn.com/6017aaf5ca0f104f796ffa6b018419e4.png" alt=""></p>
+<h4 id="softmax解决上溢与下溢的办法"><a href="#softmax解决上溢与下溢的办法" class="headerlink" title="softmax解决上溢与下溢的办法"></a>softmax解决上溢与下溢的办法</h4><p><img src="http://xukeqiniu.xukeai.cn/b826af98fc1a45a8eaa6c4be4f0957f9.png" alt=""><br>对任意a都成立，这意味着我们可以自由地调节指数函数的指数部分，一个典型的做法是取输入向量中的最大值：a=max{x1,x2…..xn}<br><strong>这可以保证指数最大不会超过0，于是避免了上溢。即便剩余的部分下溢出了，加了a之后，也能得到一个合理的值。</strong><br>并且<code>softmax</code>不受输入的常数偏移影响，即softmax(x)=softmax(x+c)证明如下：<br><img src="http://xukeqiniu.xukeai.cn/6017aaf5ca0f104f796ffa6b018419e4.png" alt=""></p>
 <h3 id="测试准确率"><a href="#测试准确率" class="headerlink" title="测试准确率"></a>测试准确率</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">layer &#123;</span><br><span class="line">  name: <span class="string">"accuracy"</span></span><br><span class="line">  type: <span class="string">"Accuracy"</span></span><br><span class="line">  bottom: <span class="string">"ip2"</span></span><br><span class="line">  bottom: <span class="string">"label"</span></span><br><span class="line">  top: <span class="string">"accuracy"</span></span><br><span class="line">  accuracy_param&#123;</span><br><span class="line">    top_k:<span class="number">5</span></span><br><span class="line">  &#125;</span><br><span class="line">  include &#123;</span><br><span class="line">    phase: TEST</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">message AccuracyParameter &#123;</span><br><span class="line">  <span class="comment">// When computing accuracy, count as correct by comparing the true label to</span></span><br><span class="line">  <span class="comment">// the top k scoring classes.  By default, only compare to the top scoring</span></span><br><span class="line">  <span class="comment">// class (i.e. argmax).</span></span><br><span class="line">  optional uint32 top_k = <span class="number">1</span> [<span class="keyword">default</span> = <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">  <span class="comment">// The "label" axis of the prediction blob, whose argmax corresponds to the</span></span><br><span class="line">  <span class="comment">// predicted label -- may be negative to index from the end (e.g., -1 for the</span></span><br><span class="line">  <span class="comment">// last axis).  For example, if axis == 1 and the predictions are</span></span><br><span class="line">  <span class="comment">// (N x C x H x W), the label blob is expected to contain N*H*W ground truth</span></span><br><span class="line">  <span class="comment">// labels with integer values in &#123;0, 1, ..., C-1&#125;.</span></span><br><span class="line">  optional int32 axis = <span class="number">2</span> [<span class="keyword">default</span> = <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">  <span class="comment">// If specified, ignore instances with the given label.</span></span><br><span class="line">  optional int32 ignore_label = <span class="number">3</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>softmax函数计算时候为什么要减去一个最大值？<br><a href="http://blog.csdn.net/shuzfan/article/details/51460895" target="_blank" rel="noopener">caffe层解读系列-softmax_loss</a></p>
@@ -633,7 +633,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://oz5oe1xth.bkt.clouddn.com/avatar.png"
+                src="http://xukeqiniu.xukeai.cn/avatar.png"
                 alt="王晓芸" />
             
               <p class="site-author-name" itemprop="name">王晓芸</p>
@@ -745,7 +745,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

@@ -93,15 +93,15 @@
 <meta property="og:site_name" content="异构 AI">
 <meta property="og:description" content="从零开始，一步一步学习caffe的使用，期间贯穿深度学习和调参的相关知识！">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/2490fe237f606073b367b7b03551461b.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/e9aca73c7366bb321c55954ba03891ca.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/%E5%8D%B7%E7%A7%AF%E8%AE%A1%E7%AE%97%E5%9B%BE%E7%A4%BA.gif">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/b2f6ae03c269d8c5c08abaf1e47cc9de.png">
-<meta property="og:updated_time" content="2018-02-06T02:04:58.000Z">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/2490fe237f606073b367b7b03551461b.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/e9aca73c7366bb321c55954ba03891ca.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/%E5%8D%B7%E7%A7%AF%E8%AE%A1%E7%AE%97%E5%9B%BE%E7%A4%BA.gif">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/b2f6ae03c269d8c5c08abaf1e47cc9de.png">
+<meta property="og:updated_time" content="2019-01-18T08:02:24.326Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="caffe详解之卷积层">
 <meta name="twitter:description" content="从零开始，一步一步学习caffe的使用，期间贯穿深度学习和调参的相关知识！">
-<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/2490fe237f606073b367b7b03551461b.png">
+<meta name="twitter:image" content="http://xukeqiniu.xukeai.cn/2490fe237f606073b367b7b03551461b.png">
 
 
 
@@ -313,7 +313,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="王晓芸">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oz5oe1xth.bkt.clouddn.com/avatar.png">
+      <meta itemprop="image" content="http://xukeqiniu.xukeai.cn/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -456,14 +456,14 @@
 
       
         <blockquote>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/2490fe237f606073b367b7b03551461b.png" alt=""><br>从零开始，一步一步学习caffe的使用，期间贯穿深度学习和调参的相关知识！<br><a id="more"></a></p>
+<p><img src="http://xukeqiniu.xukeai.cn/2490fe237f606073b367b7b03551461b.png" alt=""><br>从零开始，一步一步学习caffe的使用，期间贯穿深度学习和调参的相关知识！<br><a id="more"></a></p>
 <h3 id="卷积层参数说明"><a href="#卷积层参数说明" class="headerlink" title="卷积层参数说明"></a>卷积层参数说明</h3></blockquote>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">layer &#123;</span><br><span class="line">  name: <span class="string">"conv1"</span></span><br><span class="line">  type: <span class="string">"Convolution"</span></span><br><span class="line">  bottom: <span class="string">"data"</span></span><br><span class="line">  top: <span class="string">"conv1"</span></span><br><span class="line">  param &#123;</span><br><span class="line">    lr_mult: <span class="number">1</span>  #lr_mult: 学习率的系数，最终的学习率是这个数乘以solver.prototxt配置文件中的base_lr。如果有两个lr_mult, 则第一个表示权值的学习率，第二个表示偏置项的学习率。一般偏置项的学习率是权值学习率的两倍。</span><br><span class="line">  &#125;</span><br><span class="line">  param &#123;</span><br><span class="line">    lr_mult: <span class="number">2</span>  #偏置项的学习率</span><br><span class="line">  &#125;</span><br><span class="line">  convolution_param &#123;</span><br><span class="line">    num_output: <span class="number">20</span> #卷积核（filter)的个数</span><br><span class="line">    kernel_size: <span class="number">5</span> #卷积核的大小</span><br><span class="line">    stride: <span class="number">1</span> #卷积核的步长，默认为<span class="number">1</span></span><br><span class="line">    pad: <span class="number">0</span> #扩充边缘，默认为<span class="number">0</span>，不扩充</span><br><span class="line">    group: <span class="number">2</span> #默认为<span class="number">0</span>（通达卷积的实现方式）</span><br><span class="line">    weight_filler &#123;</span><br><span class="line">      type: <span class="string">"xavier"</span> #权值初始化。 默认为“constant<span class="string">",值全为0，很多时候我们用"</span>xavier<span class="string">"算法来进行初始化，也可以设置为”gaussian"</span></span><br><span class="line">    &#125;</span><br><span class="line">    bias_filler &#123;</span><br><span class="line">      type: <span class="string">"constant"</span> #偏置项的初始化。一般设置为<span class="string">"constant"</span>,值全为<span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="卷积配置参数意义"><a href="#卷积配置参数意义" class="headerlink" title="卷积配置参数意义"></a>卷积配置参数意义</h3><h4 id="卷积计算公式"><a href="#卷积计算公式" class="headerlink" title="卷积计算公式"></a>卷积计算公式</h4><p><img src="http://oz3lw4cji.bkt.clouddn.com/e9aca73c7366bb321c55954ba03891ca.png" alt=""></p>
-<h4 id="卷积计算过程图示"><a href="#卷积计算过程图示" class="headerlink" title="卷积计算过程图示"></a>卷积计算过程图示</h4><p><img src="http://oz3lw4cji.bkt.clouddn.com/%E5%8D%B7%E7%A7%AF%E8%AE%A1%E7%AE%97%E5%9B%BE%E7%A4%BA.gif" alt=""></p>
+<h3 id="卷积配置参数意义"><a href="#卷积配置参数意义" class="headerlink" title="卷积配置参数意义"></a>卷积配置参数意义</h3><h4 id="卷积计算公式"><a href="#卷积计算公式" class="headerlink" title="卷积计算公式"></a>卷积计算公式</h4><p><img src="http://xukeqiniu.xukeai.cn/e9aca73c7366bb321c55954ba03891ca.png" alt=""></p>
+<h4 id="卷积计算过程图示"><a href="#卷积计算过程图示" class="headerlink" title="卷积计算过程图示"></a>卷积计算过程图示</h4><p><img src="http://xukeqiniu.xukeai.cn/%E5%8D%B7%E7%A7%AF%E8%AE%A1%E7%AE%97%E5%9B%BE%E7%A4%BA.gif" alt=""></p>
 <p>上图取自CS231n，展示了三维卷积的计算过程，输入数据的三个维度，对应第二个卷积核生成了第二个<code>Feature Map</code></p>
 <h4 id="Feature-Map大小计算"><a href="#Feature-Map大小计算" class="headerlink" title="Feature Map大小计算"></a>Feature Map大小计算</h4><p>如上图所示，输出<code>Feature Map</code>大小计算公式如下：</p>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/b2f6ae03c269d8c5c08abaf1e47cc9de.png" alt=""></p>
+<p><img src="http://xukeqiniu.xukeai.cn/b2f6ae03c269d8c5c08abaf1e47cc9de.png" alt=""></p>
 <h3 id="权值与偏置的初始化方法"><a href="#权值与偏置的初始化方法" class="headerlink" title="权值与偏置的初始化方法"></a>权值与偏置的初始化方法</h3><p>caffe源文件<code>filler.hpp</code>中提供了7种权值初始化的方法。在计算机视觉的领域中权重参数的初始化常用<code>xavier</code>，偏置的初始化常用<code>constant</code>，并且初始化为0。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Filler&lt;Dtype&gt;* GetFiller(<span class="keyword">const</span> FillerParameter&amp; param) &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; type = param.type();</span><br><span class="line">  <span class="keyword">if</span> (type == <span class="string">"constant"</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ConstantFiller&lt;Dtype&gt;(param);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type == <span class="string">"gaussian"</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> GaussianFiller&lt;Dtype&gt;(param);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type == <span class="string">"positive_unitball"</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> PositiveUnitballFiller&lt;Dtype&gt;(param);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type == <span class="string">"uniform"</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> UniformFiller&lt;Dtype&gt;(param);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type == <span class="string">"xavier"</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> XavierFiller&lt;Dtype&gt;(param);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type == <span class="string">"msra"</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MSRAFiller&lt;Dtype&gt;(param);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (type == <span class="string">"bilinear"</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> BilinearFiller&lt;Dtype&gt;(param);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    CHECK(<span class="literal">false</span>) &lt;&lt; <span class="string">"Unknown filler name: "</span> &lt;&lt; param.type();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> (Filler&lt;Dtype&gt;*)(<span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>结合 <code>.prototxt</code> 文件中的 <code>FillerParameter</code>来看看怎么用</p>
@@ -649,7 +649,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://oz5oe1xth.bkt.clouddn.com/avatar.png"
+                src="http://xukeqiniu.xukeai.cn/avatar.png"
                 alt="王晓芸" />
             
               <p class="site-author-name" itemprop="name">王晓芸</p>
@@ -761,7 +761,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

@@ -93,13 +93,13 @@
 <meta property="og:site_name" content="异构 AI">
 <meta property="og:description" content="solver配置说明 前面我们介绍了卷积神经网络中主流的数据层，卷积层，全连接层，池化层，激活函数层，归一化层，dropout层,softmax层。分析每一层的配置及意义的目的主要是为了便于设计出适合自己的网络。然后根据自己的任务需要定义合适的损失函数。当搭建出自己的网络并确定网络的损失函数后，下一个关键问题便是训练网络，下面我们将重点集中到训练网络的过程。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/e2279fbf1b9e6bd53dc5093c156179b4.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/46c223d32d8fe9e657692499fdadddab.png">
-<meta property="og:updated_time" content="2018-02-06T01:59:58.000Z">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/e2279fbf1b9e6bd53dc5093c156179b4.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/46c223d32d8fe9e657692499fdadddab.png">
+<meta property="og:updated_time" content="2019-01-18T08:02:24.341Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="caffe详解之Solver文件配置">
 <meta name="twitter:description" content="solver配置说明 前面我们介绍了卷积神经网络中主流的数据层，卷积层，全连接层，池化层，激活函数层，归一化层，dropout层,softmax层。分析每一层的配置及意义的目的主要是为了便于设计出适合自己的网络。然后根据自己的任务需要定义合适的损失函数。当搭建出自己的网络并确定网络的损失函数后，下一个关键问题便是训练网络，下面我们将重点集中到训练网络的过程。">
-<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/e2279fbf1b9e6bd53dc5093c156179b4.png">
+<meta name="twitter:image" content="http://xukeqiniu.xukeai.cn/e2279fbf1b9e6bd53dc5093c156179b4.png">
 
 
 
@@ -311,7 +311,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="王晓芸">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oz5oe1xth.bkt.clouddn.com/avatar.png">
+      <meta itemprop="image" content="http://xukeqiniu.xukeai.cn/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -477,9 +477,9 @@
 <h4 id="设置测试间隔"><a href="#设置测试间隔" class="headerlink" title="设置测试间隔"></a>设置测试间隔</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test_interval: <span class="number">500</span></span><br></pre></td></tr></table></figure>
 <p>测试间隔。也就是每训练500次，才进行一次测试。</p>
 <h4 id="设置优化算法类型"><a href="#设置优化算法类型" class="headerlink" title="设置优化算法类型"></a>设置优化算法类型</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type: SGD</span><br></pre></td></tr></table></figure>
-<p>常见的优化算法包括：SGD、Adagrad、RMSProp、AdaDelta、Adam等。组织结构如下图：<br><img src="http://oz3lw4cji.bkt.clouddn.com/e2279fbf1b9e6bd53dc5093c156179b4.png" alt=""><br>上图取自SGD算法比较</p>
+<p>常见的优化算法包括：SGD、Adagrad、RMSProp、AdaDelta、Adam等。组织结构如下图：<br><img src="http://xukeqiniu.xukeai.cn/e2279fbf1b9e6bd53dc5093c156179b4.png" alt=""><br>上图取自SGD算法比较</p>
 <h4 id="设置动量系数"><a href="#设置动量系数" class="headerlink" title="设置动量系数"></a>设置动量系数</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">momentum ：<span class="number">0.9</span></span><br></pre></td></tr></table></figure>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/46c223d32d8fe9e657692499fdadddab.png" alt=""><br>动量系数是设置r的大小</p>
+<p><img src="http://xukeqiniu.xukeai.cn/46c223d32d8fe9e657692499fdadddab.png" alt=""><br>动量系数是设置r的大小</p>
 <h4 id="设置权重衰减系数"><a href="#设置权重衰减系数" class="headerlink" title="设置权重衰减系数"></a>设置权重衰减系数</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">weight_decay: <span class="number">0.0005</span></span><br></pre></td></tr></table></figure>
 <p>$ w_i = w_i - \eta \frac{\partial L}{\partial w_i} - \eta \lambda w_i$ , $\eta \lambda w_i$为正则化项，weight_decay为正则化项的参数$\lambda $的大小。</p>
 <h4 id="设置显示周期"><a href="#设置显示周期" class="headerlink" title="设置显示周期"></a>设置显示周期</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">display: <span class="number">100</span></span><br></pre></td></tr></table></figure>
@@ -653,7 +653,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://oz5oe1xth.bkt.clouddn.com/avatar.png"
+                src="http://xukeqiniu.xukeai.cn/avatar.png"
                 alt="王晓芸" />
             
               <p class="site-author-name" itemprop="name">王晓芸</p>
@@ -765,7 +765,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

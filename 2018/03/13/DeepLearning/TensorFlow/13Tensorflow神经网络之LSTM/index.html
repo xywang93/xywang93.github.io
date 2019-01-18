@@ -93,22 +93,22 @@
 <meta property="og:site_name" content="异构 AI">
 <meta property="og:description" content="LSTM 简介公式 LSTMLSTM作为门控循环神经网络因此我们从门控单元切入理解。主要包括：  输入门：It 遗忘门：Ft 输出门：Ot 候选细胞：~Ct 细胞：Ct 隐含状态：Ht  假设隐含状态长度为h，数据Xt是一个样本数为n、特征向量维度为x的批量数据，其计算如下所示（W和b表示权重和偏置）：  最后的输出其实只有两个，一个是输出，一个是状态，输出就是Ht，而状态为(Ct,Ht)，其他都">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oz5oe1xth.bkt.clouddn.com/44981d27690d8e9d4c4878f34409dfe0.png">
-<meta property="og:image" content="http://oz5oe1xth.bkt.clouddn.com/bd180c0fdffc0557b48e84d99b28fe56.png">
-<meta property="og:image" content="http://oz5oe1xth.bkt.clouddn.com/a57ff99931e6bd62068d381e593a14a7.png">
-<meta property="og:image" content="http://oz5oe1xth.bkt.clouddn.com/6a0256f97e28c3b099a63391cc97aae7.png">
-<meta property="og:image" content="http://oz5oe1xth.bkt.clouddn.com/2244cf361736f4ddd46ccbcec6baa459.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/2572534e9bc1dff727d3485cf8f958e4.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/83b5c59a84db028eddf567d68b5344bb.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/36ae3aec84e5e94a0a30a7534840af22.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/1d3b7ab425df98f2f564bb951c9c2878.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/d9a47f577060d86970701838d18779e7.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/199537faf0d0cbbd0771a4e9013d180a.png">
-<meta property="og:updated_time" content="2018-07-30T14:52:20.000Z">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/44981d27690d8e9d4c4878f34409dfe0.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/bd180c0fdffc0557b48e84d99b28fe56.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/a57ff99931e6bd62068d381e593a14a7.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/6a0256f97e28c3b099a63391cc97aae7.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/2244cf361736f4ddd46ccbcec6baa459.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/2572534e9bc1dff727d3485cf8f958e4.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/83b5c59a84db028eddf567d68b5344bb.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/36ae3aec84e5e94a0a30a7534840af22.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/1d3b7ab425df98f2f564bb951c9c2878.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/d9a47f577060d86970701838d18779e7.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/199537faf0d0cbbd0771a4e9013d180a.png">
+<meta property="og:updated_time" content="2019-01-18T08:02:38.421Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tensorflow神经网络之LSTM">
 <meta name="twitter:description" content="LSTM 简介公式 LSTMLSTM作为门控循环神经网络因此我们从门控单元切入理解。主要包括：  输入门：It 遗忘门：Ft 输出门：Ot 候选细胞：~Ct 细胞：Ct 隐含状态：Ht  假设隐含状态长度为h，数据Xt是一个样本数为n、特征向量维度为x的批量数据，其计算如下所示（W和b表示权重和偏置）：  最后的输出其实只有两个，一个是输出，一个是状态，输出就是Ht，而状态为(Ct,Ht)，其他都">
-<meta name="twitter:image" content="http://oz5oe1xth.bkt.clouddn.com/44981d27690d8e9d4c4878f34409dfe0.png">
+<meta name="twitter:image" content="http://xukeqiniu.xukeai.cn/44981d27690d8e9d4c4878f34409dfe0.png">
 
 
 
@@ -320,7 +320,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="王晓芸">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oz5oe1xth.bkt.clouddn.com/avatar.png">
+      <meta itemprop="image" content="http://xukeqiniu.xukeai.cn/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -461,27 +461,27 @@
 <li>隐含状态：Ht</li>
 </ul>
 <p>假设隐含状态长度为h，数据Xt是一个样本数为n、特征向量维度为x的批量数据，其计算如下所示（W和b表示权重和偏置）：</p>
-<p><img src="http://oz5oe1xth.bkt.clouddn.com/44981d27690d8e9d4c4878f34409dfe0.png" alt=""><br><img src="http://oz5oe1xth.bkt.clouddn.com/bd180c0fdffc0557b48e84d99b28fe56.png" alt=""><br><img src="http://oz5oe1xth.bkt.clouddn.com/a57ff99931e6bd62068d381e593a14a7.png" alt=""><br><img src="http://oz5oe1xth.bkt.clouddn.com/6a0256f97e28c3b099a63391cc97aae7.png" alt=""></p>
+<p><img src="http://xukeqiniu.xukeai.cn/44981d27690d8e9d4c4878f34409dfe0.png" alt=""><br><img src="http://xukeqiniu.xukeai.cn/bd180c0fdffc0557b48e84d99b28fe56.png" alt=""><br><img src="http://xukeqiniu.xukeai.cn/a57ff99931e6bd62068d381e593a14a7.png" alt=""><br><img src="http://xukeqiniu.xukeai.cn/6a0256f97e28c3b099a63391cc97aae7.png" alt=""></p>
 <p>最后的输出其实只有两个，一个是输出，一个是状态，输出就是Ht，而状态为(Ct,Ht)，其他都是中间计算过程。[^2]</p>
-<p><img src="http://oz5oe1xth.bkt.clouddn.com/2244cf361736f4ddd46ccbcec6baa459.png" alt=""></p>
+<p><img src="http://xukeqiniu.xukeai.cn/2244cf361736f4ddd46ccbcec6baa459.png" alt=""></p>
 <a id="more"></a>
-<h4 id="图示-LSTM"><a href="#图示-LSTM" class="headerlink" title="图示 LSTM"></a>图示 LSTM</h4><p><img src="http://oz3lw4cji.bkt.clouddn.com/2572534e9bc1dff727d3485cf8f958e4.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/83b5c59a84db028eddf567d68b5344bb.png" alt=""></p>
+<h4 id="图示-LSTM"><a href="#图示-LSTM" class="headerlink" title="图示 LSTM"></a>图示 LSTM</h4><p><img src="http://xukeqiniu.xukeai.cn/2572534e9bc1dff727d3485cf8f958e4.png" alt=""><br><img src="http://xukeqiniu.xukeai.cn/83b5c59a84db028eddf567d68b5344bb.png" alt=""></p>
 <ul>
 <li>遗忘门</li>
 </ul>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/36ae3aec84e5e94a0a30a7534840af22.png" alt=""></p>
+<p><img src="http://xukeqiniu.xukeai.cn/36ae3aec84e5e94a0a30a7534840af22.png" alt=""></p>
 <ul>
 <li>输入门</li>
 </ul>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/1d3b7ab425df98f2f564bb951c9c2878.png" alt=""></p>
+<p><img src="http://xukeqiniu.xukeai.cn/1d3b7ab425df98f2f564bb951c9c2878.png" alt=""></p>
 <ul>
 <li>当前状态</li>
 </ul>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/d9a47f577060d86970701838d18779e7.png" alt=""></p>
+<p><img src="http://xukeqiniu.xukeai.cn/d9a47f577060d86970701838d18779e7.png" alt=""></p>
 <ul>
 <li>输出层</li>
 </ul>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/199537faf0d0cbbd0771a4e9013d180a.png" alt=""></p>
+<p><img src="http://xukeqiniu.xukeai.cn/199537faf0d0cbbd0771a4e9013d180a.png" alt=""></p>
 <h4 id="Tensorflow-LSTM"><a href="#Tensorflow-LSTM" class="headerlink" title="Tensorflow LSTM"></a>Tensorflow LSTM</h4><p>tensorflow 提供了LSTM 实现的一个 basic 版本，不包含 LSTM 的一些高级扩展，同时也提供了一个标准接口，其中包含了 LSTM 的扩展。分别为：tf.nn.rnn_cell.BasicLSTMCell()，tf.nn.rnn_cell.LSTMCell()，我们这里实现一个基本版本。[^1]</p>
 <h3 id="Tensorflow-实现-LSTM"><a href="#Tensorflow-实现-LSTM" class="headerlink" title="Tensorflow 实现 LSTM"></a>Tensorflow 实现 LSTM</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tensorflow.contrib <span class="keyword">import</span> rnn</span><br></pre></td></tr></table></figure>
 <h4 id="导入数据集"><a href="#导入数据集" class="headerlink" title="导入数据集"></a>导入数据集</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Import MNIST data</span></span><br><span class="line"><span class="keyword">from</span> tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</span><br><span class="line">mnist = input_data.read_data_sets(<span class="string">"./data/"</span>, one_hot=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
@@ -698,7 +698,7 @@ Testing Accuracy: 0.875
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://oz5oe1xth.bkt.clouddn.com/avatar.png"
+                src="http://xukeqiniu.xukeai.cn/avatar.png"
                 alt="王晓芸" />
             
               <p class="site-author-name" itemprop="name">王晓芸</p>
@@ -810,7 +810,7 @@ Testing Accuracy: 0.875
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

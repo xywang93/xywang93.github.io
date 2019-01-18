@@ -93,17 +93,17 @@
 <meta property="og:site_name" content="异构 AI">
 <meta property="og:description" content="Numpy基础Numpy 是 Python 的一个科学计算包，包含了多维数组以及多维数组的操作 关于Numpy需要知道的几点：  NumPy 数组在创建时有固定的大小，不同于Python列表（可以动态增长）。更改ndarray的大小将创建一个新的数组并删除原始数据。  NumPy 数组中的元素都需要具有相同的数据类型，因此在存储器中将具有相同的大小。数组的元素如果也是数组（可以是 Python">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/0c22d321140e5e4bb6a6704609678ce8.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/43fd2d12d2c800b8077a567c7fff0b9e.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/d41ca12db14db33b463ae99edc68d80a.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/0c22d321140e5e4bb6a6704609678ce8.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/43fd2d12d2c800b8077a567c7fff0b9e.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/d41ca12db14db33b463ae99edc68d80a.png">
 <meta property="og:image" content="http://old.sebug.net/paper/books/scipydoc/_images/numpy_intro_02.png">
 <meta property="og:image" content="http://old.sebug.net/paper/books/scipydoc/_images/numpy_intro_03.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/84505c47106fab5f35883fb849e69f2e.png">
-<meta property="og:updated_time" content="2018-07-30T15:19:14.000Z">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/84505c47106fab5f35883fb849e69f2e.png">
+<meta property="og:updated_time" content="2019-01-18T08:02:24.451Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NumPy学习笔记">
 <meta name="twitter:description" content="Numpy基础Numpy 是 Python 的一个科学计算包，包含了多维数组以及多维数组的操作 关于Numpy需要知道的几点：  NumPy 数组在创建时有固定的大小，不同于Python列表（可以动态增长）。更改ndarray的大小将创建一个新的数组并删除原始数据。  NumPy 数组中的元素都需要具有相同的数据类型，因此在存储器中将具有相同的大小。数组的元素如果也是数组（可以是 Python">
-<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/0c22d321140e5e4bb6a6704609678ce8.png">
+<meta name="twitter:image" content="http://xukeqiniu.xukeai.cn/0c22d321140e5e4bb6a6704609678ce8.png">
 
 
 
@@ -315,7 +315,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="王晓芸">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oz5oe1xth.bkt.clouddn.com/avatar.png">
+      <meta itemprop="image" content="http://xukeqiniu.xukeai.cn/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -435,8 +435,8 @@
       
 
       
-        <p><img src="http://oz3lw4cji.bkt.clouddn.com/0c22d321140e5e4bb6a6704609678ce8.png" alt=""></p>
-<h2 id="Numpy基础"><a href="#Numpy基础" class="headerlink" title="Numpy基础"></a>Numpy基础</h2><p><img src="http://oz3lw4cji.bkt.clouddn.com/43fd2d12d2c800b8077a567c7fff0b9e.png" alt=""><br>Numpy 是 Python 的一个科学计算包，包含了多维数组以及多维数组的操作</p>
+        <p><img src="http://xukeqiniu.xukeai.cn/0c22d321140e5e4bb6a6704609678ce8.png" alt=""></p>
+<h2 id="Numpy基础"><a href="#Numpy基础" class="headerlink" title="Numpy基础"></a>Numpy基础</h2><p><img src="http://xukeqiniu.xukeai.cn/43fd2d12d2c800b8077a567c7fff0b9e.png" alt=""><br>Numpy 是 Python 的一个科学计算包，包含了多维数组以及多维数组的操作</p>
 <p>关于Numpy需要知道的几点：</p>
 <ul>
 <li><p>NumPy 数组在创建时有<strong>固定的大小</strong>，不同于Python列表（可以<strong>动态增长</strong>）。<strong>更改ndarray的大小将创建一个新的数组并删除原始数据</strong>。</p>
@@ -449,7 +449,7 @@
 <a id="more"></a>
 <h3 id="ndarray的内存结构"><a href="#ndarray的内存结构" class="headerlink" title="ndarray的内存结构"></a>ndarray的内存结构</h3><p>Numpy 的核心是<code>ndarray</code>对象，这个对象封装了同质数据类型的n维数组。起名 <code>ndarray</code> 的原因就是因为是 <code>n-dimension-array</code> 的简写。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a = np.array([[<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>],[<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>]], dtype=np.float32)</span><br></pre></td></tr></table></figure>
-<p>我们来看一下<code>ndarray</code>如何在内存中储存的：关于数组的描述信息保存在一个数据结构中，这个结构引用两个对象，一块用于保存数据的存储区域和一个用于描述元素类型的<code>dtype</code>对象。<br><img src="http://oz3lw4cji.bkt.clouddn.com/d41ca12db14db33b463ae99edc68d80a.png" alt=""><br>数据存储区域保存着数组中所有元素的二进制数据，<code>dtype</code>对象则知道如何将元素的二进制数据转换为可用的值。数组的维数、大小等信息都保存在<code>ndarray</code>数组对象的数据结构中。<br><code>strides</code>中保存的是当每个轴的下标增加1时，数据存储区中的指针所增加的字节数。例如图中的<code>strides</code>为12,4，即<strong>第0轴的下标增加1时，数据的地址增加12个字节</strong>：即a[1,0]的地址比a[0,0]的地址要高12个字节，正好是3个单精度浮点数的总字节数；<strong>第1轴下标增加1时，数据的地址增加4个字节</strong>，正好是单精度浮点数的字节数。</p>
+<p>我们来看一下<code>ndarray</code>如何在内存中储存的：关于数组的描述信息保存在一个数据结构中，这个结构引用两个对象，一块用于保存数据的存储区域和一个用于描述元素类型的<code>dtype</code>对象。<br><img src="http://xukeqiniu.xukeai.cn/d41ca12db14db33b463ae99edc68d80a.png" alt=""><br>数据存储区域保存着数组中所有元素的二进制数据，<code>dtype</code>对象则知道如何将元素的二进制数据转换为可用的值。数组的维数、大小等信息都保存在<code>ndarray</code>数组对象的数据结构中。<br><code>strides</code>中保存的是当每个轴的下标增加1时，数据存储区中的指针所增加的字节数。例如图中的<code>strides</code>为12,4，即<strong>第0轴的下标增加1时，数据的地址增加12个字节</strong>：即a[1,0]的地址比a[0,0]的地址要高12个字节，正好是3个单精度浮点数的总字节数；<strong>第1轴下标增加1时，数据的地址增加4个字节</strong>，正好是单精度浮点数的字节数。</p>
 <h3 id="Numpy数组初始化"><a href="#Numpy数组初始化" class="headerlink" title="Numpy数组初始化"></a>Numpy数组初始化</h3><h4 id="可以调用np-array去从list初始化一个数组"><a href="#可以调用np-array去从list初始化一个数组" class="headerlink" title="可以调用np.array去从list初始化一个数组:"></a>可以调用np.array去从list初始化一个数组:</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])  <span class="comment"># 1维数组</span></span><br><span class="line">print(type(a), a.shape, a[<span class="number">0</span>], a[<span class="number">1</span>], a[<span class="number">2</span>])</span><br><span class="line">a[<span class="number">0</span>] = <span class="number">5</span>                 <span class="comment"># 重新赋值</span></span><br><span class="line">print(a)</span><br></pre></td></tr></table></figure>
 <pre><code>&lt;class &apos;numpy.ndarray&apos;&gt; (3,) 1 2 3
 [5 2 3]
@@ -710,7 +710,7 @@ True
 <li>如果输入数组的某个轴和输出数组的对应轴的长度相同或者其长度为1时，这个数组能够用来计算，否则出错</li>
 <li>当输入数组的某个轴的长度为1时，沿着此轴运算时都用此轴上的第一组值</li>
 </ul>
-<h4 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h4><p><img src="http://oz3lw4cji.bkt.clouddn.com/84505c47106fab5f35883fb849e69f2e.png" alt=""></p>
+<h4 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h4><p><img src="http://xukeqiniu.xukeai.cn/84505c47106fab5f35883fb849e69f2e.png" alt=""></p>
 <h3 id="一些更高级的ndarray处理"><a href="#一些更高级的ndarray处理" class="headerlink" title="一些更高级的ndarray处理"></a>一些更高级的ndarray处理</h3><h4 id="where和一些其他的逻辑运算"><a href="#where和一些其他的逻辑运算" class="headerlink" title="where和一些其他的逻辑运算"></a>where和一些其他的逻辑运算</h4><p>np.where(cond,x,y)：满足条件（cond）输出x，不满足输出y</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x_arr = np.array([<span class="number">1.1</span>, <span class="number">1.2</span>, <span class="number">1.3</span>, <span class="number">1.4</span>, <span class="number">1.5</span>])</span><br><span class="line">y_arr = np.array([<span class="number">2.1</span>, <span class="number">2.2</span>, <span class="number">2.3</span>, <span class="number">2.4</span>, <span class="number">2.5</span>])</span><br><span class="line">cond = np.array([<span class="keyword">True</span>, <span class="keyword">False</span>, <span class="keyword">True</span>, <span class="keyword">True</span>, <span class="keyword">False</span>])</span><br><span class="line">print(np.where(cond, x_arr, y_arr))</span><br></pre></td></tr></table></figure>
 <pre><code>[ 1.1  2.2  1.3  1.4  2.5]
@@ -1191,7 +1191,7 @@ G:\Anaconda3\lib\site-packages\ipykernel_launcher.py:1: RuntimeWarning: overflow
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://oz5oe1xth.bkt.clouddn.com/avatar.png"
+                src="http://xukeqiniu.xukeai.cn/avatar.png"
                 alt="王晓芸" />
             
               <p class="site-author-name" itemprop="name">王晓芸</p>
@@ -1303,7 +1303,7 @@ G:\Anaconda3\lib\site-packages\ipykernel_launcher.py:1: RuntimeWarning: overflow
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

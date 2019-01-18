@@ -93,12 +93,12 @@
 <meta property="og:site_name" content="异构 AI">
 <meta property="og:description" content="前言首先，我们从一个直观的例子，讲解如何实现Tensorflow模型参数的保存以及保存后模型的读取。然后，我们在之前多层感知机的基础上进行模型的参数保存，以及参数的读取。该项技术可以用于Tensorflow分段训练模型以及对经典模型进行fine tuning（微调）">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/db94d565e96ee5ba244853e52ca1b675.png">
-<meta property="og:updated_time" content="2018-07-30T14:51:56.000Z">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/db94d565e96ee5ba244853e52ca1b675.png">
+<meta property="og:updated_time" content="2019-01-18T08:02:24.386Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tensorflow模型的保存与读取">
 <meta name="twitter:description" content="前言首先，我们从一个直观的例子，讲解如何实现Tensorflow模型参数的保存以及保存后模型的读取。然后，我们在之前多层感知机的基础上进行模型的参数保存，以及参数的读取。该项技术可以用于Tensorflow分段训练模型以及对经典模型进行fine tuning（微调）">
-<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/db94d565e96ee5ba244853e52ca1b675.png">
+<meta name="twitter:image" content="http://xukeqiniu.xukeai.cn/db94d565e96ee5ba244853e52ca1b675.png">
 
 
 
@@ -310,7 +310,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="王晓芸">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oz5oe1xth.bkt.clouddn.com/avatar.png">
+      <meta itemprop="image" content="http://xukeqiniu.xukeai.cn/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -448,7 +448,7 @@
 V2: [[-0.9465265  -0.7147392  -2.421146  ]
  [-0.48401725  0.40536404  0.21300188]]
 Model saved in file:  ./save/model.ckpt
-</code></pre><p>模型存储的文件格式如下图所示：<br><img src="http://oz3lw4cji.bkt.clouddn.com/db94d565e96ee5ba244853e52ca1b675.png" alt="模型存储文件"></p>
+</code></pre><p>模型存储的文件格式如下图所示：<br><img src="http://xukeqiniu.xukeai.cn/db94d565e96ee5ba244853e52ca1b675.png" alt="模型存储文件"></p>
 <h4 id="模型参数读取"><a href="#模型参数读取" class="headerlink" title="模型参数读取"></a>模型参数读取</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line">v1 = tf.Variable(tf.random_normal([<span class="number">1</span>,<span class="number">2</span>]), name=<span class="string">"v1"</span>)</span><br><span class="line">v2 = tf.Variable(tf.random_normal([<span class="number">2</span>,<span class="number">3</span>]), name=<span class="string">"v2"</span>)</span><br><span class="line">saver = tf.train.Saver()</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    saver.restore(sess, <span class="string">"./save/model.ckpt"</span>)</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"V1:"</span>,sess.run(v1))</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"V2:"</span>,sess.run(v2))</span><br><span class="line">    <span class="keyword">print</span> (<span class="string">"Model restored"</span>)</span><br></pre></td></tr></table></figure>
 <hr>
 <pre><code>INFO:tensorflow:Restoring parameters from ./save/model.ckpt
@@ -637,7 +637,7 @@ Accuracy: 0.9381
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://oz5oe1xth.bkt.clouddn.com/avatar.png"
+                src="http://xukeqiniu.xukeai.cn/avatar.png"
                 alt="王晓芸" />
             
               <p class="site-author-name" itemprop="name">王晓芸</p>
@@ -749,7 +749,7 @@ Accuracy: 0.9381
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

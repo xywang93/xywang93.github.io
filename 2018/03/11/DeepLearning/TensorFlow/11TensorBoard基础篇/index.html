@@ -93,15 +93,15 @@
 <meta property="og:site_name" content="异构 AI">
 <meta property="og:description" content="TensorBoard简介TensorBoard是Tensorflow自带的一个强大的可视化工具，也是一个web应用程序套件。在众多机器学习库中，Tensorflow是目前唯一自带可视化工具的库，这也是Tensorflow的一个优点。学会使用TensorBoard，将可以帮助我们构建复杂模型。 这里需要理解“可视化”的意义。“可视化”也叫做数据可视化。是关于数据之视觉表现形式的研究。这种数据的视觉">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/graph_vis_animation.gif">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/dfd03c5ec422bd903841637b67f97910.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/0d397a70c516c7fe3f7ceeec0511793f.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/45577b0533ec74f923dd92bd4d09519b.png">
-<meta property="og:updated_time" content="2018-07-30T14:52:02.000Z">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/graph_vis_animation.gif">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/dfd03c5ec422bd903841637b67f97910.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/0d397a70c516c7fe3f7ceeec0511793f.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/45577b0533ec74f923dd92bd4d09519b.png">
+<meta property="og:updated_time" content="2019-01-18T08:02:24.390Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TensorBoard基础篇">
 <meta name="twitter:description" content="TensorBoard简介TensorBoard是Tensorflow自带的一个强大的可视化工具，也是一个web应用程序套件。在众多机器学习库中，Tensorflow是目前唯一自带可视化工具的库，这也是Tensorflow的一个优点。学会使用TensorBoard，将可以帮助我们构建复杂模型。 这里需要理解“可视化”的意义。“可视化”也叫做数据可视化。是关于数据之视觉表现形式的研究。这种数据的视觉">
-<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/graph_vis_animation.gif">
+<meta name="twitter:image" content="http://xukeqiniu.xukeai.cn/graph_vis_animation.gif">
 
 
 
@@ -313,7 +313,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="王晓芸">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oz5oe1xth.bkt.clouddn.com/avatar.png">
+      <meta itemprop="image" content="http://xukeqiniu.xukeai.cn/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -453,7 +453,7 @@
 <li>最后启动TensorBoard的Web服务器。</li>
 </ul>
 <p>完成以上三个步骤，就可以在浏览器中可视化结果，Web服务器将会分析这个事件文件中的内容，并在浏览器中将结果绘制出来。</p>
-<p>如果我们已经拥有了一个事件文件，也可以直接利用TensorBoard查看这个事件文件中的摘要。<br>TensorBoard视图如下所示：<br><img src="http://oz3lw4cji.bkt.clouddn.com/graph_vis_animation.gif" alt="TensorBoard示意图"></p>
+<p>如果我们已经拥有了一个事件文件，也可以直接利用TensorBoard查看这个事件文件中的摘要。<br>TensorBoard视图如下所示：<br><img src="http://xukeqiniu.xukeai.cn/graph_vis_animation.gif" alt="TensorBoard示意图"></p>
 <a id="more"></a>
 <h3 id="Logistic回归的Tensorboard可视化"><a href="#Logistic回归的Tensorboard可视化" class="headerlink" title="Logistic回归的Tensorboard可视化"></a>Logistic回归的Tensorboard可视化</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br></pre></td></tr></table></figure>
 <h4 id="导入数据集"><a href="#导入数据集" class="headerlink" title="导入数据集"></a>导入数据集</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Import MINST data</span></span><br><span class="line"><span class="keyword">from</span> tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</span><br><span class="line">mnist = input_data.read_data_sets(<span class="string">"./data/"</span>, one_hot=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
@@ -496,9 +496,9 @@ Accuracy: 0.9136
 Run the command line:
 --&gt; tensorboard --logdir=./log
 Then open http://0.0.0.0:6006/ into your web browser
-</code></pre><h4 id="损失和准确率的可视化"><a href="#损失和准确率的可视化" class="headerlink" title="损失和准确率的可视化"></a>损失和准确率的可视化</h4><p><img src="http://oz3lw4cji.bkt.clouddn.com/dfd03c5ec422bd903841637b67f97910.png" alt="Loss and Accuracy Visualization"></p>
-<h4 id="计算图模型的基本单元"><a href="#计算图模型的基本单元" class="headerlink" title="计算图模型的基本单元"></a>计算图模型的基本单元</h4><p><img src="http://oz3lw4cji.bkt.clouddn.com/0d397a70c516c7fe3f7ceeec0511793f.png" alt=""></p>
-<h4 id="计算图模型的可视化"><a href="#计算图模型的可视化" class="headerlink" title="计算图模型的可视化"></a>计算图模型的可视化</h4><p><img src="http://oz3lw4cji.bkt.clouddn.com/45577b0533ec74f923dd92bd4d09519b.png" alt="Graph Visualization"></p>
+</code></pre><h4 id="损失和准确率的可视化"><a href="#损失和准确率的可视化" class="headerlink" title="损失和准确率的可视化"></a>损失和准确率的可视化</h4><p><img src="http://xukeqiniu.xukeai.cn/dfd03c5ec422bd903841637b67f97910.png" alt="Loss and Accuracy Visualization"></p>
+<h4 id="计算图模型的基本单元"><a href="#计算图模型的基本单元" class="headerlink" title="计算图模型的基本单元"></a>计算图模型的基本单元</h4><p><img src="http://xukeqiniu.xukeai.cn/0d397a70c516c7fe3f7ceeec0511793f.png" alt=""></p>
+<h4 id="计算图模型的可视化"><a href="#计算图模型的可视化" class="headerlink" title="计算图模型的可视化"></a>计算图模型的可视化</h4><p><img src="http://xukeqiniu.xukeai.cn/45577b0533ec74f923dd92bd4d09519b.png" alt="Graph Visualization"></p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>[TensorBoard: 图表可视化]<a href="http://wiki.jikexueyuan.com/project/tensorflow-zh/how_tos/graph_viz.html" target="_blank" rel="noopener">http://wiki.jikexueyuan.com/project/tensorflow-zh/how_tos/graph_viz.html</a></p>
 
       
@@ -649,7 +649,7 @@ Then open http://0.0.0.0:6006/ into your web browser
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://oz5oe1xth.bkt.clouddn.com/avatar.png"
+                src="http://xukeqiniu.xukeai.cn/avatar.png"
                 alt="王晓芸" />
             
               <p class="site-author-name" itemprop="name">王晓芸</p>
@@ -761,7 +761,7 @@ Then open http://0.0.0.0:6006/ into your web browser
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

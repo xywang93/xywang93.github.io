@@ -93,19 +93,19 @@
 <meta property="og:site_name" content="异构 AI">
 <meta property="og:description" content="从零开始，一步一步学习caffe的使用，期间贯穿深度学习和调参的相关知识！">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/2490fe237f606073b367b7b03551461b.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/90562df1f5d553a5069b931c5e570168.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/9aaa3f34020362e8a0eb26b565e77096.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/e8f7db6d9c51ad3a8bf482ec1d9e1979.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/d67e7866d2191053775cfcc4a5a46259.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/214ab5bd0a30fb683013e19d986e39b9.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/5bb4cb20866f0e9a3bd3c73c84d961b9.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/a1fed639d061d60d386c84f564b4d918.png">
-<meta property="og:updated_time" content="2018-02-06T01:36:40.000Z">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/2490fe237f606073b367b7b03551461b.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/90562df1f5d553a5069b931c5e570168.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/9aaa3f34020362e8a0eb26b565e77096.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/e8f7db6d9c51ad3a8bf482ec1d9e1979.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/d67e7866d2191053775cfcc4a5a46259.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/214ab5bd0a30fb683013e19d986e39b9.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/5bb4cb20866f0e9a3bd3c73c84d961b9.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/a1fed639d061d60d386c84f564b4d918.png">
+<meta property="og:updated_time" content="2019-01-18T08:02:24.329Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="caffe详解之归一化层">
 <meta name="twitter:description" content="从零开始，一步一步学习caffe的使用，期间贯穿深度学习和调参的相关知识！">
-<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/2490fe237f606073b367b7b03551461b.png">
+<meta name="twitter:image" content="http://xukeqiniu.xukeai.cn/2490fe237f606073b367b7b03551461b.png">
 
 
 
@@ -317,7 +317,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="王晓芸">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oz5oe1xth.bkt.clouddn.com/avatar.png">
+      <meta itemprop="image" content="http://xukeqiniu.xukeai.cn/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -460,18 +460,18 @@
 
       
         <blockquote>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/2490fe237f606073b367b7b03551461b.png" alt=""><br>从零开始，一步一步学习caffe的使用，期间贯穿深度学习和调参的相关知识！<br><a id="more"></a></p>
+<p><img src="http://xukeqiniu.xukeai.cn/2490fe237f606073b367b7b03551461b.png" alt=""><br>从零开始，一步一步学习caffe的使用，期间贯穿深度学习和调参的相关知识！<br><a id="more"></a></p>
 <h3 id="LRN-参数配置"><a href="#LRN-参数配置" class="headerlink" title="LRN 参数配置"></a>LRN 参数配置</h3></blockquote>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">layer &#123;</span><br><span class="line">  name: <span class="string">"norm1"</span></span><br><span class="line">  type: <span class="string">"LRN"</span></span><br><span class="line">  bottom: <span class="string">"conv1"</span></span><br><span class="line">  top: <span class="string">"norm1"</span></span><br><span class="line">  lrn_param &#123;</span><br><span class="line">    local_size: <span class="number">5</span></span><br><span class="line">    alpha: <span class="number">0.0001</span></span><br><span class="line">    beta: <span class="number">0.75</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="LRN说明"><a href="#LRN说明" class="headerlink" title="LRN说明"></a>LRN说明</h3><h4 id="示意图"><a href="#示意图" class="headerlink" title="示意图"></a>示意图</h4><p><img src="http://oz3lw4cji.bkt.clouddn.com/90562df1f5d553a5069b931c5e570168.png" alt=""></p>
-<h4 id="公式"><a href="#公式" class="headerlink" title="公式"></a>公式</h4><p><img src="http://oz3lw4cji.bkt.clouddn.com/9aaa3f34020362e8a0eb26b565e77096.png" alt=""></p>
+<h3 id="LRN说明"><a href="#LRN说明" class="headerlink" title="LRN说明"></a>LRN说明</h3><h4 id="示意图"><a href="#示意图" class="headerlink" title="示意图"></a>示意图</h4><p><img src="http://xukeqiniu.xukeai.cn/90562df1f5d553a5069b931c5e570168.png" alt=""></p>
+<h4 id="公式"><a href="#公式" class="headerlink" title="公式"></a>公式</h4><p><img src="http://xukeqiniu.xukeai.cn/9aaa3f34020362e8a0eb26b565e77096.png" alt=""></p>
 <h4 id="意义"><a href="#意义" class="headerlink" title="意义"></a>意义</h4><p><code>LRN</code>操作主要目的是在<strong>深度上进行平滑操作</strong>，使得数据在深度层面上有一定的联系。</p>
-<h4 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h4><p><code>LRN</code>层是在<code>AlexNet</code>网络中提出来的，但是因为其计算的复杂度和后期的效果并不理想，在后面的网络中基本上抛弃的LRN的归一化方法。<br><img src="http://oz3lw4cji.bkt.clouddn.com/e8f7db6d9c51ad3a8bf482ec1d9e1979.png" alt=""></p>
+<h4 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h4><p><code>LRN</code>层是在<code>AlexNet</code>网络中提出来的，但是因为其计算的复杂度和后期的效果并不理想，在后面的网络中基本上抛弃的LRN的归一化方法。<br><img src="http://xukeqiniu.xukeai.cn/e8f7db6d9c51ad3a8bf482ec1d9e1979.png" alt=""></p>
 <h3 id="Batch-Norm-参数配置"><a href="#Batch-Norm-参数配置" class="headerlink" title="Batch Norm  参数配置"></a>Batch Norm  参数配置</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">layer &#123;</span><br><span class="line">	bottom: <span class="string">"conv1"</span></span><br><span class="line">	top: <span class="string">"conv1"</span></span><br><span class="line">	name: <span class="string">"bn_conv1"</span></span><br><span class="line">	type: <span class="string">"BatchNorm"</span></span><br><span class="line">	batch_norm_param &#123;</span><br><span class="line">		use_global_stats: <span class="literal">true</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">layer &#123;</span><br><span class="line">	bottom: <span class="string">"conv1"</span></span><br><span class="line">	top: <span class="string">"conv1"</span></span><br><span class="line">	name: <span class="string">"scale_conv1"</span></span><br><span class="line">	type: <span class="string">"Scale"</span></span><br><span class="line">	scale_param &#123;</span><br><span class="line">		bias_term: <span class="literal">true</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">message BatchNormParameter &#123;</span><br><span class="line">  <span class="comment">// 如果为真，则使用保存的均值和方差，否则采用滑动平均计算新的均值和方差。</span></span><br><span class="line">  <span class="comment">// 该参数缺省的时候，如果是测试阶段则等价为真，如果是训练阶段则等价为假。</span></span><br><span class="line">  optional <span class="keyword">bool</span> use_global_stats = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 滑动平均的衰减系数，默认为0.999</span></span><br><span class="line">  optional <span class="keyword">float</span> moving_average_fraction = <span class="number">2</span> [<span class="keyword">default</span> = <span class="number">.999</span>];</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 分母附加值，防止除以方差时出现除0操作，默认为1e-5</span></span><br><span class="line">  optional <span class="keyword">float</span> eps = <span class="number">3</span> [<span class="keyword">default</span> = <span class="number">1e-5</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Batch-Norm-说明"><a href="#Batch-Norm-说明" class="headerlink" title="Batch Norm 说明"></a>Batch Norm 说明</h3><h4 id="公式-1"><a href="#公式-1" class="headerlink" title="公式"></a>公式</h4><p><img src="http://oz3lw4cji.bkt.clouddn.com/d67e7866d2191053775cfcc4a5a46259.png" alt=""></p>
-<h4 id="意义-1"><a href="#意义-1" class="headerlink" title="意义"></a>意义</h4><p>在深度神经网络的训练过程中，先前层参数的调整会导致之后每一层输入值的分布发生变化，这种现象会使得模型的训练变得复杂。因为<strong>分布均匀且统一的数据往往更加容易使得算法训练出高准确率的模型</strong>。<code>Batch Norm</code>主要借鉴的是<strong>白化的思想</strong>，目的是<strong>将数据尽量维持在方差为1，均值为0的分布上</strong>。因为数据的总量十分庞大，我们无法计算出整个数据集的均值与方差，因此采用Batch的思想，<strong>分块的进行白化处理</strong>，<code>Batch Norm</code>的精华体现在最后一个公式上，<strong>白化之后进行拉伸与平移，也就是对数据分布进行修正。并且拉伸与平移的系数是通过训练得到的，这样，我们将<code>batch</code>在整个数据集的整体分布状态也学习了出来，防止以偏概全</strong>！下图可以清晰的看出，加入<code>Batch Norm</code>使得每一层的数据更够有效且均匀的传递到下一层中去。<br><img src="http://oz3lw4cji.bkt.clouddn.com/214ab5bd0a30fb683013e19d986e39b9.png" alt=""></p>
-<h4 id="应用-1"><a href="#应用-1" class="headerlink" title="应用"></a>应用</h4><p><code>Batch Norm</code>在<code>ResNet</code>网络和<code>Inception-v2</code>、<code>Inception-v3</code>、<code>Inception-v4</code>中均有用到。<br><img src="http://oz3lw4cji.bkt.clouddn.com/5bb4cb20866f0e9a3bd3c73c84d961b9.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/a1fed639d061d60d386c84f564b4d918.png" alt=""></p>
+<h3 id="Batch-Norm-说明"><a href="#Batch-Norm-说明" class="headerlink" title="Batch Norm 说明"></a>Batch Norm 说明</h3><h4 id="公式-1"><a href="#公式-1" class="headerlink" title="公式"></a>公式</h4><p><img src="http://xukeqiniu.xukeai.cn/d67e7866d2191053775cfcc4a5a46259.png" alt=""></p>
+<h4 id="意义-1"><a href="#意义-1" class="headerlink" title="意义"></a>意义</h4><p>在深度神经网络的训练过程中，先前层参数的调整会导致之后每一层输入值的分布发生变化，这种现象会使得模型的训练变得复杂。因为<strong>分布均匀且统一的数据往往更加容易使得算法训练出高准确率的模型</strong>。<code>Batch Norm</code>主要借鉴的是<strong>白化的思想</strong>，目的是<strong>将数据尽量维持在方差为1，均值为0的分布上</strong>。因为数据的总量十分庞大，我们无法计算出整个数据集的均值与方差，因此采用Batch的思想，<strong>分块的进行白化处理</strong>，<code>Batch Norm</code>的精华体现在最后一个公式上，<strong>白化之后进行拉伸与平移，也就是对数据分布进行修正。并且拉伸与平移的系数是通过训练得到的，这样，我们将<code>batch</code>在整个数据集的整体分布状态也学习了出来，防止以偏概全</strong>！下图可以清晰的看出，加入<code>Batch Norm</code>使得每一层的数据更够有效且均匀的传递到下一层中去。<br><img src="http://xukeqiniu.xukeai.cn/214ab5bd0a30fb683013e19d986e39b9.png" alt=""></p>
+<h4 id="应用-1"><a href="#应用-1" class="headerlink" title="应用"></a>应用</h4><p><code>Batch Norm</code>在<code>ResNet</code>网络和<code>Inception-v2</code>、<code>Inception-v3</code>、<code>Inception-v4</code>中均有用到。<br><img src="http://xukeqiniu.xukeai.cn/5bb4cb20866f0e9a3bd3c73c84d961b9.png" alt=""><br><img src="http://xukeqiniu.xukeai.cn/a1fed639d061d60d386c84f564b4d918.png" alt=""></p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>批标准化 (Batch Normalization)<br><a href="https://morvanzhou.github.io/tutorials/machine-learning/ML-intro/3-08-batch-normalization/" target="_blank" rel="noopener">https://morvanzhou.github.io/tutorials/machine-learning/ML-intro/3-08-batch-normalization/</a></p>
 
       
@@ -622,7 +622,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://oz5oe1xth.bkt.clouddn.com/avatar.png"
+                src="http://xukeqiniu.xukeai.cn/avatar.png"
                 alt="王晓芸" />
             
               <p class="site-author-name" itemprop="name">王晓芸</p>
@@ -734,7 +734,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

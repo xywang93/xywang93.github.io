@@ -93,14 +93,14 @@
 <meta property="og:site_name" content="异构 AI">
 <meta property="og:description" content="脉动阵列，本身的核心概念就是让数据在运算单元的阵列中进行流动，减少访存的次数。脉动阵列使得结构更加规整，布线更加统一，提高频率。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/6d467ebf3a2314ec97aeb83d1dad5cfc.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/6ea88b692aadc01c66a38210814213a0.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/%E8%84%89%E5%8A%A8%E9%98%B5%E5%88%97%E7%A4%BA%E6%84%8F%E5%9B%BE.gif">
-<meta property="og:updated_time" content="2018-01-18T09:30:20.000Z">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/6d467ebf3a2314ec97aeb83d1dad5cfc.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/6ea88b692aadc01c66a38210814213a0.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/%E8%84%89%E5%8A%A8%E9%98%B5%E5%88%97%E7%A4%BA%E6%84%8F%E5%9B%BE.gif">
+<meta property="og:updated_time" content="2019-01-18T08:02:24.587Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="经典设计结构之脉动阵列OpenCL实现">
 <meta name="twitter:description" content="脉动阵列，本身的核心概念就是让数据在运算单元的阵列中进行流动，减少访存的次数。脉动阵列使得结构更加规整，布线更加统一，提高频率。">
-<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/6d467ebf3a2314ec97aeb83d1dad5cfc.png">
+<meta name="twitter:image" content="http://xukeqiniu.xukeai.cn/6d467ebf3a2314ec97aeb83d1dad5cfc.png">
 
 
 
@@ -312,7 +312,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="王晓芸">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oz5oe1xth.bkt.clouddn.com/avatar.png">
+      <meta itemprop="image" content="http://xukeqiniu.xukeai.cn/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -454,10 +454,10 @@
       
 
       
-        <blockquote class="blockquote-center"><br><br><img src="http://oz3lw4cji.bkt.clouddn.com/6d467ebf3a2314ec97aeb83d1dad5cfc.png" alt=""><br><br>脉动阵列，本身的核心概念就是让数据在运算单元的阵列中进行流动，减少访存的次数。<br>脉动阵列使得结构更加规整，布线更加统一，提高频率。<br><br></blockquote>
+        <blockquote class="blockquote-center"><br><br><img src="http://xukeqiniu.xukeai.cn/6d467ebf3a2314ec97aeb83d1dad5cfc.png" alt=""><br><br>脉动阵列，本身的核心概念就是让数据在运算单元的阵列中进行流动，减少访存的次数。<br>脉动阵列使得结构更加规整，布线更加统一，提高频率。<br><br></blockquote>
 
 <a id="more"></a>
-<h3 id="脉动阵列架构"><a href="#脉动阵列架构" class="headerlink" title="脉动阵列架构"></a>脉动阵列架构</h3><p><img src="http://oz3lw4cji.bkt.clouddn.com/6ea88b692aadc01c66a38210814213a0.png" alt=""><br>上图中上半部分是传统的计算系统的模型。一个处理单元（<code>PE</code>）从存储器（<code>memory</code>）读取数据，进行处理，然后再写回到存储器。这个系统的最大问题是：数据存取的速度往往大大低于数据处理的速度。因此，整个系统的处理能力（<code>MOPS</code>，每秒完成的操作）很大程度受限于访存的能力。脉动阵列架构用了一个很简单的方法：让数据尽量在处理单元中多流动一会儿。正如上图的下半部分所描述的，第一个数据首先进入第一个PE，经过处理以后被传递到下一个PE，同时第二个数据进入第一个PE。以此类推，当第一个数据到达最后一个PE，它已经被处理了多次。所以，脉动架构实际上是多次重用了输入数据。因此，它可以在消耗较小的<code>memory</code>带宽的情况下实现较高的运算吞吐率。当然，脉动架构还有其它一些好处，比如模块化的设计容易扩展，简单和规则的数据和控制流程，使用简单并且均匀的单元（<code>cell</code>），避免了全局广播和扇入（<code>fan-in</code>），以及快速的响应时间等等。<br>总结起来，脉动阵列架构有几个特征：</p>
+<h3 id="脉动阵列架构"><a href="#脉动阵列架构" class="headerlink" title="脉动阵列架构"></a>脉动阵列架构</h3><p><img src="http://xukeqiniu.xukeai.cn/6ea88b692aadc01c66a38210814213a0.png" alt=""><br>上图中上半部分是传统的计算系统的模型。一个处理单元（<code>PE</code>）从存储器（<code>memory</code>）读取数据，进行处理，然后再写回到存储器。这个系统的最大问题是：数据存取的速度往往大大低于数据处理的速度。因此，整个系统的处理能力（<code>MOPS</code>，每秒完成的操作）很大程度受限于访存的能力。脉动阵列架构用了一个很简单的方法：让数据尽量在处理单元中多流动一会儿。正如上图的下半部分所描述的，第一个数据首先进入第一个PE，经过处理以后被传递到下一个PE，同时第二个数据进入第一个PE。以此类推，当第一个数据到达最后一个PE，它已经被处理了多次。所以，脉动架构实际上是多次重用了输入数据。因此，它可以在消耗较小的<code>memory</code>带宽的情况下实现较高的运算吞吐率。当然，脉动架构还有其它一些好处，比如模块化的设计容易扩展，简单和规则的数据和控制流程，使用简单并且均匀的单元（<code>cell</code>），避免了全局广播和扇入（<code>fan-in</code>），以及快速的响应时间等等。<br>总结起来，脉动阵列架构有几个特征：</p>
 <ul>
 <li>由多个同构的<code>PE</code>构成，可以是一维或二维，串行、阵列或树的结构（现在我们看到的更多的是阵列形式）；</li>
 <li><code>PE</code>功能相对简单，系统通过实现大量<code>PE</code>并行来提高运算的效率；</li>
@@ -467,7 +467,7 @@
 <h3 id="脉动阵列实现矩阵乘法"><a href="#脉动阵列实现矩阵乘法" class="headerlink" title="脉动阵列实现矩阵乘法"></a>脉动阵列实现矩阵乘法</h3><ul>
 <li>脉动阵列矩阵乘法示意图</li>
 </ul>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/%E8%84%89%E5%8A%A8%E9%98%B5%E5%88%97%E7%A4%BA%E6%84%8F%E5%9B%BE.gif" alt=""></p>
+<p><img src="http://xukeqiniu.xukeai.cn/%E8%84%89%E5%8A%A8%E9%98%B5%E5%88%97%E7%A4%BA%E6%84%8F%E5%9B%BE.gif" alt=""></p>
 <ul>
 <li>源码实现</li>
 </ul>
@@ -540,8 +540,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/12/SDAccel/优化/kernel_opt/shift_register/" rel="next" title="经典设计结构之移位寄存器OpenCL实现">
-                <i class="fa fa-chevron-left"></i> 经典设计结构之移位寄存器OpenCL实现
+              <a href="/2018/01/09/Python/04-seaborn/" rel="next" title="Seaborn学习笔记">
+                <i class="fa fa-chevron-left"></i> Seaborn学习笔记
               </a>
             
           </div>
@@ -550,8 +550,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/01/18/SDAccel/优化/kernel_opt/Loop_Perfect/" rel="prev" title="循环优化之最佳循环（Perfect Loop）">
-                循环优化之最佳循环（Perfect Loop） <i class="fa fa-chevron-right"></i>
+              <a href="/2018/01/12/SDAccel/优化/kernel_opt/shift_register/" rel="prev" title="经典设计结构之移位寄存器OpenCL实现">
+                经典设计结构之移位寄存器OpenCL实现 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -624,7 +624,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://oz5oe1xth.bkt.clouddn.com/avatar.png"
+                src="http://xukeqiniu.xukeai.cn/avatar.png"
                 alt="王晓芸" />
             
               <p class="site-author-name" itemprop="name">王晓芸</p>
@@ -736,7 +736,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

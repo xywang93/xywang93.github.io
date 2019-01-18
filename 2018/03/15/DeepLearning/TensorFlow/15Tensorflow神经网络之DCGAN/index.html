@@ -93,13 +93,13 @@
 <meta property="og:site_name" content="异构 AI">
 <meta property="og:description" content="DCGAN简介DCGAN在GAN的基础上优化了网络结构，加入了 conv，batch_norm 等层，使得网络更容易训练，网络结构如下：注意：本图只是示例，与下面实际网络参数不对应。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/67d781d61c77b7d1985f57ecc932a1e3.png">
-<meta property="og:image" content="http://oz5oe1xth.bkt.clouddn.com/c614ca83379dc0e98f9d49ff17e80894.png">
-<meta property="og:updated_time" content="2018-07-30T14:52:32.000Z">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/67d781d61c77b7d1985f57ecc932a1e3.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/c614ca83379dc0e98f9d49ff17e80894.png">
+<meta property="og:updated_time" content="2019-01-18T08:02:38.428Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tensorflow神经网络之DCGAN">
 <meta name="twitter:description" content="DCGAN简介DCGAN在GAN的基础上优化了网络结构，加入了 conv，batch_norm 等层，使得网络更容易训练，网络结构如下：注意：本图只是示例，与下面实际网络参数不对应。">
-<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/67d781d61c77b7d1985f57ecc932a1e3.png">
+<meta name="twitter:image" content="http://xukeqiniu.xukeai.cn/67d781d61c77b7d1985f57ecc932a1e3.png">
 
 
 
@@ -311,7 +311,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="王晓芸">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oz5oe1xth.bkt.clouddn.com/avatar.png">
+      <meta itemprop="image" content="http://xukeqiniu.xukeai.cn/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -442,7 +442,7 @@
       
 
       
-        <h3 id="DCGAN简介"><a href="#DCGAN简介" class="headerlink" title="DCGAN简介"></a>DCGAN简介</h3><p>DCGAN在GAN的基础上优化了网络结构，加入了 <code>conv</code>，<code>batch_norm</code> 等层，使得网络更容易训练，网络结构如下：<br><img src="http://oz3lw4cji.bkt.clouddn.com/67d781d61c77b7d1985f57ecc932a1e3.png" alt="DCGAN网络结构图"><br>注意：本图只是示例，与下面实际网络参数不对应。</p>
+        <h3 id="DCGAN简介"><a href="#DCGAN简介" class="headerlink" title="DCGAN简介"></a>DCGAN简介</h3><p>DCGAN在GAN的基础上优化了网络结构，加入了 <code>conv</code>，<code>batch_norm</code> 等层，使得网络更容易训练，网络结构如下：<br><img src="http://xukeqiniu.xukeai.cn/67d781d61c77b7d1985f57ecc932a1e3.png" alt="DCGAN网络结构图"><br>注意：本图只是示例，与下面实际网络参数不对应。</p>
 <a id="more"></a>
 <h3 id="Tensorflow实现DCGAN"><a href="#Tensorflow实现DCGAN" class="headerlink" title="Tensorflow实现DCGAN"></a>Tensorflow实现DCGAN</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> division, print_function, absolute_import</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br></pre></td></tr></table></figure>
 <h4 id="导入数据集"><a href="#导入数据集" class="headerlink" title="导入数据集"></a>导入数据集</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Import MNIST data</span></span><br><span class="line"><span class="keyword">from</span> tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</span><br><span class="line">mnist = input_data.read_data_sets(<span class="string">"./data/"</span>, one_hot=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
@@ -477,7 +477,7 @@ Step 9000: Generator Loss: 4.660669, Discriminator Loss: 0.182506
 Step 9500: Generator Loss: 4.492438, Discriminator Loss: 0.411817
 Step 10000: Generator Loss: 5.906080, Discriminator Loss: 0.088082
 </code></pre><h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Testing</span></span><br><span class="line"><span class="comment"># Generate images from noise, using the generator network.</span></span><br><span class="line">n = <span class="number">6</span></span><br><span class="line">canvas = np.empty((<span class="number">28</span> * n, <span class="number">28</span> * n))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    <span class="comment"># Noise input.</span></span><br><span class="line">    z = np.random.uniform(<span class="number">-1.</span>, <span class="number">1.</span>, size=[n, noise_dim])</span><br><span class="line">    <span class="comment"># Generate image from noise.</span></span><br><span class="line">    g = sess.run(gen_sample, feed_dict=&#123;noise_input: z, is_training:<span class="keyword">False</span>&#125;)</span><br><span class="line">    <span class="comment"># Rescale values to the original [0, 1] (from tanh -&gt; [-1, 1])</span></span><br><span class="line">    g = (g + <span class="number">1.</span>) / <span class="number">2.</span></span><br><span class="line">    <span class="comment"># Reverse colours for better display</span></span><br><span class="line">    g = <span class="number">-1</span> * (g - <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(n):</span><br><span class="line">        <span class="comment"># Draw the generated digits</span></span><br><span class="line">        canvas[i * <span class="number">28</span>:(i + <span class="number">1</span>) * <span class="number">28</span>, j * <span class="number">28</span>:(j + <span class="number">1</span>) * <span class="number">28</span>] = g[j].reshape([<span class="number">28</span>, <span class="number">28</span>])</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(n, n))</span><br><span class="line">plt.imshow(canvas, origin=<span class="string">"upper"</span>, cmap=<span class="string">"gray"</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<p><img src="http://oz5oe1xth.bkt.clouddn.com/c614ca83379dc0e98f9d49ff17e80894.png" alt=""></p>
+<p><img src="http://xukeqiniu.xukeai.cn/c614ca83379dc0e98f9d49ff17e80894.png" alt=""></p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>[1] <a href="https://blog.csdn.net/u013146742/article/details/51986575" target="_blank" rel="noopener">RELU 激活函数及其他相关的函数</a></p>
 
       
@@ -628,7 +628,7 @@ Step 10000: Generator Loss: 5.906080, Discriminator Loss: 0.088082
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://oz5oe1xth.bkt.clouddn.com/avatar.png"
+                src="http://xukeqiniu.xukeai.cn/avatar.png"
                 alt="王晓芸" />
             
               <p class="site-author-name" itemprop="name">王晓芸</p>
@@ -740,7 +740,7 @@ Step 10000: Generator Loss: 5.906080, Discriminator Loss: 0.088082
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

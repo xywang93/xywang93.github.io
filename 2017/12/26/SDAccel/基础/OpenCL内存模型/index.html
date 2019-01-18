@@ -91,16 +91,16 @@
 <meta property="og:url" content="http://xywang93.github.io.git/2017/12/26/SDAccel/基础/OpenCL内存模型/index.html">
 <meta property="og:site_name" content="异构 AI">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/ba8a91ba461c7aee85797c3a0d624746.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/dd72efd1d54575c5443bb809c32802cc.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/0051b0fb402e185c86f45a4fb5fd5e49.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/3d304d01541ddc4d6f277ca75a822790.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/105ed4ec6822b54ef66e2dc578ac140d.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/9e1a687b0b73cbfdd6ba0e07eced7c7b.png">
-<meta property="og:updated_time" content="2018-01-03T09:22:18.000Z">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/ba8a91ba461c7aee85797c3a0d624746.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/dd72efd1d54575c5443bb809c32802cc.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/0051b0fb402e185c86f45a4fb5fd5e49.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/3d304d01541ddc4d6f277ca75a822790.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/105ed4ec6822b54ef66e2dc578ac140d.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/9e1a687b0b73cbfdd6ba0e07eced7c7b.png">
+<meta property="og:updated_time" content="2019-01-18T08:02:24.614Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Xilinx OpenCL的存储模型">
-<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/ba8a91ba461c7aee85797c3a0d624746.png">
+<meta name="twitter:image" content="http://xukeqiniu.xukeai.cn/ba8a91ba461c7aee85797c3a0d624746.png">
 
 
 
@@ -312,7 +312,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="王晓芸">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oz5oe1xth.bkt.clouddn.com/avatar.png">
+      <meta itemprop="image" content="http://xukeqiniu.xukeai.cn/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -443,18 +443,18 @@
       
 
       
-        <blockquote class="blockquote-center"><br><br><img src="http://oz3lw4cji.bkt.clouddn.com/ba8a91ba461c7aee85797c3a0d624746.png" alt=""><br><br></blockquote>
+        <blockquote class="blockquote-center"><br><br><img src="http://xukeqiniu.xukeai.cn/ba8a91ba461c7aee85797c3a0d624746.png" alt=""><br><br></blockquote>
 
 <a id="more"></a>
-<p>具体细节的展示图如下：<br><img src="http://oz3lw4cji.bkt.clouddn.com/dd72efd1d54575c5443bb809c32802cc.png" alt=""><br>通过上图可知，在OpenCL中提供的存储模型中，有如下几种Memory类型。</p>
+<p>具体细节的展示图如下：<br><img src="http://xukeqiniu.xukeai.cn/dd72efd1d54575c5443bb809c32802cc.png" alt=""><br>通过上图可知，在OpenCL中提供的存储模型中，有如下几种Memory类型。</p>
 <h3 id="Host-Memory"><a href="#Host-Memory" class="headerlink" title="Host Memory"></a>Host Memory</h3><p>Host Memory指的是连接在主板上的内存条，仅供host进行数据读取。</p>
-<h3 id="Off-Chip-Global-memory"><a href="#Off-Chip-Global-memory" class="headerlink" title="Off-Chip Global memory"></a>Off-Chip Global memory</h3><p>Off-Chip Global memory 指的是在FPGA板卡上通过硬件与<code>FPGA</code>芯片连接的内存条。数据存取所花费的时间相对较长，但是容量相对较大。<br><img src="http://oz3lw4cji.bkt.clouddn.com/0051b0fb402e185c86f45a4fb5fd5e49.png" alt=""></p>
+<h3 id="Off-Chip-Global-memory"><a href="#Off-Chip-Global-memory" class="headerlink" title="Off-Chip Global memory"></a>Off-Chip Global memory</h3><p>Off-Chip Global memory 指的是在FPGA板卡上通过硬件与<code>FPGA</code>芯片连接的内存条。数据存取所花费的时间相对较长，但是容量相对较大。<br><img src="http://xukeqiniu.xukeai.cn/0051b0fb402e185c86f45a4fb5fd5e49.png" alt=""></p>
 <ul>
 <li>Off-Chip Global Memory<br>Off-Chip Global Memory Host端可以通过PCIe进行数据读写，Device端同样可以进行数据的读写</li>
 <li>Off-Chip Constant Global Memory<br>Constant Global Memory同样是在FPGA板卡上通过硬件与<code>FPGA</code>芯片连接的内存条。不同的是Host端只能进行写入，Device端只能进行读出。适用于参数数据的传输。<h3 id="On-Chip-Memory"><a href="#On-Chip-Memory" class="headerlink" title="On-Chip Memory"></a>On-Chip Memory</h3>On-Chip Memory 主要是采用FPGA中BRAM资源组成，具有随机存储和低延时的特点，但是资源有限。</li>
-<li>On-Chip Global Memory<br><img src="http://oz3lw4cji.bkt.clouddn.com/3d304d01541ddc4d6f277ca75a822790.png" alt=""></li>
-<li>On-Chip Pipes<br><img src="http://oz3lw4cji.bkt.clouddn.com/105ed4ec6822b54ef66e2dc578ac140d.png" alt=""></li>
-<li>Local Memory &amp; Private Memory<br>Local Memory可用于所有的<code>work-item</code><br>Private Memory仅用于<code>single work-item</code><br><img src="http://oz3lw4cji.bkt.clouddn.com/9e1a687b0b73cbfdd6ba0e07eced7c7b.png" alt=""></li>
+<li>On-Chip Global Memory<br><img src="http://xukeqiniu.xukeai.cn/3d304d01541ddc4d6f277ca75a822790.png" alt=""></li>
+<li>On-Chip Pipes<br><img src="http://xukeqiniu.xukeai.cn/105ed4ec6822b54ef66e2dc578ac140d.png" alt=""></li>
+<li>Local Memory &amp; Private Memory<br>Local Memory可用于所有的<code>work-item</code><br>Private Memory仅用于<code>single work-item</code><br><img src="http://xukeqiniu.xukeai.cn/9e1a687b0b73cbfdd6ba0e07eced7c7b.png" alt=""></li>
 </ul>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://china.xilinx.com/video/hardware/opencl-memory-architecture.html" target="_blank" rel="noopener">OpenCL Memory Architecture</a><br>SDAccel Environment  Optimization Guide (UG1207)</p>
 
@@ -608,7 +608,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://oz5oe1xth.bkt.clouddn.com/avatar.png"
+                src="http://xukeqiniu.xukeai.cn/avatar.png"
                 alt="王晓芸" />
             
               <p class="site-author-name" itemprop="name">王晓芸</p>
@@ -720,7 +720,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

@@ -93,18 +93,18 @@
 <meta property="og:site_name" content="异构 AI">
 <meta property="og:description" content="从一个矩阵乘法的例子一步一步进行功能设计与性能优化。SDAccel矩阵乘法优化（一）SDAccel矩阵乘法优化（二）SDAccel矩阵乘法优化（三）SDAccel矩阵乘法优化（四）  mmult实现及优化步骤   步骤 实现功能 关键概念/ Keywords     1、cpu实现 即在host端实现简单的矩阵乘法，便于比对数据与性能对比   2、OpenCL实现 在device端实现基于Open">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/78a27d3a0dfbdabcbb72001593a6d2d0.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/89f2fca8fde82ccf904243adbb520dc5.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/7696f0ee156a3a1de3aebd4bc1631f02.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/9323b98639be0a46975f06cea4ee9777.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/1d973057d6b3609af2256ab9a19e4edf.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/98602da9079cd03cf8ccc7045d21ea04.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/513370e7eff99b2da9e41d14edfe265d.png">
-<meta property="og:updated_time" content="2018-01-21T13:24:32.000Z">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/78a27d3a0dfbdabcbb72001593a6d2d0.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/89f2fca8fde82ccf904243adbb520dc5.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/7696f0ee156a3a1de3aebd4bc1631f02.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/9323b98639be0a46975f06cea4ee9777.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/1d973057d6b3609af2256ab9a19e4edf.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/98602da9079cd03cf8ccc7045d21ea04.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/513370e7eff99b2da9e41d14edfe265d.png">
+<meta property="og:updated_time" content="2019-01-18T08:02:24.611Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDAccel矩阵乘法优化（四）">
 <meta name="twitter:description" content="从一个矩阵乘法的例子一步一步进行功能设计与性能优化。SDAccel矩阵乘法优化（一）SDAccel矩阵乘法优化（二）SDAccel矩阵乘法优化（三）SDAccel矩阵乘法优化（四）  mmult实现及优化步骤   步骤 实现功能 关键概念/ Keywords     1、cpu实现 即在host端实现简单的矩阵乘法，便于比对数据与性能对比   2、OpenCL实现 在device端实现基于Open">
-<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/78a27d3a0dfbdabcbb72001593a6d2d0.png">
+<meta name="twitter:image" content="http://xukeqiniu.xukeai.cn/78a27d3a0dfbdabcbb72001593a6d2d0.png">
 
 
 
@@ -316,7 +316,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="王晓芸">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oz5oe1xth.bkt.clouddn.com/avatar.png">
+      <meta itemprop="image" content="http://xukeqiniu.xukeai.cn/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -458,7 +458,7 @@
       
 
       
-        <blockquote class="blockquote-center"><br><img src="http://oz3lw4cji.bkt.clouddn.com/78a27d3a0dfbdabcbb72001593a6d2d0.png" alt=""><br>从一个矩阵乘法的例子一步一步进行功能设计与性能优化。<br><a href="https://xuke225.github.io/2017/11/22/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%961/" target="_blank" rel="noopener">SDAccel矩阵乘法优化（一）</a><br><a href="https://xuke225.github.io/2017/11/23/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%962/" target="_blank" rel="noopener">SDAccel矩阵乘法优化（二）</a><br><a href="https://xuke225.github.io/2017/11/24/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%963/" target="_blank" rel="noopener">SDAccel矩阵乘法优化（三）</a><br><a href="https://xuke225.github.io/2017/11/25/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%964/" target="_blank" rel="noopener">SDAccel矩阵乘法优化（四）</a><br></blockquote>
+        <blockquote class="blockquote-center"><br><img src="http://xukeqiniu.xukeai.cn/78a27d3a0dfbdabcbb72001593a6d2d0.png" alt=""><br>从一个矩阵乘法的例子一步一步进行功能设计与性能优化。<br><a href="https://xuke225.github.io/2017/11/22/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%961/" target="_blank" rel="noopener">SDAccel矩阵乘法优化（一）</a><br><a href="https://xuke225.github.io/2017/11/23/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%962/" target="_blank" rel="noopener">SDAccel矩阵乘法优化（二）</a><br><a href="https://xuke225.github.io/2017/11/24/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%963/" target="_blank" rel="noopener">SDAccel矩阵乘法优化（三）</a><br><a href="https://xuke225.github.io/2017/11/25/SDAccel/%E4%BC%98%E5%8C%96/%E7%BB%BC%E5%90%88%E6%A1%88%E4%BE%8B/mmult%E4%BC%98%E5%8C%964/" target="_blank" rel="noopener">SDAccel矩阵乘法优化（四）</a><br></blockquote>
 
 <h3 id="mmult实现及优化步骤"><a href="#mmult实现及优化步骤" class="headerlink" title="mmult实现及优化步骤"></a>mmult实现及优化步骤</h3><table>
 <thead>
@@ -501,11 +501,11 @@
 <ul>
 <li>xcl_pipeline_loop</li>
 </ul>
-<p>循环流水（<code>Loop pipelining</code>）是在一个迭代周期内的多个操作可实现并行处理。下图中的<code>A</code>展示了默认情况下的顺序执行操作，每次读操作之间相差3个时钟周期（<code>II=3</code>），离最后一次写操作相差8个时钟周期。图中的<code>B</code>展示了加入循环流水的示意图，每次读操作之间相差1个周期(<code>II=1</code>)，离最后一次写操作相差4个时钟周期，在使用同样的资源下，提高了流水线的启动间隔和延迟。<br><img src="http://oz3lw4cji.bkt.clouddn.com/89f2fca8fde82ccf904243adbb520dc5.png" alt=""></p>
+<p>循环流水（<code>Loop pipelining</code>）是在一个迭代周期内的多个操作可实现并行处理。下图中的<code>A</code>展示了默认情况下的顺序执行操作，每次读操作之间相差3个时钟周期（<code>II=3</code>），离最后一次写操作相差8个时钟周期。图中的<code>B</code>展示了加入循环流水的示意图，每次读操作之间相差1个周期(<code>II=1</code>)，离最后一次写操作相差4个时钟周期，在使用同样的资源下，提高了流水线的启动间隔和延迟。<br><img src="http://xukeqiniu.xukeai.cn/89f2fca8fde82ccf904243adbb520dc5.png" alt=""></p>
 <ul>
 <li>xcl_array_partition</li>
 </ul>
-<p>下图所示的是数组分隔的三种方式：<code>block</code>、<code>cyclic</code>和<code>complete</code>。<code>block</code>和<code>cyclic</code>是根据<code>factor</code>参数的设置来决定划分多少个独立的<code>RAM</code>存储（如图中的<code>factor=2</code>）。按块划为<code>block</code>是在原数组上按连续存储元素的方式划分成<code>factor</code>个块单元；按轮询<code>cyclic</code>是在原数组上按交叉存储元素的方式划分成<code>factor</code>个块单元；按全部展开<code>complete</code>是把原数组划分为一个个独立的元素（寄存器）。<br><img src="http://oz3lw4cji.bkt.clouddn.com/7696f0ee156a3a1de3aebd4bc1631f02.png" alt=""><br>对于多维数组的分割，可按照数组的维度来划分：<br><img src="http://oz3lw4cji.bkt.clouddn.com/9323b98639be0a46975f06cea4ee9777.png" alt=""></p>
+<p>下图所示的是数组分隔的三种方式：<code>block</code>、<code>cyclic</code>和<code>complete</code>。<code>block</code>和<code>cyclic</code>是根据<code>factor</code>参数的设置来决定划分多少个独立的<code>RAM</code>存储（如图中的<code>factor=2</code>）。按块划为<code>block</code>是在原数组上按连续存储元素的方式划分成<code>factor</code>个块单元；按轮询<code>cyclic</code>是在原数组上按交叉存储元素的方式划分成<code>factor</code>个块单元；按全部展开<code>complete</code>是把原数组划分为一个个独立的元素（寄存器）。<br><img src="http://xukeqiniu.xukeai.cn/7696f0ee156a3a1de3aebd4bc1631f02.png" alt=""><br>对于多维数组的分割，可按照数组的维度来划分：<br><img src="http://xukeqiniu.xukeai.cn/9323b98639be0a46975f06cea4ee9777.png" alt=""></p>
 <h4 id="实验结果分析"><a href="#实验结果分析" class="headerlink" title="实验结果分析"></a>实验结果分析</h4><ul>
 <li>vivado hls log文件分析</li>
 </ul>
@@ -513,12 +513,12 @@
 <ul>
 <li>HLS Report</li>
 </ul>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/1d973057d6b3609af2256ab9a19e4edf.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/98602da9079cd03cf8ccc7045d21ea04.png" alt=""></p>
+<p><img src="http://xukeqiniu.xukeai.cn/1d973057d6b3609af2256ab9a19e4edf.png" alt=""><br><img src="http://xukeqiniu.xukeai.cn/98602da9079cd03cf8ccc7045d21ea04.png" alt=""></p>
 <ul>
 <li>综合结果分析<br>＊ 首先，硬件代码没有优化指令，log文件中首先将三个数组进行了对应维度的切割，然后也成功的对最内层的循环进行了<code>unroll</code>处理。<br>＊ 然后，相比于<code>Burst Read/Write</code>版本的矩阵乘法实现，该版本主要是加上了两个优化指令，实现内层循环的并行化。从<code>Pipleline</code>的角度考虑：第一段for循环<code>pipeline</code>成功；第二段的for循环嵌套中<code>write_data</code>对应的for循环并行展开，接着对其外层的for循环进行<code>flatten</code>,最终，整体实现<code>pipeline</code>；第三段for循环<code>pipeline</code>成功。<br>＊ 从pipeline成功后的II角度考虑:所有for循环<code>pipeline</code>后的<code>II=1</code>。</li>
 </ul>
 <ul>
-<li>硬件仿真结果<br><img src="http://oz3lw4cji.bkt.clouddn.com/513370e7eff99b2da9e41d14edfe265d.png" alt=""></li>
+<li>硬件仿真结果<br><img src="http://xukeqiniu.xukeai.cn/513370e7eff99b2da9e41d14edfe265d.png" alt=""></li>
 </ul>
 <ul>
 <li>硬件实现结果</li>
@@ -680,7 +680,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://oz5oe1xth.bkt.clouddn.com/avatar.png"
+                src="http://xukeqiniu.xukeai.cn/avatar.png"
                 alt="王晓芸" />
             
               <p class="site-author-name" itemprop="name">王晓芸</p>
@@ -792,7 +792,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

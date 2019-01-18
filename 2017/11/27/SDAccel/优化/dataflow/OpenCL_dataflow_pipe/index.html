@@ -93,17 +93,17 @@
 <meta property="og:site_name" content="异构 AI">
 <meta property="og:description" content="dataflow可谓是FPGA性能体现的绝佳表现方式，数据在硬件中能流动起来，靠的就是dataflow!下面我们将探究SDAccel OpenCL开发方式下两种dataflow的实现方式：pipe传输方式与function传输方式。以及SDAccel HLS 开发方式下两种dataflow的编程风格：loop 与 streamSDAccel Dataflow 那点事儿（一）SDAccel Data">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/67be912a7072aad94e097cb54c4f5a47.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/dc1579131dd925ed45eafe33f0bb401e.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/6b1620ac10ee6d9393b4fb69ef37f116.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/08ba6a45ed0db177d0d3d990478caf3e.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/42f2d336176fb922a30d30691a77e81f.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/0d1e0e0ba375769beb6cd81797392592.png">
-<meta property="og:updated_time" content="2018-01-03T10:13:50.000Z">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/67be912a7072aad94e097cb54c4f5a47.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/dc1579131dd925ed45eafe33f0bb401e.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/6b1620ac10ee6d9393b4fb69ef37f116.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/08ba6a45ed0db177d0d3d990478caf3e.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/42f2d336176fb922a30d30691a77e81f.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/0d1e0e0ba375769beb6cd81797392592.png">
+<meta property="og:updated_time" content="2019-01-18T08:02:24.495Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDAccel Dataflow 那点事儿（二）">
 <meta name="twitter:description" content="dataflow可谓是FPGA性能体现的绝佳表现方式，数据在硬件中能流动起来，靠的就是dataflow!下面我们将探究SDAccel OpenCL开发方式下两种dataflow的实现方式：pipe传输方式与function传输方式。以及SDAccel HLS 开发方式下两种dataflow的编程风格：loop 与 streamSDAccel Dataflow 那点事儿（一）SDAccel Data">
-<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/67be912a7072aad94e097cb54c4f5a47.png">
+<meta name="twitter:image" content="http://xukeqiniu.xukeai.cn/67be912a7072aad94e097cb54c4f5a47.png">
 
 
 
@@ -315,7 +315,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="王晓芸">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oz5oe1xth.bkt.clouddn.com/avatar.png">
+      <meta itemprop="image" content="http://xukeqiniu.xukeai.cn/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -457,7 +457,7 @@
       
 
       
-        <blockquote class="blockquote-center"><br><br><img src="http://oz3lw4cji.bkt.clouddn.com/67be912a7072aad94e097cb54c4f5a47.png" alt=""><br>dataflow可谓是FPGA性能体现的绝佳表现方式，数据在硬件中能流动起来，靠的就是dataflow!<br>下面我们将探究SDAccel OpenCL开发方式下两种dataflow的实现方式：<code>pipe</code>传输方式与<code>function</code>传输方式。<br>以及SDAccel HLS 开发方式下两种dataflow的编程风格：<code>loop</code> 与 <code>stream</code><br><a href="https://xuke225.github.io/2017/11/15/SDAccel/" target="_blank" rel="noopener">SDAccel Dataflow 那点事儿（一）</a><br><a href="">SDAccel Dataflow 那点事儿（二）</a><br><a href="">SDAccel Dataflow 那点事儿（三）</a><br><a href="">SDAccel Dataflow 那点事儿（四）</a><br></blockquote>
+        <blockquote class="blockquote-center"><br><br><img src="http://xukeqiniu.xukeai.cn/67be912a7072aad94e097cb54c4f5a47.png" alt=""><br>dataflow可谓是FPGA性能体现的绝佳表现方式，数据在硬件中能流动起来，靠的就是dataflow!<br>下面我们将探究SDAccel OpenCL开发方式下两种dataflow的实现方式：<code>pipe</code>传输方式与<code>function</code>传输方式。<br>以及SDAccel HLS 开发方式下两种dataflow的编程风格：<code>loop</code> 与 <code>stream</code><br><a href="https://xuke225.github.io/2017/11/15/SDAccel/" target="_blank" rel="noopener">SDAccel Dataflow 那点事儿（一）</a><br><a href="">SDAccel Dataflow 那点事儿（二）</a><br><a href="">SDAccel Dataflow 那点事儿（三）</a><br><a href="">SDAccel Dataflow 那点事儿（四）</a><br></blockquote>
 
 
 
@@ -491,14 +491,14 @@
 <h3 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h3><ul>
 <li>非结构体类型Pipe硬件仿真波形图</li>
 </ul>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/dc1579131dd925ed45eafe33f0bb401e.png" alt=""></p>
+<p><img src="http://xukeqiniu.xukeai.cn/dc1579131dd925ed45eafe33f0bb401e.png" alt=""></p>
 <ul>
 <li>结构体类型Pipe硬件仿真波形图</li>
 </ul>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/6b1620ac10ee6d9393b4fb69ef37f116.png" alt=""></p>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/08ba6a45ed0db177d0d3d990478caf3e.png" alt=""></p>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/42f2d336176fb922a30d30691a77e81f.png" alt=""></p>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/0d1e0e0ba375769beb6cd81797392592.png" alt=""></p>
+<p><img src="http://xukeqiniu.xukeai.cn/6b1620ac10ee6d9393b4fb69ef37f116.png" alt=""></p>
+<p><img src="http://xukeqiniu.xukeai.cn/08ba6a45ed0db177d0d3d990478caf3e.png" alt=""></p>
+<p><img src="http://xukeqiniu.xukeai.cn/42f2d336176fb922a30d30691a77e81f.png" alt=""></p>
+<p><img src="http://xukeqiniu.xukeai.cn/0d1e0e0ba375769beb6cd81797392592.png" alt=""></p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://github.com/Xilinx/SDAccel_Examples/tree/master/getting_started/dataflow" target="_blank" rel="noopener">xilinx github SDAccel_Examples/getting_started/dataflow/</a><br>ug1253 SDx Pragma Reference Guide 2017.2<br>ug1207 SDAccel Environment Optmizaton Guide</p>
 
       
@@ -653,7 +653,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://oz5oe1xth.bkt.clouddn.com/avatar.png"
+                src="http://xukeqiniu.xukeai.cn/avatar.png"
                 alt="王晓芸" />
             
               <p class="site-author-name" itemprop="name">王晓芸</p>
@@ -765,7 +765,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

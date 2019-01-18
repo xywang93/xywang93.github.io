@@ -93,17 +93,17 @@
 <meta property="og:site_name" content="异构 AI">
 <meta property="og:description" content="前言通过最近邻算法的实现，展示在实际的优化中，如何巧妙的将嵌套的for循环进行融合。 最近邻算法最近邻是机器学习中一种典型的算法，属于K紧邻算法的一种特殊形式。具体的实现过程如下图所示(图片取自百度百科)：从最近邻的计算角度来说，最重要的是从诸多已知点中，寻找对应当前点最近的一个点（默认采用欧几里得距离）。因此，我们主要在FPGA中实现寻找最近点的操作。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/25e2618899ac4119948b5ad214e4e12c.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/fd471014f85a0bd93247b5cc57c3b45c.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/18b52f20b924faf11ff03dc659d8b798.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/e3d7ba972921050fe62a3dcee6acaaf1.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/d21bb20737c6c8c08855e4964ff27df1.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/21bf811dd4e6fe52fa9e1e5fdb8f782b.png">
-<meta property="og:updated_time" content="2018-01-18T11:16:58.000Z">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/25e2618899ac4119948b5ad214e4e12c.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/fd471014f85a0bd93247b5cc57c3b45c.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/18b52f20b924faf11ff03dc659d8b798.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/e3d7ba972921050fe62a3dcee6acaaf1.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/d21bb20737c6c8c08855e4964ff27df1.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/21bf811dd4e6fe52fa9e1e5fdb8f782b.png">
+<meta property="og:updated_time" content="2019-01-18T08:02:24.576Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="循环优化之融合篇（Fusion Loop）">
 <meta name="twitter:description" content="前言通过最近邻算法的实现，展示在实际的优化中，如何巧妙的将嵌套的for循环进行融合。 最近邻算法最近邻是机器学习中一种典型的算法，属于K紧邻算法的一种特殊形式。具体的实现过程如下图所示(图片取自百度百科)：从最近邻的计算角度来说，最重要的是从诸多已知点中，寻找对应当前点最近的一个点（默认采用欧几里得距离）。因此，我们主要在FPGA中实现寻找最近点的操作。">
-<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/25e2618899ac4119948b5ad214e4e12c.png">
+<meta name="twitter:image" content="http://xukeqiniu.xukeai.cn/25e2618899ac4119948b5ad214e4e12c.png">
 
 
 
@@ -315,7 +315,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="王晓芸">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oz5oe1xth.bkt.clouddn.com/avatar.png">
+      <meta itemprop="image" content="http://xukeqiniu.xukeai.cn/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -458,27 +458,27 @@
 
       
         <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>通过最近邻算法的实现，展示在实际的优化中，如何巧妙的将嵌套的for循环进行融合。</p>
-<h3 id="最近邻算法"><a href="#最近邻算法" class="headerlink" title="最近邻算法"></a>最近邻算法</h3><p>最近邻是机器学习中一种典型的算法，属于K紧邻算法的一种特殊形式。具体的实现过程如下图所示(图片取自百度百科)：<br><img src="http://oz3lw4cji.bkt.clouddn.com/25e2618899ac4119948b5ad214e4e12c.png" alt=""><br>从最近邻的计算角度来说，最重要的是从诸多已知点中，寻找对应当前点最近的一个点（默认采用欧几里得距离）。因此，我们主要在FPGA中实现寻找最近点的操作。</p>
+<h3 id="最近邻算法"><a href="#最近邻算法" class="headerlink" title="最近邻算法"></a>最近邻算法</h3><p>最近邻是机器学习中一种典型的算法，属于K紧邻算法的一种特殊形式。具体的实现过程如下图所示(图片取自百度百科)：<br><img src="http://xukeqiniu.xukeai.cn/25e2618899ac4119948b5ad214e4e12c.png" alt=""><br>从最近邻的计算角度来说，最重要的是从诸多已知点中，寻找对应当前点最近的一个点（默认采用欧几里得距离）。因此，我们主要在FPGA中实现寻找最近点的操作。</p>
 <a id="more"></a>
 <h3 id="嵌套for循环"><a href="#嵌套for循环" class="headerlink" title="嵌套for循环"></a>嵌套for循环</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_DIMS 5</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="comment">// This is a simple implementation of a linear search algorithm. We use two</span></span><br><span class="line"> <span class="comment">// loops. The outer loop cycles through each of the search space and the inner</span></span><br><span class="line"> <span class="comment">// loop calculates the distance to a particular point.</span></span><br><span class="line"> <span class="comment">// len 指的是有多少已知点</span></span><br><span class="line"> <span class="comment">// dim 指的是每一个点的维度是多少</span></span><br><span class="line"> <span class="comment">// search_point 指的是确定的用于寻找最近邻的固定点（1个点，dim维）</span></span><br><span class="line"> <span class="comment">// point是随机的样本点（len个点，dim维）</span></span><br><span class="line"> <span class="comment">// out是search_point的最近邻点</span></span><br><span class="line">kernel __attribute__((reqd_work_group_size(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>))) <span class="keyword">void</span></span><br><span class="line">nearest_neighbor(global <span class="keyword">int</span> *out, global <span class="keyword">const</span> <span class="keyword">int</span> *points,</span><br><span class="line">                      global <span class="keyword">const</span> <span class="keyword">int</span> *search_point, <span class="keyword">const</span> <span class="keyword">int</span> len,</span><br><span class="line">                      <span class="keyword">const</span> <span class="keyword">int</span> dim) &#123;</span><br><span class="line">    <span class="keyword">int</span> best_i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> best_dist = INT_MAX;</span><br><span class="line">    <span class="keyword">int</span> s_point[MAX_DIMS];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 从global memory 搬移到 local memory</span></span><br><span class="line">    __attribute__((xcl_pipeline_loop))</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> d = <span class="number">0</span>; d &lt; dim; ++d) &#123;</span><br><span class="line">        s_point[d] = search_point[d];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 遍历所有点与s_point的最近距离，记录最近距离以及第几个点</span></span><br><span class="line">    find_best:</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> p = <span class="number">0</span>; p &lt; len; ++p) &#123;</span><br><span class="line">        <span class="keyword">int</span> dist = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Calculate the distance in a n-dimensional space</span></span><br><span class="line">        __attribute__((xcl_pipeline_loop))</span><br><span class="line">        dist_calc:</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> c = <span class="number">0</span>; c &lt; dim; ++c) &#123;</span><br><span class="line">            <span class="keyword">int</span> dx = points[dim * p + c] - s_point[c];</span><br><span class="line">            dist += dx * dx;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (dist &lt; best_dist) &#123;</span><br><span class="line">            best_i = p;</span><br><span class="line">            best_dist = dist;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//将最近的距离点写回global memory</span></span><br><span class="line">    __attribute__((xcl_pipeline_loop))</span><br><span class="line">    write_best:</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> c = <span class="number">0</span>; c &lt; dim; ++c) &#123;</span><br><span class="line">        out[c] = points[best_i * dim + c];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="嵌套for循环的融合"><a href="#嵌套for循环的融合" class="headerlink" title="嵌套for循环的融合"></a>嵌套for循环的融合</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_DIMS 5</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// This implementation fuses the distance calculation and the iteration through</span></span><br><span class="line"><span class="comment">// the search space into one loop.</span></span><br><span class="line"><span class="comment">// len 指的是有多少已知点</span></span><br><span class="line"><span class="comment">// dim 指的是每一个点的维度是多少</span></span><br><span class="line"><span class="comment">// search_point 指的是确定的用于寻找最近邻的固定点（1个点，dim维）</span></span><br><span class="line"><span class="comment">// point是随机的样本点（len个点，dim维）</span></span><br><span class="line"><span class="comment">// out是search_point的最近邻点</span></span><br><span class="line">kernel __attribute__((reqd_work_group_size(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>))) <span class="keyword">void</span></span><br><span class="line">nearest_neighbor_loop_fusion(global <span class="keyword">int</span> *out, global <span class="keyword">const</span> <span class="keyword">int</span> *points,</span><br><span class="line">                       global <span class="keyword">const</span> <span class="keyword">int</span> *search_point, <span class="keyword">const</span> <span class="keyword">int</span> len,</span><br><span class="line">                       <span class="keyword">const</span> <span class="keyword">int</span> dim) &#123;</span><br><span class="line">    <span class="keyword">int</span> best_i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> best_dist = INT_MAX;</span><br><span class="line">    <span class="keyword">int</span> s_point[MAX_DIMS];</span><br><span class="line"></span><br><span class="line">    __attribute__((xcl_pipeline_loop))</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> d = <span class="number">0</span>; d &lt; dim; ++d) &#123;</span><br><span class="line">        s_point[d] = search_point[d];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> dist = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> iterations = len * dim;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// This loop iterates through each point and through each of the dimension.</span></span><br><span class="line">    <span class="comment">// The combined loop performs the same number of iterations as the previous</span></span><br><span class="line">    <span class="comment">// implementation but this approach give the compiler more opportunity to</span></span><br><span class="line">    <span class="comment">// optimize the operations.</span></span><br><span class="line">    __attribute__((xcl_pipeline_loop))</span><br><span class="line">    find_best:</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> p = <span class="number">0</span>, c = <span class="number">0</span>, itr = <span class="number">0</span>; itr &lt; iterations; itr++) &#123;</span><br><span class="line">        <span class="keyword">int</span> dx = points[dim * p + c] - s_point[c];</span><br><span class="line">        dist += dx * dx;</span><br><span class="line">        <span class="comment">// Defines the end of the dimension calculation(The inner loop in the</span></span><br><span class="line">        <span class="comment">// previous example)</span></span><br><span class="line">        <span class="keyword">if</span> (c == dim - <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (dist &lt; best_dist) &#123;</span><br><span class="line">                best_i = p;</span><br><span class="line">                best_dist = dist;</span><br><span class="line">            &#125;</span><br><span class="line">            c = <span class="number">0</span>;</span><br><span class="line">            dist = <span class="number">0</span>;</span><br><span class="line">            p++;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            c++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    __attribute__((xcl_pipeline_loop))</span><br><span class="line">    write_best:</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> c = <span class="number">0</span>; c &lt; dim; ++c) &#123;</span><br><span class="line">        out[c] = points[best_i * dim + c];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h3><h4 id="软件仿真结果"><a href="#软件仿真结果" class="headerlink" title="软件仿真结果"></a>软件仿真结果</h4><p><img src="http://oz3lw4cji.bkt.clouddn.com/fd471014f85a0bd93247b5cc57c3b45c.png" alt=""></p>
+<h3 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h3><h4 id="软件仿真结果"><a href="#软件仿真结果" class="headerlink" title="软件仿真结果"></a>软件仿真结果</h4><p><img src="http://xukeqiniu.xukeai.cn/fd471014f85a0bd93247b5cc57c3b45c.png" alt=""></p>
 <h4 id="performence分析"><a href="#performence分析" class="headerlink" title="performence分析"></a>performence分析</h4><ul>
 <li><strong>nearest_neighbor</strong></li>
 </ul>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/18b52f20b924faf11ff03dc659d8b798.png" alt=""></p>
+<p><img src="http://xukeqiniu.xukeai.cn/18b52f20b924faf11ff03dc659d8b798.png" alt=""></p>
 <ul>
 <li><strong>nearest_neighbor_loop_fusion</strong></li>
 </ul>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/e3d7ba972921050fe62a3dcee6acaaf1.png" alt=""></p>
+<p><img src="http://xukeqiniu.xukeai.cn/e3d7ba972921050fe62a3dcee6acaaf1.png" alt=""></p>
 <h4 id="资源占用分析"><a href="#资源占用分析" class="headerlink" title="资源占用分析"></a>资源占用分析</h4><ul>
 <li><strong>nearest_neighbor</strong></li>
 </ul>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/d21bb20737c6c8c08855e4964ff27df1.png" alt=""></p>
+<p><img src="http://xukeqiniu.xukeai.cn/d21bb20737c6c8c08855e4964ff27df1.png" alt=""></p>
 <ul>
 <li><strong>nearest_neighbor_loop_fusion</strong></li>
 </ul>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/21bf811dd4e6fe52fa9e1e5fdb8f782b.png" alt=""></p>
+<p><img src="http://xukeqiniu.xukeai.cn/21bf811dd4e6fe52fa9e1e5fdb8f782b.png" alt=""></p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>对于嵌套的<code>for</code>循环，若是内层的<code>for</code>循环无法进行循环展开，那么我们只能将内层循环进行<code>pipeline</code>，而不能兼顾到外层循环的<code>pipeline</code>状况。编译器对于内层<code>for</code>循环进行<code>pipeline</code>后，会默认的去尝试能否对外层的<code>for</code>循环进行<code>flatten</code>，如果是<code>perfect loop</code> 或者 <code>semi-perfect loop</code>能够成功的<code>flatten</code>，但是对于<code>imperfect loop</code> 则不能。因此，为了避免<code>for</code>循环的嵌套带来的优化问题，一种很好的解决方式就是将<code>for</code>循环进行融合，直接对最外层的<code>for</code>循环进行<code>pipeline</code>处理。这样既能减少<code>Iteration Latency</code>。还能减少<code>FF</code>与<code>LUT</code>资源的利用率。</p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://github.com/Xilinx/SDAccel_Examples/tree/master/getting_started" target="_blank" rel="noopener">xilinx github SDAccel_Examples/getting_started </a></p>
 
@@ -548,8 +548,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/18/SDAccel/优化/kernel_opt/Loop_Perfect/" rel="next" title="循环优化之最佳循环（Perfect Loop）">
-                <i class="fa fa-chevron-left"></i> 循环优化之最佳循环（Perfect Loop）
+              <a href="/2018/01/12/SDAccel/优化/kernel_opt/shift_register/" rel="next" title="经典设计结构之移位寄存器OpenCL实现">
+                <i class="fa fa-chevron-left"></i> 经典设计结构之移位寄存器OpenCL实现
               </a>
             
           </div>
@@ -558,8 +558,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/01/20/DeepLearning/caffe/layer/数据层/" rel="prev" title="caffe详解之数据层">
-                caffe详解之数据层 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/01/18/SDAccel/优化/kernel_opt/Loop_Perfect/" rel="prev" title="循环优化之最佳循环（Perfect Loop）">
+                循环优化之最佳循环（Perfect Loop） <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -632,7 +632,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://oz5oe1xth.bkt.clouddn.com/avatar.png"
+                src="http://xukeqiniu.xukeai.cn/avatar.png"
                 alt="王晓芸" />
             
               <p class="site-author-name" itemprop="name">王晓芸</p>
@@ -744,7 +744,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

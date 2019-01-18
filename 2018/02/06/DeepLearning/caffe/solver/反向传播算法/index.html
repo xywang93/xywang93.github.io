@@ -93,24 +93,24 @@
 <meta property="og:site_name" content="异构 AI">
 <meta property="og:description" content="前向传播与反向传播 反向传播（back-propagation）是计算深度学习模型参数梯度的方法。总的来说，反向传播中会依据微积分中的链式法则，按照输出层、靠近输出层的隐含层、靠近输入层的隐含层和输入层的次序，依次计算并存储模型损失函数有关模型各层的中间变量和参数的梯度。反向传播回传误差（只在训练过程中实现） 反向传播对于各层中变量和参数的梯度计算可能会依赖各层变量和参数的当前值。对深度学习模型按">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/399eb3c02fa3b4c350130156c7658294.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/bb4665c5f902894e9a8becc2ecde11db.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/88e2db7ccac6aa788f50dd210f34d5df.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/21d97a44a0190718d5b789af29cb3daa.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/c81962c16c13eb129e6cc278cce94163.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/608220d04dab0d8ec84707e30aeca7d0.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/e5d82c5862acb8b1b9a192fe4d3bc145.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/d5db3e9154c95e2abd5cb6518a91c74b.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/be949eccfe5585a40de6a225a814bb2d.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/5dd91e4d699e2510fa7620de85dccaa5.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/2feecb3a122bdee266dbe1bb213d130b.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/7ef796877aed43c8b29b2940b4c7623b.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E4%B8%8E%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E5%9B%BE.gif">
-<meta property="og:updated_time" content="2018-07-30T15:29:32.000Z">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/399eb3c02fa3b4c350130156c7658294.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/bb4665c5f902894e9a8becc2ecde11db.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/88e2db7ccac6aa788f50dd210f34d5df.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/21d97a44a0190718d5b789af29cb3daa.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/c81962c16c13eb129e6cc278cce94163.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/608220d04dab0d8ec84707e30aeca7d0.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/e5d82c5862acb8b1b9a192fe4d3bc145.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/d5db3e9154c95e2abd5cb6518a91c74b.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/be949eccfe5585a40de6a225a814bb2d.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/5dd91e4d699e2510fa7620de85dccaa5.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/2feecb3a122bdee266dbe1bb213d130b.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/7ef796877aed43c8b29b2940b4c7623b.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E4%B8%8E%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E5%9B%BE.gif">
+<meta property="og:updated_time" content="2019-01-18T08:02:24.347Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="caffe详解之反向传播算法">
 <meta name="twitter:description" content="前向传播与反向传播 反向传播（back-propagation）是计算深度学习模型参数梯度的方法。总的来说，反向传播中会依据微积分中的链式法则，按照输出层、靠近输出层的隐含层、靠近输入层的隐含层和输入层的次序，依次计算并存储模型损失函数有关模型各层的中间变量和参数的梯度。反向传播回传误差（只在训练过程中实现） 反向传播对于各层中变量和参数的梯度计算可能会依赖各层变量和参数的当前值。对深度学习模型按">
-<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/399eb3c02fa3b4c350130156c7658294.png">
+<meta name="twitter:image" content="http://xukeqiniu.xukeai.cn/399eb3c02fa3b4c350130156c7658294.png">
 
 
 
@@ -322,7 +322,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="王晓芸">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oz5oe1xth.bkt.clouddn.com/avatar.png">
+      <meta itemprop="image" content="http://xukeqiniu.xukeai.cn/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -468,7 +468,7 @@
 <li>反向传播（back-propagation）是<strong>计算深度学习模型参数梯度的方法</strong>。总的来说，反向传播中会依据微积分中的链式法则，按照输出层、靠近输出层的隐含层、靠近输入层的隐含层和输入层的次序，依次<strong>计算并存储模型损失函数有关模型各层的中间变量和参数的梯度</strong>。反向传播回传误差（只在训练过程中实现）</li>
 <li>反向传播对于各层中变量和参数的梯度计算可能会依赖各层变量和参数的当前值。对深度学习模型按照输入层、靠近输入层的隐含层、靠近输出层的隐含层和输出层的次序，<strong>依次计算并存储模型的中间变量</strong>叫做正向传播（forward-propagation）。前向传播求损失（训练与测试均需要）</li>
 </ul>
-<h3 id="反向传播公式推导"><a href="#反向传播公式推导" class="headerlink" title="反向传播公式推导"></a>反向传播公式推导</h3><p>在这里，我们先按照周志华《机器学习》的反向传播理解思路进行公式推导，对后面深入理解深度神经网络中的反向传播预热！<br><img src="http://oz3lw4cji.bkt.clouddn.com/399eb3c02fa3b4c350130156c7658294.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/bb4665c5f902894e9a8becc2ecde11db.png" alt=""></p>
+<h3 id="反向传播公式推导"><a href="#反向传播公式推导" class="headerlink" title="反向传播公式推导"></a>反向传播公式推导</h3><p>在这里，我们先按照周志华《机器学习》的反向传播理解思路进行公式推导，对后面深入理解深度神经网络中的反向传播预热！<br><img src="http://xukeqiniu.xukeai.cn/399eb3c02fa3b4c350130156c7658294.png" alt=""><br><img src="http://xukeqiniu.xukeai.cn/bb4665c5f902894e9a8becc2ecde11db.png" alt=""></p>
 <a id="more"></a>
 <h3 id="深入理解反向传播"><a href="#深入理解反向传播" class="headerlink" title="深入理解反向传播"></a>深入理解反向传播</h3><h4 id="计算图"><a href="#计算图" class="headerlink" title="计算图"></a>计算图</h4><p>计算图的三要素：节点，连接线，操作</p>
 <ul>
@@ -476,20 +476,20 @@
 <li>连接线：用于连通节点</li>
 <li>操作：一个或多个变量的简单函数</li>
 </ul>
-<p>举例说明计算图的表示方式<br><img src="http://oz3lw4cji.bkt.clouddn.com/88e2db7ccac6aa788f50dd210f34d5df.png" alt=""></p>
+<p>举例说明计算图的表示方式<br><img src="http://xukeqiniu.xukeai.cn/88e2db7ccac6aa788f50dd210f34d5df.png" alt=""></p>
 <h4 id="链式法则与雅可比矩阵"><a href="#链式法则与雅可比矩阵" class="headerlink" title="链式法则与雅可比矩阵"></a>链式法则与雅可比矩阵</h4><ul>
-<li>单项链式法则<br><img src="http://oz3lw4cji.bkt.clouddn.com/21d97a44a0190718d5b789af29cb3daa.png" alt=""></li>
-<li>多项链式法则<br><img src="http://oz3lw4cji.bkt.clouddn.com/c81962c16c13eb129e6cc278cce94163.png" alt=""></li>
-<li>雅可比矩阵<br><img src="http://oz3lw4cji.bkt.clouddn.com/608220d04dab0d8ec84707e30aeca7d0.png" alt=""></li>
-<li>高维链式法则表示<br><img src="http://oz3lw4cji.bkt.clouddn.com/e5d82c5862acb8b1b9a192fe4d3bc145.png" alt=""></li>
+<li>单项链式法则<br><img src="http://xukeqiniu.xukeai.cn/21d97a44a0190718d5b789af29cb3daa.png" alt=""></li>
+<li>多项链式法则<br><img src="http://xukeqiniu.xukeai.cn/c81962c16c13eb129e6cc278cce94163.png" alt=""></li>
+<li>雅可比矩阵<br><img src="http://xukeqiniu.xukeai.cn/608220d04dab0d8ec84707e30aeca7d0.png" alt=""></li>
+<li>高维链式法则表示<br><img src="http://xukeqiniu.xukeai.cn/e5d82c5862acb8b1b9a192fe4d3bc145.png" alt=""></li>
 </ul>
-<h4 id="反向传播的优点"><a href="#反向传播的优点" class="headerlink" title="反向传播的优点"></a>反向传播的优点</h4><p>我们通过计算图结合链式法则举例说明反向传播在计算上的优势：<br><img src="http://oz3lw4cji.bkt.clouddn.com/d5db3e9154c95e2abd5cb6518a91c74b.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/be949eccfe5585a40de6a225a814bb2d.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/5dd91e4d699e2510fa7620de85dccaa5.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/2feecb3a122bdee266dbe1bb213d130b.png" alt=""><br><img src="http://oz3lw4cji.bkt.clouddn.com/7ef796877aed43c8b29b2940b4c7623b.png" alt=""></p>
+<h4 id="反向传播的优点"><a href="#反向传播的优点" class="headerlink" title="反向传播的优点"></a>反向传播的优点</h4><p>我们通过计算图结合链式法则举例说明反向传播在计算上的优势：<br><img src="http://xukeqiniu.xukeai.cn/d5db3e9154c95e2abd5cb6518a91c74b.png" alt=""><br><img src="http://xukeqiniu.xukeai.cn/be949eccfe5585a40de6a225a814bb2d.png" alt=""><br><img src="http://xukeqiniu.xukeai.cn/5dd91e4d699e2510fa7620de85dccaa5.png" alt=""><br><img src="http://xukeqiniu.xukeai.cn/2feecb3a122bdee266dbe1bb213d130b.png" alt=""><br><img src="http://xukeqiniu.xukeai.cn/7ef796877aed43c8b29b2940b4c7623b.png" alt=""></p>
 <h4 id="反向传播与梯度下降的关系"><a href="#反向传播与梯度下降的关系" class="headerlink" title="反向传播与梯度下降的关系"></a>反向传播与梯度下降的关系</h4><p>有很多人会将反向传播与梯度下降算法混为一谈，但其实两者是可以分离的，我们独立出两个概念来讨论问题会使得学习的重点更加清晰！</p>
 <ul>
 <li><strong>反向传播仅仅是计算梯度的算法</strong></li>
 <li><strong>梯度下降是使用该梯度进行学习的算法</strong></li>
 </ul>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>反向传播与梯度下降总结图示：<br><img src="http://oz3lw4cji.bkt.clouddn.com/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E4%B8%8E%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E5%9B%BE.gif" alt=""></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>反向传播与梯度下降总结图示：<br><img src="http://xukeqiniu.xukeai.cn/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E4%B8%8E%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E5%9B%BE.gif" alt=""></p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>李宏毅机器学习课程<br>Deep Learning Book<br><a href="http://galaxy.agh.edu.pl/~vlsi/AI/backp_t_en/backprop.html" target="_blank" rel="noopener">Principles of training multi-layer neural network using backpropagation</a></p>
 
       
@@ -640,7 +640,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://oz5oe1xth.bkt.clouddn.com/avatar.png"
+                src="http://xukeqiniu.xukeai.cn/avatar.png"
                 alt="王晓芸" />
             
               <p class="site-author-name" itemprop="name">王晓芸</p>
@@ -752,7 +752,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

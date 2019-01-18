@@ -93,14 +93,14 @@
 <meta property="og:site_name" content="异构 AI">
 <meta property="og:description" content="从零开始，一步一步学习caffe的使用，期间贯穿深度学习和调参的相关知识！">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/2490fe237f606073b367b7b03551461b.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/bbbdfeb8bcb537f3f3b56e7dd8cb690f.png">
-<meta property="og:image" content="http://oz3lw4cji.bkt.clouddn.com/c5461b9b48c076bd1be8041fa5ab3dda.png">
-<meta property="og:updated_time" content="2018-02-06T01:36:48.000Z">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/2490fe237f606073b367b7b03551461b.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/bbbdfeb8bcb537f3f3b56e7dd8cb690f.png">
+<meta property="og:image" content="http://xukeqiniu.xukeai.cn/c5461b9b48c076bd1be8041fa5ab3dda.png">
+<meta property="og:updated_time" content="2019-01-18T08:02:24.323Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="caffe详解之全连接层">
 <meta name="twitter:description" content="从零开始，一步一步学习caffe的使用，期间贯穿深度学习和调参的相关知识！">
-<meta name="twitter:image" content="http://oz3lw4cji.bkt.clouddn.com/2490fe237f606073b367b7b03551461b.png">
+<meta name="twitter:image" content="http://xukeqiniu.xukeai.cn/2490fe237f606073b367b7b03551461b.png">
 
 
 
@@ -312,7 +312,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="王晓芸">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oz5oe1xth.bkt.clouddn.com/avatar.png">
+      <meta itemprop="image" content="http://xukeqiniu.xukeai.cn/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -455,12 +455,12 @@
 
       
         <blockquote>
-<p><img src="http://oz3lw4cji.bkt.clouddn.com/2490fe237f606073b367b7b03551461b.png" alt=""><br>从零开始，一步一步学习caffe的使用，期间贯穿深度学习和调参的相关知识！<br><a id="more"></a></p>
+<p><img src="http://xukeqiniu.xukeai.cn/2490fe237f606073b367b7b03551461b.png" alt=""><br>从零开始，一步一步学习caffe的使用，期间贯穿深度学习和调参的相关知识！<br><a id="more"></a></p>
 </blockquote>
 <h3 id="全连接层参数说明"><a href="#全连接层参数说明" class="headerlink" title="全连接层参数说明"></a>全连接层参数说明</h3><p>全连接层，输出的是一个一维向量,参数跟卷积层一样。<strong>一般将全连接置于卷积神经网络的后几层</strong>。权重值的初始化采用<code>xavier</code>,偏置初始化为0.</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">layer &#123;</span><br><span class="line">  name: <span class="string">"ip1"</span></span><br><span class="line">  type: <span class="string">"InnerProduct"</span> #全连接层</span><br><span class="line">  bottom: <span class="string">"pool2"</span> #输入</span><br><span class="line">  top: <span class="string">"ip1"</span> #输出</span><br><span class="line">  param &#123;</span><br><span class="line">    lr_mult: <span class="number">1</span> #权重学习率倍数</span><br><span class="line">  &#125;</span><br><span class="line">  param &#123;</span><br><span class="line">    lr_mult: <span class="number">2</span> #偏置学习率倍数</span><br><span class="line">  &#125;</span><br><span class="line">  inner_product_param &#123;</span><br><span class="line">    num_output: <span class="number">500</span> #输出一维向量个数</span><br><span class="line">    weight_filler &#123;</span><br><span class="line">      type: <span class="string">"xavier"</span> #权重初始化方式</span><br><span class="line">    &#125;</span><br><span class="line">    bias_filler &#123;</span><br><span class="line">      type: <span class="string">"constant"</span> #偏置初始化方式</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="全连接配置参数意义"><a href="#全连接配置参数意义" class="headerlink" title="全连接配置参数意义"></a>全连接配置参数意义</h3><h4 id="全连接计算公式"><a href="#全连接计算公式" class="headerlink" title="全连接计算公式"></a>全连接计算公式</h4><p><img src="http://oz3lw4cji.bkt.clouddn.com/bbbdfeb8bcb537f3f3b56e7dd8cb690f.png" alt=""></p>
-<h4 id="全连接计算图示"><a href="#全连接计算图示" class="headerlink" title="全连接计算图示"></a>全连接计算图示</h4><p><img src="http://oz3lw4cji.bkt.clouddn.com/c5461b9b48c076bd1be8041fa5ab3dda.png" alt=""></p>
+<h3 id="全连接配置参数意义"><a href="#全连接配置参数意义" class="headerlink" title="全连接配置参数意义"></a>全连接配置参数意义</h3><h4 id="全连接计算公式"><a href="#全连接计算公式" class="headerlink" title="全连接计算公式"></a>全连接计算公式</h4><p><img src="http://xukeqiniu.xukeai.cn/bbbdfeb8bcb537f3f3b56e7dd8cb690f.png" alt=""></p>
+<h4 id="全连接计算图示"><a href="#全连接计算图示" class="headerlink" title="全连接计算图示"></a>全连接计算图示</h4><p><img src="http://xukeqiniu.xukeai.cn/c5461b9b48c076bd1be8041fa5ab3dda.png" alt=""></p>
 <h4 id="全连接意义"><a href="#全连接意义" class="headerlink" title="全连接意义"></a>全连接意义</h4><p>全连接计算是神经网络的基本计算单元，从历史的角度考虑，全连接其实是前馈神经网络，多层感知机（MLP）方法在卷积神经网络的延用。因此，在全连接计算图示模块中我采用的是传统的MLP结构。全连接层一般置于卷积神经网络的结尾，<strong>因为其参数量和计算量对输入输出数据都比较敏感</strong>，若<strong>卷积神经网络结构前期采用全连接层容易造成参数量过大，数据计算冗余进一步使得模型容易过拟合</strong>，因此，我们采用卷积的计算过程减少了参数量，并更够提取合适的特征。但是<strong>随着深度的增加，数据信息会不断地丢失，最后采用全连接层能够保留住前面的重要信息</strong>，因此全连接与卷积的合理调整会对整个模型的性能产生至关重要的作用！</p>
 
       
@@ -611,7 +611,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://oz5oe1xth.bkt.clouddn.com/avatar.png"
+                src="http://xukeqiniu.xukeai.cn/avatar.png"
                 alt="王晓芸" />
             
               <p class="site-author-name" itemprop="name">王晓芸</p>
@@ -723,7 +723,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
